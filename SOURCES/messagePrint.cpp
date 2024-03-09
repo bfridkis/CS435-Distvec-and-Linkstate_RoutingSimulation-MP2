@@ -121,7 +121,6 @@ void messagePrint(std::vector<std::map<int, std::multimap<int, std::vector<int>>
 						_outFile << *it << " ";
 					}
 				}
-				}
 			}
 			_outFile << message << std::endl;
 		}
