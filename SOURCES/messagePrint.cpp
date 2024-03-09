@@ -28,7 +28,7 @@ void messagePrint(std::vector<std::map<int, std::multimap<int, std::vector<int>>
 				std::cout << "from " << sourceNode << " to " << destNode << " cost " << cost << " hops " << sourceNode;
 			}
 			else {
-				std::cout << "from " << sourceNode << " to " << destNode << " cost " << cost << " hops " << sourceNode;
+				std::cout << "from " << sourceNode << " to " << destNode << " cost " << cost << " hops " << sourceNode << " ";
 				std::vector<int> lowestCostPath(_FT[sourceNode].find(destNode)->second.begin()->second);
 				if(lowestCostPath.size() > 1) {
 					for(std::vector<int>::iterator it = lowestCostPath.begin(); it != lowestCostPath.end()-1; it++) {
@@ -100,7 +100,7 @@ void messagePrint(std::vector<std::map<int, std::multimap<int, std::vector<int>>
     while (!messages.eof()) {
         std::string line, message;
         getline(messages, line);
-		std::cout << "Line in messagePrint: " << line << std::endl;
+		std::cout << "Line in messagePrint: " << line << "Line is Empty Check: " << message.empty() << std::endl;
         int sourceNode, destNode, cost;
         std::istringstream messageStr(line);
         messageStr >> sourceNode >> destNode;
