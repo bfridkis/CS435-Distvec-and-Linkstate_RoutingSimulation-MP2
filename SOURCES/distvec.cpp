@@ -274,3 +274,4 @@ int main(int argc, char** argv) {
 //https://stackoverflow.com/questions/49441588/c-how-to-check-if-contents-of-vector-exist-in-another-vector
 //https://stackoverflow.com/questions/8234779/how-to-remove-from-a-map-while-iterating-it
 //https://cplusplus.com/reference/algorithm/adjacent_find/#google_vignette
+//https://stackoverflow.com/questions/28331017/rewind-an-ifstream-object-after-hitting-the-end-of-file
