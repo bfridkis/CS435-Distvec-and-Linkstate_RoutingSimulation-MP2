@@ -5,7 +5,7 @@
 ** Description: Source file for vecToString function.
 *****************************************************/
 
-#include "../HEADER/vecToString.hpp"
+#include "../HEADERS/vecToString.hpp"
 
 std::string vecToString(std::vector<int>& vec) {
     if (vec.size() > 0) { 

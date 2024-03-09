@@ -32,4 +32,11 @@
 #include <algorithm>
 #include <iterator>
 
+#include "../HEADERS/converge.hpp"
+#include "../HEADERS/messagePrint.hpp"
+#include "../HEADERS/outputFunctions.hpp"
+#include "../HEADERS/processChanges.hpp"
+#include "../HEADERS/tieBreaker.hpp"
+#include "../HEADERS/vecToString.hpp"
+
 #endif /* include_hpp */

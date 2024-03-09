@@ -32,7 +32,7 @@
 #include <iterator>
 */
 
-#include "converge.hpp"
+#include "../HEADERS/include.hpp"
 
 int main(int argc, char** argv) {
     //printf("Number of arguments: %d", argc);
@@ -62,7 +62,7 @@ int main(int argc, char** argv) {
     //std::cout << "Line53..." << std::endl;
 	
 	//Output file stream
-	std::ofstream outfile("output.txt");
+	std::ofstream outFile("output.txt");
 	
 	std::ifstream topoInputFile(argv[1]);
 	std::ifstream messagesInputFile(argv[2]);
@@ -196,7 +196,7 @@ int main(int argc, char** argv) {
     auto iss = std::istringstream{"2 1 here is a message from 2 to 1\n3 5 this one gets sent from 3 to 5!"};
     messagePrint(FT, iss);
 	
-	messagePrint(FT, messagesInputFile);
+	messagePrint(FT, messagesInputFile, outFile);
     
     std::cout << std::endl;
     
@@ -215,7 +215,7 @@ int main(int argc, char** argv) {
     
     //processChanges(FT, changeInput);
 	
-	processChanges(FT, changesInputFile, messagesInputFile, outfile);
+	processChanges(FT, changesInputFile, messagesInputFile, outFile);
     
     std::cout << std::endl;
     

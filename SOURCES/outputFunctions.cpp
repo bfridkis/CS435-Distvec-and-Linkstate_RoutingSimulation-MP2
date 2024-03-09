@@ -5,7 +5,7 @@
 ** Description: Source file for output functions.
 ***************************************************/
 
-#include "../HEADER/outputFunctions.hpp"
+#include "../HEADERS/outputFunctions.hpp"
 
 //For testing/debugging only
 void consoleOutFT(std::vector<std::map<int, std::multimap<int, std::vector<int>>>> &_FT) {
@@ -40,7 +40,7 @@ void consoleOutFT(std::vector<std::map<int, std::multimap<int, std::vector<int>>
 }
 
 //For Printing the Forwarding Table Elements to a File
-void fileOutFT(std::vector<std::map<int, std::multimap<int, std::vector<int>>>> &_FT, std::ofstream _outFile) {
+void fileOutFT(std::vector<std::map<int, std::multimap<int, std::vector<int>>>> &_FT, std::ofstream& _outFile) {
     for (unsigned short i = 1; i < _FT.size(); i++) {
         for (std::map<int, std::multimap<int, std::vector<int>>>::iterator it=_FT[i].begin(); it!=_FT[i].end(); it++) {
             _outFile << i << " " << it->first << " " << it->second.begin()->first << std::endl;

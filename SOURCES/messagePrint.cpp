@@ -5,7 +5,7 @@
 ** Description: Source file for messagePrint functions.
 *******************************************************/
 
-#include "../HEADER/messagePrint.hpp"
+#include "../HEADERS/messagePrint.hpp"
 
 void messagePrint(std::vector<std::map<int, std::multimap<int, std::vector<int>>>> &_FT, std::istringstream& messagesStr) {
     

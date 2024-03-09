@@ -5,7 +5,7 @@
 ** Description: Source file for processChanges function.
 ********************************************************/
 
-#include "../HEADER/processChanges.hpp"
+#include "../HEADERS/processChanges.hpp"
 
 void processChanges(std::vector<std::map<int, std::multimap<int, std::vector<int>>>> &_FT, std::stringstream& _changesInput) {
 
