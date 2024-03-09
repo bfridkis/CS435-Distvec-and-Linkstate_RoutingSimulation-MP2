@@ -35,11 +35,11 @@
 #include "../HEADERS/include.hpp"
 
 int main(int argc, char** argv) {
-    //printf("Number of arguments: %d", argc);
-    //if (argc != 4) {
-    //    printf("Usage: ./distvec topofile messagefile changesfile\n");
-    //    return -1;
-    //}
+    printf("Number of arguments: %d", argc);
+    if (argc != 4) {
+        printf("Usage: ./distvec topofile messagefile changesfile\n");
+        return -1;
+    }
     
     std::cout << "Beginning of Program..." << std::endl;
     
