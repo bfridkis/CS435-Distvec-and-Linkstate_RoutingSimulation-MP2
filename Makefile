@@ -49,7 +49,7 @@ distvec: $(DISTVECOBJECTS)
 
 # RM is a built-in variable that defaults to "rm -f".
 clean:
-	$(RM) OBJECTS/*.o linkstate distvec
+	$(RM) OBJECTS/*.o linkstate distvec output.txt
 
 # $<: the first dependency in the list; here, %.cpp. (Of course, we could also have used $^).
 # The % sign means "match one or more characters". You specify it in the target, and when a file
