@@ -129,4 +129,8 @@ void messagePrint(std::vector<std::map<int, std::multimap<int, std::vector<int>>
 		}
     }   
     _outFile << std::endl;
+	
+	//Rewind input stream to beginning for next print job...
+	messages.clear();
+	messages.seek(0);
 }
