@@ -132,5 +132,5 @@ void messagePrint(std::vector<std::map<int, std::multimap<int, std::vector<int>>
 	
 	//Rewind input stream to beginning for next print job...
 	messages.clear();
-	messages.seek(0);
+	messages.seekg(0);
 }
