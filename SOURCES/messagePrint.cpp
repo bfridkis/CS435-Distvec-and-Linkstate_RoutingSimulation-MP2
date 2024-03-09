@@ -101,10 +101,10 @@ void messagePrint(std::vector<std::map<int, std::multimap<int, std::vector<int>>
         std::string line, message;
         getline(messages, line);
 		//std::cout << "Line in messagePrint: " << line << "Line is Empty Check: " << line.empty() << std::endl;
-        if((!line.empty()) && (std::find_if_not(line.begin(),line.end(),std::isspace) != line.end())
+        if((!line.empty()) && (std::find_if_not(line.begin(),line.end(),[](char c){return std::isspace(c)) != line.end())
 		int sourceNode, destNode, cost;
         std::istringstream messageStr(line);
-		std::cout << "messageStr: " << std::endl;
+		//std::cout << "messageStr: " << messageStr << std::endl;
         messageStr >> sourceNode >> destNode;
         getline(messageStr, message);
         if(_FT[sourceNode].find(destNode) != _FT[sourceNode].end()) {
