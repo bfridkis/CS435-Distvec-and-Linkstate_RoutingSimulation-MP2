@@ -22,7 +22,7 @@ void processChanges(std::vector<std::map<int, std::multimap<int, std::vector<int
                     std::multimap<int, std::vector<int>> destNodePaths = it_m->second;
                     for(auto&& [cost, path] : destNodePaths) {
                         //If this is the direct link affected by the change, update accordingly
-                        if(path.size() == 1 && (sourceNode == changedLinkNode1 && changedLinkNode2 == path[0] || sourceNode == changedLinkNode2 && changedLinkNode1 == path[0])) {
+                        if(path.size() == 1 && ((sourceNode == changedLinkNode1 && changedLinkNode2 == path[0]) || (sourceNode == changedLinkNode2 && changedLinkNode1 == path[0]))) {
                             std::cout << "Current Path: " << vecToString(path) << std::endl;
                             std::cout << "Erasing Map Entry..." << " sourceNode: " << sourceNode << " changedLinkNode1: " << changedLinkNode1 << " destNode: " << destNode << " changedLinkNode2: " << changedLinkNode2 << std::endl;
                             //If link is broken and this is the only path from source to destination, remove destNode map from source node's forwaring table (destination no longer reachable)
@@ -131,7 +131,7 @@ void processChanges(std::vector<std::map<int, std::multimap<int, std::vector<int
                     std::multimap<int, std::vector<int>> destNodePaths = it_m->second;
                     for(auto&& [cost, path] : destNodePaths) {
                         //If this is the direct link affected by the change, update accordingly
-                        if(path.size() == 1 && (sourceNode == changedLinkNode1 && changedLinkNode2 == path[0] || sourceNode == changedLinkNode2 && changedLinkNode1 == path[0])) {
+                        if(path.size() == 1 && ((sourceNode == changedLinkNode1 && changedLinkNode2 == path[0]) || (sourceNode == changedLinkNode2 && changedLinkNode1 == path[0]))) {
                             std::cout << "Current Path: " << vecToString(path) << std::endl;
                             std::cout << "Erasing Map Entry..." << " sourceNode: " << sourceNode << " changedLinkNode1: " << changedLinkNode1 << " destNode: " << destNode << " changedLinkNode2: " << changedLinkNode2 << std::endl;
                             //If link is broken and this is the only path from source to destination, remove destNode map from source node's forwaring table (destination no longer reachable)
