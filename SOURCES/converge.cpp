@@ -298,6 +298,7 @@ void converge(int sourceNode, int neighbor, int prevDestNode, std::vector<std::m
                                 }
                                 else {
                                     std::cout << "Existing path cheaper than this path. Continuing..." << std::endl;
+									//Could decide to add higher cost valid path here anyway in case it's needed later but reconvergences should pick it up again if needed after a change...
                                 }
                             }
                         }
