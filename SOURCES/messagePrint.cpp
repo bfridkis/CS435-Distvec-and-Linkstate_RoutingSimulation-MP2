@@ -31,7 +31,7 @@ void messagePrint(std::vector<std::map<int, std::multimap<int, std::vector<int>>
 				std::cout << "from " << sourceNode << " to " << destNode << " cost " << cost << " hops " << sourceNode;
 				std::vector<int> lowestCostPath(_FT[sourceNode].find(destNode)->second.begin()->second);
 				if(lowestCostPath.size() > 1) {
-					for(std::vector<int>::iterator it = lowestCostPath.begin()+1; it != lowestCostPath.end()-1; it++) {
+					for(std::vector<int>::iterator it = lowestCostPath.begin(); it != lowestCostPath.end()-1; it++) {
 						if(it == lowestCostPath.end()-2) {
 							std::cout << *it;
 						}
@@ -73,7 +73,7 @@ void messagePrint(std::vector<std::map<int, std::multimap<int, std::vector<int>>
 				_outFile << "from " << sourceNode << " to " << destNode << " cost " << cost << " hops " << sourceNode;
 				std::vector<int> lowestCostPath(_FT[sourceNode].find(destNode)->second.begin()->second);
 				if(lowestCostPath.size() > 1) {
-					for(std::vector<int>::iterator it = lowestCostPath.begin()+1; it != lowestCostPath.end()-1; it++) {
+					for(std::vector<int>::iterator it = lowestCostPath.begin(); it != lowestCostPath.end()-1; it++) {
 						if(it == lowestCostPath.end()-2) {
 							_outFile << *it;
 						}
@@ -110,18 +110,17 @@ void messagePrint(std::vector<std::map<int, std::multimap<int, std::vector<int>>
 			if (lowestCostPath.size() == 1) {
 				_outFile << "from " << sourceNode << " to " << destNode << " cost " << cost << " hops " << sourceNode;
 			}
-			else {
+			else if (lowestCostPath.size() > 1) {
 				_outFile << "from " << sourceNode << " to " << destNode << " cost " << cost << " hops " << sourceNode;
 				std::vector<int> lowestCostPath(_FT[sourceNode].find(destNode)->second.begin()->second);
-				if(lowestCostPath.size() > 1) {
-					for(std::vector<int>::iterator it = lowestCostPath.begin()+1; it != lowestCostPath.end()-1; it++) {
-						if(it == lowestCostPath.end()-2) {
-							_outFile << *it;
-						}
-						else {
-							_outFile << *it << " ";
-						}
+				for(std::vector<int>::iterator it = lowestCostPath.begin(); it != lowestCostPath.end()-1; it++) {
+					if(it == lowestCostPath.end()-2) {
+						_outFile << *it;
 					}
+					else {
+						_outFile << *it << " ";
+					}
+				}
 				}
 			}
 			_outFile << message << std::endl;
