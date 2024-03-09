@@ -216,11 +216,16 @@ void processChanges(std::vector<std::map<int, std::multimap<int, std::vector<int
             converge(sourceNode, -1, -1, _FT);
             //converge(sourceNode, -1, -1, _FT, nullptr);
         }
-		for (int sourceNode = _FT.size()-1; sourceNode > 0; sourceNode--) {
+		for (int sourceNode = 1; sourceNode < _FT.size(); sourceNode++) {
             std::cout << "converging for node: << " << sourceNode << " (after change " << j << ")" << std::endl;
             converge(sourceNode, -1, -1, _FT);
             //converge(sourceNode, -1, -1, _FT, nullptr);
         }
+		/*for (int sourceNode = _FT.size()-1; sourceNode > 0; sourceNode--) {
+            std::cout << "converging for node: << " << sourceNode << " (after change " << j << ")" << std::endl;
+            converge(sourceNode, -1, -1, _FT);
+            //converge(sourceNode, -1, -1, _FT, nullptr);
+        }*/
         std::cout << std::endl;
         std::cout << "Forwarding tables after change " << j++ << " and subsequent reconvergence applied..." << std::endl;
         consoleOutFT(_FT);
