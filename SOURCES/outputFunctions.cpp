@@ -43,9 +43,9 @@ void consoleOutFT(std::vector<std::map<int, std::multimap<int, std::vector<int>>
 void fileOutFT(std::vector<std::map<int, std::multimap<int, std::vector<int>>>> &_FT, std::ofstream& _outFile) {
     for (unsigned short i = 1; i < _FT.size(); i++) {
         for (std::map<int, std::multimap<int, std::vector<int>>>::iterator it=_FT[i].begin(); it!=_FT[i].end(); it++) {
-            //std::cout << "output file is getting... " << i << " " << it->first << " " << it->second.begin()->first << std::endl;
+            std::cout << "output file is getting... " << i << " " << it->first << " " << it->second.begin()->first << std::endl;
 			//_outFile << i << " " << it->first << " " << it->second.begin()->first << std::endl;
-			_outFile << it->first << " " << vecToString(it->second.begin()->second) <<  it->second.begin()->first << std::endl;
+			//_outFile << it->first << " " << vecToString(it->second.begin()->second) <<  it->second.begin()->first << std::endl;
 			
         }
     }
