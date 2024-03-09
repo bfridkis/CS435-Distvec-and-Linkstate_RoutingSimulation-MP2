@@ -91,3 +91,44 @@ void messagePrint(std::vector<std::map<int, std::multimap<int, std::vector<int>>
     }   
     _outFile << std::endl;
 }
+
+void messagePrint(std::vector<std::map<int, std::multimap<int, std::vector<int>>>> &_FT, std::ifstream& messages, std::ofstream& _outFile) {
+    
+    std::cout << std::endl;
+    
+    auto str = std::string{};
+    while (!messages.eof()) {
+        std::string line, message;
+        getline(messages, line);
+        int sourceNode, destNode, cost;
+        std::istringstream messageStr(line);
+        messageStr >> sourceNode >> destNode;
+        getline(messageStr, message);
+        if(_FT[sourceNode].find(destNode) != _FT[sourceNode].end()) {
+			cost = _FT[sourceNode].find(destNode)->second.begin()->first;
+			std::vector<int> lowestCostPath(_FT[sourceNode].find(destNode)->second.begin()->second);
+			if (lowestCostPath.size() == 1) {
+				_outFile << "from " << sourceNode << " to " << destNode << " cost " << cost << " hops " << sourceNode;
+			}
+			else {
+				_outFile << "from " << sourceNode << " to " << destNode << " cost " << cost << " hops " << sourceNode;
+				std::vector<int> lowestCostPath(_FT[sourceNode].find(destNode)->second.begin()->second);
+				if(lowestCostPath.size() > 1) {
+					for(std::vector<int>::iterator it = lowestCostPath.begin()+1; it != lowestCostPath.end()-1; it++) {
+						if(it == lowestCostPath.end()-2) {
+							_outFile << *it;
+						}
+						else {
+							_outFile << *it << " ";
+						}
+					}
+				}
+			}
+			_outFile << message << std::endl;
+		}
+		else {
+			_outFile << "from " << sourceNode << " to " << destNode << " cost infinite hops unreachable message" << message << std::endl;
+		}
+    }   
+    _outFile << std::endl;
+}
