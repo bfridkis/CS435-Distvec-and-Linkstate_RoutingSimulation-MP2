@@ -108,7 +108,7 @@ void messagePrint(std::vector<std::map<int, std::multimap<int, std::vector<int>>
 			cost = _FT[sourceNode].find(destNode)->second.begin()->first;
 			std::vector<int> lowestCostPath(_FT[sourceNode].find(destNode)->second.begin()->second);
 			if (lowestCostPath.size() == 1) {
-				_outFile << "from " << sourceNode << " to " << destNode << " cost " << cost << " hops " << sourceNode << " ";
+				_outFile << "from " << sourceNode << " to " << destNode << " cost " << cost << " hops " << sourceNode;
 			}
 			else if (lowestCostPath.size() > 1) {
 				_outFile << "from " << sourceNode << " to " << destNode << " cost " << cost << " hops " << sourceNode << " ";
@@ -122,7 +122,7 @@ void messagePrint(std::vector<std::map<int, std::multimap<int, std::vector<int>>
 					}
 				}
 			}
-			_outFile << message << std::endl;
+			_outFile << " message" << message << std::endl;
 		}
 		else {
 			_outFile << "from " << sourceNode << " to " << destNode << " cost infinite hops unreachable message" << message << std::endl;
