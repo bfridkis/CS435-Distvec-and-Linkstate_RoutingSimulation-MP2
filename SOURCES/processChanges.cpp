@@ -180,8 +180,8 @@ void processChanges(std::vector<std::map<int, std::multimap<int, std::vector<int
                             auto findLink = [changedLinkNode1, changedLinkNode2, sourceNode](int nodeA, int nodeB) { 
                                 //std::cout << "In Lambda... sourceNode: " << sourceNode << " nodeA: " << nodeA << " changedLinkNode1: " << changedLinkNode1 << " nodeB: " << nodeB << " changedLinkNode2: " << changedLinkNode2 << std::endl;
                                 //std::cout << "Lambda Return Value : " << ((nodeA == changedLinkNode1 && nodeB == changedLinkNode2) || (nodeA == changedLinkNode2 && nodeB == changedLinkNode1)) << std::endl;
-                                return (sourceNode == changedLinkNode1 && nodeA == changedLinkNode2) || (sourceNode == changedLinkNode2 && nodeA == changedLinkNode1) ||
-									   (nodeA == changedLinkNode1 && nodeB == changedLinkNode2) || (nodeA == changedLinkNode2 && nodeB == changedLinkNode1); 
+                                return ((sourceNode == changedLinkNode1 && nodeA == changedLinkNode2) || (sourceNode == changedLinkNode2 && nodeA == changedLinkNode1) ||
+									   (nodeA == changedLinkNode1 && nodeB == changedLinkNode2) || (nodeA == changedLinkNode2 && nodeB == changedLinkNode1)); 
                             };
                             std::vector<int>::iterator it_findLink = std::adjacent_find(path.begin(), path.end(), findLink);
                             //std::cout << "it_findLink == path.end()?: " << (it_findLink == path.end()) << " it_findLink: " << *it_findLink << std::endl;
