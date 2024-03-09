@@ -99,8 +99,13 @@ void processChanges(std::vector<std::map<int, std::multimap<int, std::vector<int
         consoleOutFT(_FT);
         std::cout << std::endl;
         
-        //Reconverge for each node after changes applied...
+        //Reconverge for each node after changes applied (Run twice to ensure all lowest paths are found.)
         for (int sourceNode = 1; sourceNode < _FT.size(); sourceNode++) {
+            std::cout << "converging for node: << " << sourceNode << " (after change " << j << ")" << std::endl;
+            converge(sourceNode, -1, -1, _FT);
+            //converge(sourceNode, -1, -1, _FT, nullptr);
+        }
+		for (int sourceNode = _FT.size()-1; sourceNode > 0; sourceNode--) {
             std::cout << "converging for node: << " << sourceNode << " (after change " << j << ")" << std::endl;
             converge(sourceNode, -1, -1, _FT);
             //converge(sourceNode, -1, -1, _FT, nullptr);
@@ -203,12 +208,15 @@ void processChanges(std::vector<std::map<int, std::multimap<int, std::vector<int
         consoleOutFT(_FT);
 		fileOutFT(_FT, _outFile);
 		
-		messagePrint(_FT, _messagesInput, _outFile);
-		
         std::cout << std::endl;
         
-        //Reconverge for each node after changes applied...
+        //Reconverge for each node after changes applied (Run twice to ensure all lowest paths are found.)
         for (int sourceNode = 1; sourceNode < _FT.size(); sourceNode++) {
+            std::cout << "converging for node: << " << sourceNode << " (after change " << j << ")" << std::endl;
+            converge(sourceNode, -1, -1, _FT);
+            //converge(sourceNode, -1, -1, _FT, nullptr);
+        }
+		for (int sourceNode = _FT.size()-1; sourceNode > 0; sourceNode--) {
             std::cout << "converging for node: << " << sourceNode << " (after change " << j << ")" << std::endl;
             converge(sourceNode, -1, -1, _FT);
             //converge(sourceNode, -1, -1, _FT, nullptr);
@@ -216,5 +224,7 @@ void processChanges(std::vector<std::map<int, std::multimap<int, std::vector<int
         std::cout << std::endl;
         std::cout << "Forwarding tables after change " << j++ << " and subsequent reconvergence applied..." << std::endl;
         consoleOutFT(_FT);
+		
+		messagePrint(_FT, _messagesInput, _outFile);
     }
 }
