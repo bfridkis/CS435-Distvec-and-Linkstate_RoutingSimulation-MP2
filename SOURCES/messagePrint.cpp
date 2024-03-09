@@ -104,6 +104,7 @@ void messagePrint(std::vector<std::map<int, std::multimap<int, std::vector<int>>
         if((!line.empty()) && (std::find_if_not(line.begin(),line.end(),std::isspace) != line.end())
 		int sourceNode, destNode, cost;
         std::istringstream messageStr(line);
+		std::cout << "messageStr: " << std::endl;
         messageStr >> sourceNode >> destNode;
         getline(messageStr, message);
         if(_FT[sourceNode].find(destNode) != _FT[sourceNode].end()) {
