@@ -41,12 +41,17 @@ void consoleOutFT(std::vector<std::map<int, std::multimap<int, std::vector<int>>
 
 //For Printing the Forwarding Table Elements to a File
 void fileOutFT(std::vector<std::map<int, std::multimap<int, std::vector<int>>>> &_FT, std::ofstream& _outFile) {
-    for (unsigned short i = 1; i < _FT.size(); i++) {
-        for (std::map<int, std::multimap<int, std::vector<int>>>::iterator it=_FT[i].begin(); it!=_FT[i].end(); it++) {
-            std::cout << "output file is getting... " << i << " " << it->first << " " << it->second.begin()->first << " size of path: " << it->second.begin()->second.size() << " first element of path: " << it->second.begin()->second.size() << std::endl;
-			//_outFile << i << " " << it->first << " " << it->second.begin()->first << std::endl;
-			//_outFile << it->first << " " << vecToString(it->second.begin()->second) <<  it->second.begin()->first << std::endl;
-			
+    for (unsigned short sourceNode = 1; sourceNode < _FT.size(); sourceNode++) {
+        for (std::map<int, std::multimap<int, std::vector<int>>>::iterator it=_FT[sourceNode].begin(); it!=_FT[sourceNode].end(); it++) {
+            //std::cout << "output file is getting... " << sourceNode << " " << it->first << " " << it->second.begin()->first << " size of path: " << it->second.begin()->second.size() << std::endl;
+			//_outFile << sourceNode << " " << it->first << " " << it->second.begin()->first << std::endl;
+			if(it->second.begin()->second.size() == 0) {
+				//The only entry for which the path size is 0 is a self entry, so it->first should == sourceNode
+				_outFile << it->first << " " << it->first <<  it->second.begin()->first << std::endl;
+			}
+			else {
+				_outFile << it->first << " " << it->second.begin()->second[0] <<  it->second.begin()->first << std::endl;
+			}
         }
     }
 }
