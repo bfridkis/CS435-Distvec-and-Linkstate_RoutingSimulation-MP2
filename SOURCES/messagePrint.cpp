@@ -95,13 +95,14 @@ void messagePrint(std::vector<std::map<int, std::multimap<int, std::vector<int>>
 void messagePrint(std::vector<std::map<int, std::multimap<int, std::vector<int>>>> &_FT, std::ifstream& messages, std::ofstream& _outFile) {
     
     std::cout << std::endl;
-    _outFile << std::endl;
+    //_outFile << std::endl;
     auto str = std::string{};
     while (!messages.eof()) {
         std::string line, message;
         getline(messages, line);
 		//std::cout << "Line in messagePrint: " << line << "Line is Empty Check: " << line.empty() << std::endl;
         if((!line.empty()) && (std::find_if_not(line.begin(),line.end(),[](char c){return std::isspace(c);}) != line.end())) {
+			_outFile << std::endl;
 			int sourceNode, destNode, cost;
 			std::istringstream messageStr(line);
 			//std::cout << "messageStr: " << messageStr << std::endl;
@@ -125,10 +126,12 @@ void messagePrint(std::vector<std::map<int, std::multimap<int, std::vector<int>>
 						}
 					}
 				}
-				_outFile << " message" << message << std::endl;
+				//_outFile << " message" << message << std::endl;
+				_outFile << " message" << message;
 			}
 			else {
-				_outFile << "from " << sourceNode << " to " << destNode << " cost infinite hops unreachable message" << message << std::endl;
+				//_outFile << "from " << sourceNode << " to " << destNode << " cost infinite hops unreachable message" << message << std::endl;
+				_outFile << "from " << sourceNode << " to " << destNode << " cost infinite hops unreachable message" << message;
 			}
 		}
     }   
