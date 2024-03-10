@@ -210,17 +210,18 @@ void converge(int sourceNode, int neighbor, int prevDestNode, std::vector<std::m
 										
 										//Make sure this path is not already in the table (need to search all paths to this node, as there may be multiple paths with the same lowest cost (i.e. tied paths, don't want to add duplicates of tied lowest cost paths that may or may not be highest priority)
 										bool pathAlreadyInTable = false;
-										for(auto&& [_nextHopRemoteNodePathCost, _nextHopRemoteNodePath] : nextHopRemoteNodePaths) {
-											if(_nextHopRemoteNodePath.size() == newPath.size()) { 
+										for(auto&& [existingNextHopRemoteNodePathCost, existingNextHopRemoteNodePath] : _FT[sourceNode].find(nextHopRemoteNode)->second) {
+											std::cout << "Checking for identical paths... " << "Existing path to remote node
+											if(existingNextHopRemoteNodePath.size() == newPath.size()) { 
 												std::vector<int>::iterator it_nextHopRemoteNodePath;
 												std::vector<int>::iterator it_newPath;
-												for(it_nextHopRemoteNodePath = _nextHopRemoteNodePath.begin(), it_newPath = newPath.begin();
-													it_nextHopRemoteNodePath != _nextHopRemoteNodePath.end() && it_newPath != newPath.end();
+												for(it_nextHopRemoteNodePath = existingNextHopRemoteNodePath.begin(), it_newPath = newPath.begin();
+													it_nextHopRemoteNodePath != existingNextHopRemoteNodePath.end() && it_newPath != newPath.end();
 													it_nextHopRemoteNodePath++, it_newPath++) {
 														if(*it_nextHopRemoteNodePath != *it_newPath) {
 															break;
 														}
-														if(it_nextHopRemoteNodePath+1 == _nextHopRemoteNodePath.end() && it_newPath+1 == newPath.end()) {
+														if(it_nextHopRemoteNodePath+1 == existingNextHopRemoteNodePath.end() && it_newPath+1 == newPath.end()) {
 															pathAlreadyInTable = true;
 														}
 													}	
