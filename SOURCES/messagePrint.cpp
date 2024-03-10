@@ -126,16 +126,16 @@ void messagePrint(std::vector<std::map<int, std::multimap<int, std::vector<int>>
 						}
 					}
 				}
-				//_outFile << " message" << message << std::endl;
-				_outFile << " message" << message;
+				_outFile << " message" << message << std::endl;
+				//_outFile << " message" << message;
 			}
 			else {
-				//_outFile << "from " << sourceNode << " to " << destNode << " cost infinite hops unreachable message" << message << std::endl;
-				_outFile << "from " << sourceNode << " to " << destNode << " cost infinite hops unreachable message" << message;
+				_outFile << "from " << sourceNode << " to " << destNode << " cost infinite hops unreachable message" << message << std::endl;
+				//_outFile << "from " << sourceNode << " to " << destNode << " cost infinite hops unreachable message" << message;
 			}
 		}
     }   
-    _outFile << std::endl;
+    //_outFile << std::endl;
 	
 	//Rewind input stream to beginning for next print job...
 	messages.clear();
