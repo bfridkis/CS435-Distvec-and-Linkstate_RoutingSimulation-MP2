@@ -118,7 +118,7 @@ void converge(int sourceNode, int neighbor, int prevDestNode, std::vector<std::m
                     for(auto&& [nextHopRemoteNodePathCost, nextHopRemoteNodePath] : nextHopRemoteNodePaths) {
                         //std::cout << "Source Node: " << sourceNode << " Node to Search: " << nodeToSearch << " Previous Hop: " << prevDestNode << " Next Hop: " << destNode << " Next Hop Remote Node: " << nextHopRemoteNode <<  " Next Hop Remote Node Path Cost: " << nextHopRemoteNodePathCost << " Next Hop Remote Node Path: " << vecToString(nextHopRemoteNodePath) << std::endl;
 						//We only look at direct links for each level of recursion. Subsequent levels of recursion should cover subsequent links on each available valid path...
-						if(nextHopRemoteNodePath.size() == 1) {
+						//if(nextHopRemoteNodePath.size() == 1) {
 							std::cout << "Source Node: " << sourceNode << " Node to Search: " << nodeToSearch << " Next Hop: " << destNode << " Next Hop Remote Node: " << nextHopRemoteNode <<  " Next Hop Remote Node Path Cost: " << nextHopRemoteNodePathCost << " Next Hop Remote Node Path: " << vecToString(nextHopRemoteNodePath) << std::endl;
 							//If the route does not contain the sourceNode (as this would be an invalid route, or in other words a route with a loop)...
 							//Make sure this new route would not introduce any loops nor contain the source node (which would also be a loop)
@@ -331,7 +331,7 @@ void converge(int sourceNode, int neighbor, int prevDestNode, std::vector<std::m
                     }
                 }
             }
-        }
+        //}
         
         //delete nodesAddedOnCurrentPath;
     }
