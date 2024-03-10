@@ -102,6 +102,7 @@ void converge(int sourceNode, int neighbor, int prevDestNode, std::vector<std::m
 			}
             //For each remote node's map of remote nodes (nextHopRemoteNode) and corresponding multimap of routes (nextHopRemoteNodePaths)...
             for(auto&& [nextHopRemoteNode, nextHopRemoteNodePaths] : _FT[destNode]) {
+				std::cout << "Starting converge, line 105..." << std::endl;
                 //Ignore the remote node's entry for itself and entries for sourceNode and prevDestNode, as these nodes are already part of the path (i.e. would introduce loops if added again), and ignore nodes already added by converge
                 if(nextHopRemoteNode != destNode && nextHopRemoteNode != sourceNode && destNode != prevDestNode && nextHopRemoteNode != nodeToSearch) {
                    //std::find(nodesAddedOnCurrentPath.begin(), nodesAddedOnCurrentPath.end(), destNode) == nodesAddedOnCurrentPath.end() &&
