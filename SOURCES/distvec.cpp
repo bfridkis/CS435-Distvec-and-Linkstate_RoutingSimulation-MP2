@@ -41,7 +41,7 @@ int main(int argc, char** argv) {
         return -1;
     }
     
-    std::cout << "Beginning of Program..." << std::endl;
+    std::cout << "\nBeginning of Program..." << std::endl;
     
     //Forwarding tables stored as  vector of maps. Each map represents the forwarding table for a given node. Map key is remote node, map value is a multimap with keys representing costs (stored as int), and values representing paths (stored as std::vector<int>).
     ////Multimap used so multiple routes can be stored for a given destination, for reconvergence upon link failure.
@@ -86,8 +86,10 @@ int main(int argc, char** argv) {
         //std::cout << "i: " << ++i << std::endl;
         //std::cout << "Line68..." << "a: " << a << " b: " << b << " c: " << c << std::endl;
         
-        //Add additional entries up to largest number node found in topology.
+		//Add additional entries up to largest number node found in topology.
         ////Padding by one in the front so index number = node number for semantic convenience. :)
+        if (a >= FT.size()) { FT.resize(a+1); }
+        if (b >= FT.size()) { FT.resize(b+1); }
 		
         //std::cout << "Line75..." << "FT Size: " << FT.size() << std::endl;
         
