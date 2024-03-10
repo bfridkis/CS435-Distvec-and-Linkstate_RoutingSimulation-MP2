@@ -77,7 +77,7 @@ int main(int argc, char** argv) {
     //iterator to traverse and access elements of multimaps (forwarding tables / routes for a given destination)
     std::multimap<int, std::vector<int>>::iterator itMM;
     
-	std::map<int> nodesAdded;
+	std::set<int> nodesAdded;
 	
     //std::cout << "Line64..." << std::endl;
     //int i = 0;
