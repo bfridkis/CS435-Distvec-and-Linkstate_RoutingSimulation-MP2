@@ -197,7 +197,7 @@ void processChanges(std::vector<std::map<int, std::multimap<int, std::vector<int
                                 std::cout << "destNodesPaths.size(): " << _FT[sourceNode].find(destNode)->second.size() << std::endl;
                                 std::cout << "Erasing multi-map entry here for node " << sourceNode << std::endl;
                                 //In case of a tie, must loop through paths and find the match (so as to not inadvertently delete the wrong entry/path 
-								for(std::pair<int, vector<int>>::iterator pathAtCost = _FT[sourceNode].find(destNode)->second.find(cost); pathAtCost != _FT[sourceNode].find(destNode)->second.end(); pathAtCost++) {
+								for(std::pair<int, std::vector<int>>::iterator pathAtCost = _FT[sourceNode].find(destNode)->second.find(cost); pathAtCost != _FT[sourceNode].find(destNode)->second.end(); pathAtCost++) {
 									if(pathAtCost->second == path) {
 										_FT[sourceNode].find(destNode)->second.erase(pathAtCost);
 										break;
