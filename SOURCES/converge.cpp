@@ -115,193 +115,196 @@ void converge(int sourceNode, int neighbor, int prevDestNode, std::vector<std::m
                     //For each route a remote node has to another given node (that is not the remote node itself or the source node)... [nextHopRemoteNodePathCost is cost of route, nextHopRemoteNodePath is vector of ints representing the route]. (Can't just take lowest cost route because it might have a loop through self. Therefore need to iterate until first valid route is found.)
                     for(auto&& [nextHopRemoteNodePathCost, nextHopRemoteNodePath] : nextHopRemoteNodePaths) {
                         //std::cout << "Source Node: " << sourceNode << " Node to Search: " << nodeToSearch << " Previous Hop: " << prevDestNode << " Next Hop: " << destNode << " Next Hop Remote Node: " << nextHopRemoteNode <<  " Next Hop Remote Node Path Cost: " << nextHopRemoteNodePathCost << " Next Hop Remote Node Path: " << vecToString(nextHopRemoteNodePath) << std::endl;
-                        std::cout << "Source Node: " << sourceNode << " Node to Search: " << nodeToSearch << " Next Hop: " << destNode << " Next Hop Remote Node: " << nextHopRemoteNode <<  " Next Hop Remote Node Path Cost: " << nextHopRemoteNodePathCost << " Next Hop Remote Node Path: " << vecToString(nextHopRemoteNodePath) << std::endl;
-                        //If the route does not contain the sourceNode (as this would be an invalid route, or in other words a route with a loop)...
-                        //Make sure this new route would not introduce any loops nor contain the source node (which would also be a loop)
-                        bool loopFound = false;
-                        std::vector<int> existingPathToNextHop(_FT[sourceNode].find(destNode)->second.begin()->second);
-                        for (auto node: nextHopRemoteNodePath) {
-                            if (std::find(existingPathToNextHop.begin(), existingPathToNextHop.end(), node) != existingPathToNextHop.end()) {
-                                loopFound = true;
-                                //break;
-                            }
-                        }
-                        if(loopFound){
-                            std::cout << "Loop Found. Existing Path To Next Node: " << vecToString(existingPathToNextHop) << " Remote node path from " << nextHopRemoteNode << ": " << vecToString(nextHopRemoteNodePath) << std::endl;
-                        }
-                        else {
-                            std::cout << "Loop Not Found. Existing Path To Next Node: " << vecToString(existingPathToNextHop) << " Remote node path from " << nextHopRemoteNode << ": " << vecToString(nextHopRemoteNodePath) << std::endl;
-                        }
-                        if(std::find(nextHopRemoteNodePath.begin(), nextHopRemoteNodePath.end(), sourceNode) == nextHopRemoteNodePath.end() && !loopFound) {  //    destNodePaths.begin()->first > ) {
-                            //std::cout << "Next Hop: " << destNode << std::endl;
-                            //If the sourceNode has no current entry for the remote node's reachable node, add a new entry as this new node can now be reached from the source via neighbor chain.
-                            if(_FT[sourceNode].find(nextHopRemoteNode) == _FT[sourceNode].end()) {
-                                //If top-level / first call of recursion, calculate cost and update path according to directly connected neighbors
-                                //if (nodeToSearch == sourceNode) { 
-                                int costToNextHop = _FT[sourceNode].find(destNode)->second.begin()->first;
-                                totalPathCost = costToNextHop + nextHopRemoteNodePathCost;
-                                //Initialize newPath vector with existing path to next hop
-                                std::vector<int> newPath(existingPathToNextHop);
-                                //Then add path from next hop to remote node
-                                newPath.insert(newPath.end(), nextHopRemoteNodePath.begin(), nextHopRemoteNodePath.end());
-                                //Use temporary multimap to construct final map entry for newly reachable node
-                                tmpMM.insert(std::make_pair(totalPathCost, newPath));
-                                
-                                //bool canFindNewlyAddedNodeInSourceNodesFT = _FT[sourceNode].find(nextHopRemoteNode) != _FT[sourceNode].end();
-                                //std::cout << "Can find new Destination Node After Adding Node " << nextHopRemoteNode << " now...? " << canFindNewlyAddedNodeInSourceNodesFT << std::endl;
-                                
-                                //nodesAddedOnCurrentPath.push_back(nextHopRemoteNode);
-                                _FT[sourceNode].insert(std::make_pair(nextHopRemoteNode, std::multimap<int, std::vector<int>>(tmpMM)));
-                                
-                                //canFindNewlyAddedNodeInSourceNodesFT = _FT[sourceNode].find(nextHopRemoteNode) != _FT[sourceNode].end();
-                                //std::cout << "Can find new Destination Node After Adding Node " << nextHopRemoteNode << " now...? " << canFindNewlyAddedNodeInSourceNodesFT << std::endl;
-                                
-                                //nodesAddedOnCurrentPath.push_back(nextHopRemoteNode);
-                                std::cout << "New remote node added! Source Node: " << sourceNode << " Destination Node: " << nextHopRemoteNode << " Cost: " << totalPathCost << " Path: " << vecToString(newPath) << std::endl;
-                                tmpMM.clear();
-                                    
-                                //}
-                                //If not top-level call, calculate cost and update path according to what was just previously calculated / updated for prior node (added in previous call)
-                                //else { 
-                                //    totalPathCost = _FT[sourceNode].find(neighbor)->second.begin()->first + nextHopRemoteNodePathCost;
-                                //    std::vector<int> newPath(_FT[sourceNode].find(neighbor)->second.begin()->second);
-                                //    newPath.push_back(nextHopRemoteNode);
-                                //}
-                                //std::cout << "Next Hop: " << destNode << std::endl;
-                                //Because this is a newly reachable node, need to recursively check it in turn for any newly reachable nodes [from this newly added node, that is]
-                                converge(sourceNode, nextHopRemoteNode, destNode, _FT);
-                                //converge(sourceNode, nextHopRemoteNode, _FT);
-                                
-                                //After returning from each level of recursion, remove the last node added to the newly added nodes list
-                                //nodesAddedOnCurrentPath.pop_back();
-                                
-                                //Can break because multimap is sorted, so this should be lowest cost option that doesn't introduce a loop (i.e. lowest cost valid route). No need to check additional routes to target node.
-                                //However... removing this break statement may result in a slower initial convergence but provide alternate routes initially, resulting in faster reconvergences after topology changes are introduced.
-                                break;
-                            }
-                            //If there already is an entry for the remote node's reachable node (but not one that has already been added by converge previously 
-                            else {
-                            //else if (_FT[sourceNode].find(nextHopRemoteNode) != _FT[sourceNode].end()) {
-                            //else if (_FT[sourceNode].find(destNode) != _FT[sourceNode].end()) {
-                            //else if (_FT[sourceNode].find(destNode) != _FT[sourceNode].end() && _FT[sourceNode].find(nextHopRemoteNode)->second.begin()->first > _FT[sourceNode].find(destNode)->second.begin()->first + nextHopRemoteNodePathCost) {
-                                totalPathCost = _FT[sourceNode].find(destNode)->second.begin()->first + nextHopRemoteNodePathCost;
-                                //Compare remote node's cost to lowest existing cost route for target node. If new path cost is less than the existing path cost in sourceNode table, add new entry for target node. 
-                                if (_FT[sourceNode].find(nextHopRemoteNode)->second.begin()->first > totalPathCost) {
-                                    //Initialize the vector [that represents the path] for the new entry with the existing path to the next hop, then add the path from the next hop to the remote node to it.
-                                    _FT[sourceNode].find(nextHopRemoteNode)->second.insert(std::make_pair(totalPathCost, std::vector<int>(existingPathToNextHop)));
-                                    _FT[sourceNode].find(nextHopRemoteNode)->second.begin()->second.insert(_FT[sourceNode].find(nextHopRemoteNode)->second.begin()->second.end(), nextHopRemoteNodePath.begin(), nextHopRemoteNodePath.end());
-                                    
-                                    std::cout << "New path added for existing node. Source Node: " << sourceNode << " Destination Node: " << nextHopRemoteNode << " Cost: " << totalPathCost << " Path: " << vecToString(_FT[sourceNode].find(nextHopRemoteNode)->second.begin()->second) << std::endl;
-                                    std::cout << "Path Cost Breakdown for New Path Added to Existing Node: " << "Existing path cost to destNode: " << _FT[sourceNode].find(destNode)->second.begin()->first << " Path cost from nextHopRemoteNode to Destination: " << nextHopRemoteNodePathCost << std::endl;
-                                    
-                                    //Can break because multimap is sorted, so this should be lowest cost option that doesn't introduce a loop (i.e. lowest cost valid route). No need to check additional routes to target node.
-                                    //However... removing this break statement may result in a slower initial convergence but provide alternate routes initially, resulting in faster reconvergences after topology changes are introduced.
-                                    break;
-                                }
-                                //Else if new path cost is equal to the existing path cost in sourceNode table, break tie based on route's first hop node number (lowest first hop = highest priority) . 
-                                else if (_FT[sourceNode].find(nextHopRemoteNode)->second.begin()->first == totalPathCost) {
-                                    
+						//We only look at direct links for each level of recursion. Subsequent levels of recursion should cover subsequent links on each available valid path...
+						if(nextHopRemoteNodePath.size() == 1) {
+							std::cout << "Source Node: " << sourceNode << " Node to Search: " << nodeToSearch << " Next Hop: " << destNode << " Next Hop Remote Node: " << nextHopRemoteNode <<  " Next Hop Remote Node Path Cost: " << nextHopRemoteNodePathCost << " Next Hop Remote Node Path: " << vecToString(nextHopRemoteNodePath) << std::endl;
+							//If the route does not contain the sourceNode (as this would be an invalid route, or in other words a route with a loop)...
+							//Make sure this new route would not introduce any loops nor contain the source node (which would also be a loop)
+							bool loopFound = false;
+							std::vector<int> existingPathToNextHop(_FT[sourceNode].find(destNode)->second.begin()->second);
+							for (auto node: nextHopRemoteNodePath) {
+								if (std::find(existingPathToNextHop.begin(), existingPathToNextHop.end(), node) != existingPathToNextHop.end()) {
+									loopFound = true;
+									//break;
+								}
+							}
+							if(loopFound){
+								std::cout << "Loop Found. Existing Path To Next Node: " << vecToString(existingPathToNextHop) << " Remote node path from " << nextHopRemoteNode << ": " << vecToString(nextHopRemoteNodePath) << std::endl;
+							}
+							else {
+								std::cout << "Loop Not Found. Existing Path To Next Node: " << vecToString(existingPathToNextHop) << " Remote node path from " << nextHopRemoteNode << ": " << vecToString(nextHopRemoteNodePath) << std::endl;
+							}
+							if(std::find(nextHopRemoteNodePath.begin(), nextHopRemoteNodePath.end(), sourceNode) == nextHopRemoteNodePath.end() && !loopFound) {  //    destNodePaths.begin()->first > ) {
+								//std::cout << "Next Hop: " << destNode << std::endl;
+								//If the sourceNode has no current entry for the remote node's reachable node, add a new entry as this new node can now be reached from the source via neighbor chain.
+								if(_FT[sourceNode].find(nextHopRemoteNode) == _FT[sourceNode].end()) {
+									//If top-level / first call of recursion, calculate cost and update path according to directly connected neighbors
+									//if (nodeToSearch == sourceNode) { 
+									int costToNextHop = _FT[sourceNode].find(destNode)->second.begin()->first;
+									totalPathCost = costToNextHop + nextHopRemoteNodePathCost;
 									//Initialize newPath vector with existing path to next hop
 									std::vector<int> newPath(existingPathToNextHop);
 									//Then add path from next hop to remote node
 									newPath.insert(newPath.end(), nextHopRemoteNodePath.begin(), nextHopRemoteNodePath.end());
+									//Use temporary multimap to construct final map entry for newly reachable node
+									tmpMM.insert(std::make_pair(totalPathCost, newPath));
 									
-                                    int highestPriorityIsNewPath = tieBreaker(_FT[sourceNode].find(nextHopRemoteNode)->second.begin()->second, newPath);
-                                    /*std::vector<int>::iterator npIt, epIt;
-                                    for(epIt = _FT[sourceNode].find(nextHopRemoteNode)->second.begin()->second.begin(), npIt = newPath.begin() ;
-                                        epIt != _FT[sourceNode].find(nextHopRemoteNode)->second.begin()->second.end() && npIt != newPath.end();
-                                        epIt++, npIt++) {
-											std::cout << "new path node: " << *npIt << " existing path node: " << *epIt << std::endl;
-                                        if (*npIt < *epIt) {
-                                            highestPriorityIsNewPath = 1;
-                                            std::cout << "Did we get to npIt < epIt...??" << std::endl;
+									//bool canFindNewlyAddedNodeInSourceNodesFT = _FT[sourceNode].find(nextHopRemoteNode) != _FT[sourceNode].end();
+									//std::cout << "Can find new Destination Node After Adding Node " << nextHopRemoteNode << " now...? " << canFindNewlyAddedNodeInSourceNodesFT << std::endl;
+									
+									//nodesAddedOnCurrentPath.push_back(nextHopRemoteNode);
+									_FT[sourceNode].insert(std::make_pair(nextHopRemoteNode, std::multimap<int, std::vector<int>>(tmpMM)));
+									
+									//canFindNewlyAddedNodeInSourceNodesFT = _FT[sourceNode].find(nextHopRemoteNode) != _FT[sourceNode].end();
+									//std::cout << "Can find new Destination Node After Adding Node " << nextHopRemoteNode << " now...? " << canFindNewlyAddedNodeInSourceNodesFT << std::endl;
+									
+									//nodesAddedOnCurrentPath.push_back(nextHopRemoteNode);
+									std::cout << "New remote node added! Source Node: " << sourceNode << " Destination Node: " << nextHopRemoteNode << " Cost: " << totalPathCost << " Path: " << vecToString(newPath) << std::endl;
+									tmpMM.clear();
+										
+									//}
+									//If not top-level call, calculate cost and update path according to what was just previously calculated / updated for prior node (added in previous call)
+									//else { 
+									//    totalPathCost = _FT[sourceNode].find(neighbor)->second.begin()->first + nextHopRemoteNodePathCost;
+									//    std::vector<int> newPath(_FT[sourceNode].find(neighbor)->second.begin()->second);
+									//    newPath.push_back(nextHopRemoteNode);
+									//}
+									//std::cout << "Next Hop: " << destNode << std::endl;
+									//Because this is a newly reachable node, need to recursively check it in turn for any newly reachable nodes [from this newly added node, that is]
+									converge(sourceNode, nextHopRemoteNode, destNode, _FT);
+									//converge(sourceNode, nextHopRemoteNode, _FT);
+									
+									//After returning from each level of recursion, remove the last node added to the newly added nodes list
+									//nodesAddedOnCurrentPath.pop_back();
+									
+									//Can break because multimap is sorted, so this should be lowest cost option that doesn't introduce a loop (i.e. lowest cost valid route). No need to check additional routes to target node.
+									//However... removing this break statement may result in a slower initial convergence but provide alternate routes initially, resulting in faster reconvergences after topology changes are introduced.
+									break;
+								}
+								//If there already is an entry for the remote node's reachable node (but not one that has already been added by converge previously 
+								else {
+								//else if (_FT[sourceNode].find(nextHopRemoteNode) != _FT[sourceNode].end()) {
+								//else if (_FT[sourceNode].find(destNode) != _FT[sourceNode].end()) {
+								//else if (_FT[sourceNode].find(destNode) != _FT[sourceNode].end() && _FT[sourceNode].find(nextHopRemoteNode)->second.begin()->first > _FT[sourceNode].find(destNode)->second.begin()->first + nextHopRemoteNodePathCost) {
+									totalPathCost = _FT[sourceNode].find(destNode)->second.begin()->first + nextHopRemoteNodePathCost;
+									//Compare remote node's cost to lowest existing cost route for target node. If new path cost is less than the existing path cost in sourceNode table, add new entry for target node. 
+									if (_FT[sourceNode].find(nextHopRemoteNode)->second.begin()->first > totalPathCost) {
+										//Initialize the vector [that represents the path] for the new entry with the existing path to the next hop, then add the path from the next hop to the remote node to it.
+										_FT[sourceNode].find(nextHopRemoteNode)->second.insert(std::make_pair(totalPathCost, std::vector<int>(existingPathToNextHop)));
+										_FT[sourceNode].find(nextHopRemoteNode)->second.begin()->second.insert(_FT[sourceNode].find(nextHopRemoteNode)->second.begin()->second.end(), nextHopRemoteNodePath.begin(), nextHopRemoteNodePath.end());
+										
+										std::cout << "New path added for existing node. Source Node: " << sourceNode << " Destination Node: " << nextHopRemoteNode << " Cost: " << totalPathCost << " Path: " << vecToString(_FT[sourceNode].find(nextHopRemoteNode)->second.begin()->second) << std::endl;
+										std::cout << "Path Cost Breakdown for New Path Added to Existing Node: " << "Existing path cost to destNode: " << _FT[sourceNode].find(destNode)->second.begin()->first << " Path cost from nextHopRemoteNode to Destination: " << nextHopRemoteNodePathCost << std::endl;
+										
+										//Can break because multimap is sorted, so this should be lowest cost option that doesn't introduce a loop (i.e. lowest cost valid route). No need to check additional routes to target node.
+										//However... removing this break statement may result in a slower initial convergence but provide alternate routes initially, resulting in faster reconvergences after topology changes are introduced.
+										break;
+									}
+									//Else if new path cost is equal to the existing path cost in sourceNode table, break tie based on route's first hop node number (lowest first hop = highest priority) . 
+									else if (_FT[sourceNode].find(nextHopRemoteNode)->second.begin()->first == totalPathCost) {
+										
+										//Initialize newPath vector with existing path to next hop
+										std::vector<int> newPath(existingPathToNextHop);
+										//Then add path from next hop to remote node
+										newPath.insert(newPath.end(), nextHopRemoteNodePath.begin(), nextHopRemoteNodePath.end());
+										
+										int highestPriorityIsNewPath = tieBreaker(_FT[sourceNode].find(nextHopRemoteNode)->second.begin()->second, newPath);
+										/*std::vector<int>::iterator npIt, epIt;
+										for(epIt = _FT[sourceNode].find(nextHopRemoteNode)->second.begin()->second.begin(), npIt = newPath.begin() ;
+											epIt != _FT[sourceNode].find(nextHopRemoteNode)->second.begin()->second.end() && npIt != newPath.end();
+											epIt++, npIt++) {
+												std::cout << "new path node: " << *npIt << " existing path node: " << *epIt << std::endl;
+											if (*npIt < *epIt) {
+												highestPriorityIsNewPath = 1;
+												std::cout << "Did we get to npIt < epIt...??" << std::endl;
+												break;
+											}
+											else if (*npIt > *epIt) {
+												highestPriorityIsNewPath = 0;
+												std::cout << "Did we get to npIt < epIt...??" << std::endl;
+												break;
+											}
+										}*/
+										//if(epIt == _FT[sourceNode].find(nextHopRemoteNode)->second.begin()->second.end() && npIt == newPath.end() && highestPriorityIsNewPath == -1) {
+										if(highestPriorityIsNewPath == -1) {
+											//std::cout << "epIt == existing path end?: " << npIt == 
+											//If we get here, paths are identical. Do nothing... (i.e. do not add duplicate paths)
+											std::cout << "Are we here skipping over identical paths...?" << std::endl;
 											break;
-                                        }
-                                        else if (*npIt > *epIt) {
-                                            highestPriorityIsNewPath = 0;
-											std::cout << "Did we get to npIt < epIt...??" << std::endl;
-                                            break;
-                                        }
-                                    }*/
-                                    //if(epIt == _FT[sourceNode].find(nextHopRemoteNode)->second.begin()->second.end() && npIt == newPath.end() && highestPriorityIsNewPath == -1) {
-									if(highestPriorityIsNewPath == -1) {
-                                        //std::cout << "epIt == existing path end?: " << npIt == 
-										//If we get here, paths are identical. Do nothing... (i.e. do not add duplicate paths)
-                                        std::cout << "Are we here skipping over identical paths...?" << std::endl;
-                                        break;
-                                    }
-                                    else if (highestPriorityIsNewPath) {
-                                        //New path gets added straight in if it has the highest priority, as multimap ordering will be according to insertion when keys are duplicated
-                                        //Initialize the vector [that represents the path] for the new entry with the existing path to the next hop, then add the path from the next hop to the remote node to it.
-                                        
-										//If top-level / first call of recursion, calculate cost and update path according to directly connected neighbors
-										//if (nodeToSearch == sourceNode) { 
-										int costToNextHop = _FT[sourceNode].find(destNode)->second.begin()->first;
-										totalPathCost = costToNextHop + nextHopRemoteNodePathCost;
-										//Initialize newPath vector with existing path to next hop
-										//std::vector<int> newPath(existingPathToNextHop);
-										//Then add path from next hop to remote node
-										//newPath.insert(newPath.end(), nextHopRemoteNodePath.begin(), nextHopRemoteNodePath.end());
-										
-										//bool canFindNewlyAddedNodeInSourceNodesFT = _FT[sourceNode].find(nextHopRemoteNode) != _FT[sourceNode].end();
-										//std::cout << "Can find new Destination Node After Adding Node " << nextHopRemoteNode << " now...? " << canFindNewlyAddedNodeInSourceNodesFT << std::endl;
-										
-										//nodesAddedOnCurrentPath.push_back(nextHopRemoteNode);
-										_FT[sourceNode].find(nextHopRemoteNode)->second.insert(std::make_pair(totalPathCost, std::vector<int>(newPath)));
-										
-										//_FT[sourceNode].find(nextHopRemoteNode)->second.insert(std::make_pair(totalPathCost, std::vector<int>(_FT[sourceNode].find(destNode)->second.begin()->second)));
-                                        //_FT[sourceNode].find(nextHopRemoteNode)->second.begin()->second.insert(_FT[sourceNode].find(nextHopRemoteNode)->second.begin()->second.end(), nextHopRemoteNodePath.begin(), nextHopRemoteNodePath.end());
-                                        
-										//std::cout << "!!!!Existing path to next hop added: " << vecToString(_FT[sourceNode].find(destNode)->second.begin()->second) << " Next hop remote node path added to it: " << vecToString(nextHopRemoteNodePath) << std::endl;
-										std::cout << "!!!!New path to next hop added: " << vecToString(newPath) << std::endl;
-										
-                                        std::cout << "New path added for existing node (tie breaker: new path highest priority). Source Node: " << sourceNode << " Destination Node: " << nextHopRemoteNode << " Cost: " << totalPathCost << " Path: " << vecToString(_FT[sourceNode].find(nextHopRemoteNode)->second.begin()->second) << std::endl;
-                                        std::cout << "Path Cost Breakdown for New Path Added to Existing Node: " << "Existing path cost to destNode: " << _FT[sourceNode].find(destNode)->second.begin()->first << " Path cost from nextHopRemoteNode to Destination: " << nextHopRemoteNodePathCost << std::endl;
-                                        
-                                        //Can break because multimap is sorted, so this should be lowest cost option that doesn't introduce a loop (i.e. lowest cost valid route). No need to check additional routes to target node.
-                                        //However... removing this break statement may result in a slower initial convergence but provide alternate routes initially, resulting in faster reconvergences after topology changes are introduced.
-                                        break;
-                                    }
-                                    else {
-                                        //Getting here means the existing path is higher priority. The new path is still added [in case it is needed later after a network change] but is placed lower in the ordering of the multimap...
-                                        //Save temp copy of highest priorty entry then remove...
-                                        std::pair<int, std::vector<int>> tmpMMEntry(*(_FT[sourceNode].find(nextHopRemoteNode)->second.begin()));
-                                        //Erase the highest priority entry from the source node's FT...
-                                        _FT[sourceNode].find(nextHopRemoteNode)->second.erase(_FT[sourceNode].find(nextHopRemoteNode)->second.begin());
-                                        
-										//Add the new path with equivalent cost but lower priority to the source node's FT...
-                                        //_FT[sourceNode].find(nextHopRemoteNode)->second.insert(std::make_pair(totalPathCost, std::vector<int>(_FT[sourceNode].find(destNode)->second.begin()->second)));
-                                        //_FT[sourceNode].find(nextHopRemoteNode)->second.begin()->second.insert(_FT[sourceNode].find(nextHopRemoteNode)->second.begin()->second.end(), nextHopRemoteNodePath.begin(), nextHopRemoteNodePath.end());
-                                        int costToNextHop = _FT[sourceNode].find(destNode)->second.begin()->first;
-										totalPathCost = costToNextHop + nextHopRemoteNodePathCost;
-										//Initialize newPath vector with existing path to next hop
-										//std::vector<int> newPath(existingPathToNextHop);
-										//Then add path from next hop to remote node
-										//newPath.insert(newPath.end(), nextHopRemoteNodePath.begin(), nextHopRemoteNodePath.end());
-										
-										//bool canFindNewlyAddedNodeInSourceNodesFT = _FT[sourceNode].find(nextHopRemoteNode) != _FT[sourceNode].end();
-										//std::cout << "Can find new Destination Node After Adding Node " << nextHopRemoteNode << " now...? " << canFindNewlyAddedNodeInSourceNodesFT << std::endl;
-										
-										//nodesAddedOnCurrentPath.push_back(nextHopRemoteNode);
-										_FT[sourceNode].find(nextHopRemoteNode)->second.insert(std::make_pair(totalPathCost, std::vector<int>(newPath)));
-										
-										//Add back in the highest priority entry, which will retain highest priority by virtue of being added last, despite duplicate key...
-                                        _FT[sourceNode].find(nextHopRemoteNode)->second.insert(tmpMMEntry);
-                                        
-                                        std::cout << "New path added for existing node (tie breaker: existing path has highest priority). Source Node: " << sourceNode << " Destination Node: " << nextHopRemoteNode << " Cost: " << totalPathCost << " Path: " << vecToString(_FT[sourceNode].find(nextHopRemoteNode)->second.begin()->second) << std::endl;
-                                        std::cout << "Path Cost Breakdown for New Path Added to Existing Node: " << "Existing path cost to destNode: " << _FT[sourceNode].find(destNode)->second.begin()->first << " Path cost from nextHopRemoteNode to Destination: " << nextHopRemoteNodePathCost << std::endl;
-                                        
-                                        //Can break because multimap is sorted, so this should be lowest cost option that doesn't introduce a loop (i.e. lowest cost valid route). No need to check additional routes to target node.
-                                        //However... removing this break statement may result in a slower initial convergence but provide alternate routes initially, resulting in faster reconvergences after topology changes are introduced.
-                                        break;
-                                    }   
-                                }
-                                else {
-                                    std::cout << "Existing path cheaper than this path. Continuing..." << std::endl;
-									//Could decide to add higher cost valid path here anyway in case it's needed later but reconvergences should pick it up again if needed after a change...
-                                }
-                            }
-                        }
+										}
+										else if (highestPriorityIsNewPath) {
+											//New path gets added straight in if it has the highest priority, as multimap ordering will be according to insertion when keys are duplicated
+											//Initialize the vector [that represents the path] for the new entry with the existing path to the next hop, then add the path from the next hop to the remote node to it.
+											
+											//If top-level / first call of recursion, calculate cost and update path according to directly connected neighbors
+											//if (nodeToSearch == sourceNode) { 
+											int costToNextHop = _FT[sourceNode].find(destNode)->second.begin()->first;
+											totalPathCost = costToNextHop + nextHopRemoteNodePathCost;
+											//Initialize newPath vector with existing path to next hop
+											//std::vector<int> newPath(existingPathToNextHop);
+											//Then add path from next hop to remote node
+											//newPath.insert(newPath.end(), nextHopRemoteNodePath.begin(), nextHopRemoteNodePath.end());
+											
+											//bool canFindNewlyAddedNodeInSourceNodesFT = _FT[sourceNode].find(nextHopRemoteNode) != _FT[sourceNode].end();
+											//std::cout << "Can find new Destination Node After Adding Node " << nextHopRemoteNode << " now...? " << canFindNewlyAddedNodeInSourceNodesFT << std::endl;
+											
+											//nodesAddedOnCurrentPath.push_back(nextHopRemoteNode);
+											_FT[sourceNode].find(nextHopRemoteNode)->second.insert(std::make_pair(totalPathCost, std::vector<int>(newPath)));
+											
+											//_FT[sourceNode].find(nextHopRemoteNode)->second.insert(std::make_pair(totalPathCost, std::vector<int>(_FT[sourceNode].find(destNode)->second.begin()->second)));
+											//_FT[sourceNode].find(nextHopRemoteNode)->second.begin()->second.insert(_FT[sourceNode].find(nextHopRemoteNode)->second.begin()->second.end(), nextHopRemoteNodePath.begin(), nextHopRemoteNodePath.end());
+											
+											//std::cout << "!!!!Existing path to next hop added: " << vecToString(_FT[sourceNode].find(destNode)->second.begin()->second) << " Next hop remote node path added to it: " << vecToString(nextHopRemoteNodePath) << std::endl;
+											std::cout << "!!!!New path to next hop added: " << vecToString(newPath) << std::endl;
+											
+											std::cout << "New path added for existing node (tie breaker: new path highest priority). Source Node: " << sourceNode << " Destination Node: " << nextHopRemoteNode << " Cost: " << totalPathCost << " Path: " << vecToString(_FT[sourceNode].find(nextHopRemoteNode)->second.begin()->second) << std::endl;
+											std::cout << "Path Cost Breakdown for New Path Added to Existing Node: " << "Existing path cost to destNode: " << _FT[sourceNode].find(destNode)->second.begin()->first << " Path cost from nextHopRemoteNode to Destination: " << nextHopRemoteNodePathCost << std::endl;
+											
+											//Can break because multimap is sorted, so this should be lowest cost option that doesn't introduce a loop (i.e. lowest cost valid route). No need to check additional routes to target node.
+											//However... removing this break statement may result in a slower initial convergence but provide alternate routes initially, resulting in faster reconvergences after topology changes are introduced.
+											break;
+										}
+										else {
+											//Getting here means the existing path is higher priority. The new path is still added [in case it is needed later after a network change] but is placed lower in the ordering of the multimap...
+											//Save temp copy of highest priorty entry then remove...
+											std::pair<int, std::vector<int>> tmpMMEntry(*(_FT[sourceNode].find(nextHopRemoteNode)->second.begin()));
+											//Erase the highest priority entry from the source node's FT...
+											_FT[sourceNode].find(nextHopRemoteNode)->second.erase(_FT[sourceNode].find(nextHopRemoteNode)->second.begin());
+											
+											//Add the new path with equivalent cost but lower priority to the source node's FT...
+											//_FT[sourceNode].find(nextHopRemoteNode)->second.insert(std::make_pair(totalPathCost, std::vector<int>(_FT[sourceNode].find(destNode)->second.begin()->second)));
+											//_FT[sourceNode].find(nextHopRemoteNode)->second.begin()->second.insert(_FT[sourceNode].find(nextHopRemoteNode)->second.begin()->second.end(), nextHopRemoteNodePath.begin(), nextHopRemoteNodePath.end());
+											int costToNextHop = _FT[sourceNode].find(destNode)->second.begin()->first;
+											totalPathCost = costToNextHop + nextHopRemoteNodePathCost;
+											//Initialize newPath vector with existing path to next hop
+											//std::vector<int> newPath(existingPathToNextHop);
+											//Then add path from next hop to remote node
+											//newPath.insert(newPath.end(), nextHopRemoteNodePath.begin(), nextHopRemoteNodePath.end());
+											
+											//bool canFindNewlyAddedNodeInSourceNodesFT = _FT[sourceNode].find(nextHopRemoteNode) != _FT[sourceNode].end();
+											//std::cout << "Can find new Destination Node After Adding Node " << nextHopRemoteNode << " now...? " << canFindNewlyAddedNodeInSourceNodesFT << std::endl;
+											
+											//nodesAddedOnCurrentPath.push_back(nextHopRemoteNode);
+											_FT[sourceNode].find(nextHopRemoteNode)->second.insert(std::make_pair(totalPathCost, std::vector<int>(newPath)));
+											
+											//Add back in the highest priority entry, which will retain highest priority by virtue of being added last, despite duplicate key...
+											_FT[sourceNode].find(nextHopRemoteNode)->second.insert(tmpMMEntry);
+											
+											std::cout << "New path added for existing node (tie breaker: existing path has highest priority). Source Node: " << sourceNode << " Destination Node: " << nextHopRemoteNode << " Cost: " << totalPathCost << " Path: " << vecToString(_FT[sourceNode].find(nextHopRemoteNode)->second.begin()->second) << std::endl;
+											std::cout << "Path Cost Breakdown for New Path Added to Existing Node: " << "Existing path cost to destNode: " << _FT[sourceNode].find(destNode)->second.begin()->first << " Path cost from nextHopRemoteNode to Destination: " << nextHopRemoteNodePathCost << std::endl;
+											
+											//Can break because multimap is sorted, so this should be lowest cost option that doesn't introduce a loop (i.e. lowest cost valid route). No need to check additional routes to target node.
+											//However... removing this break statement may result in a slower initial convergence but provide alternate routes initially, resulting in faster reconvergences after topology changes are introduced.
+											break;
+										}   
+									}
+									else {
+										std::cout << "Existing path cheaper than this path. Continuing..." << std::endl;
+										//Could decide to add higher cost valid path here anyway in case it's needed later but reconvergences should pick it up again if needed after a change...
+									}
+								}
+							}
+						}
                     }
                 }
             }
