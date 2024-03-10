@@ -86,8 +86,10 @@ int main(int argc, char** argv) {
         
         //Add additional entries up to largest number node found in topology.
         ////Padding by one in the front so index number = node number for semantic convenience. :)
-        ////Load entries with entries of -1 to later identify and node numbers that were never actually added
+        ////Load entries with entries of -1 to later identify and node numbers that were never actually added 
 		tempMM.insert(std::make_pair(-1, std::vector<int>(-1,1)));
+		//Temporary map used for initial map resizing
+		std::map<int, std::multimap<int, std::vector<int>>> tempM = std::make_pair(-1, tempMM);
 		if (a >= FT.size()) { FT.resize(a+1, std::make_pair(-1, std::multimap<int, std::vector<int>>(tempMM))); }
         if (b >= FT.size()) { FT.resize(b+1, std::make_pair(-1, std::multimap<int, std::vector<int>>(tempMM))); }
         tempMM.clear();
