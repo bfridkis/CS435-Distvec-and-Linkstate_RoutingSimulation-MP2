@@ -95,7 +95,7 @@ void messagePrint(std::vector<std::map<int, std::multimap<int, std::vector<int>>
 void messagePrint(std::vector<std::map<int, std::multimap<int, std::vector<int>>>> &_FT, std::ifstream& messages, std::ofstream& _outFile) {
     
     std::cout << std::endl;
-    
+    _outFile << std::endl;
     auto str = std::string{};
     while (!messages.eof()) {
         std::string line, message;
@@ -132,7 +132,7 @@ void messagePrint(std::vector<std::map<int, std::multimap<int, std::vector<int>>
 			}
 		}
     }   
-    _outFile << std::endl;
+    //_outFile << std::endl;
 	
 	//Rewind input stream to beginning for next print job...
 	messages.clear();
