@@ -40,7 +40,8 @@ void converge(int sourceNode, int neighbor, int prevDestNode, std::vector<std::m
         //Ignore entries back to sourceNode and self entry
         //if(destNode != sourceNode && destNode != nodeToSearch && std::find(nodesAddedOnCurrentPath.begin(), nodesAddedOnCurrentPath.end(), destNode) == nodesAddedOnCurrentPath.end()) {
         if(destNode != sourceNode && destNode != nodeToSearch) {
-            int totalPathCost;
+            std::cout << "Starting converge, line 43..." << std::endl;
+			int totalPathCost;
             //For any n-level of recursive call greater than 1, need to add entry for destNode here if a route isn't already available, before adding entries for destNode remote/reachable node's below (don't need to for first level of recursion because direct connected nodes already have entries established via intial topology load)
             if (prevDestNode != -1 && _FT[sourceNode].find(destNode) == _FT[sourceNode].end()) {
                 //Search through potential paths and find cheapest that won't introduce a loop when path to this hop is added to path from this hop to destNode
