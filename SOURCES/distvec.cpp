@@ -114,6 +114,7 @@ int main(int argc, char** argv) {
 					linkAlreadyAdded = true;
 					break;
 				}
+			}
 			if(!linkAlreadyAdded) {
 				it->second.insert(std::make_pair(c, std::vector<int>(1,b)));
 			}
@@ -137,6 +138,7 @@ int main(int argc, char** argv) {
 					linkAlreadyAdded = true;
 					break;
 				}
+			}
 			if(!linkAlreadyAdded) {
 				it->second.insert(std::make_pair(c, std::vector<int>(1,a)));
 			}
