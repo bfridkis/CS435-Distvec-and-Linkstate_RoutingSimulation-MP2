@@ -49,11 +49,11 @@ void fileOutFT(std::vector<std::map<int, std::multimap<int, std::vector<int>>>> 
 				//_outFile << sourceNode << " " << it->first << " " << it->second.begin()->first << std::endl;
 				if(it->second.begin()->second.size() == 0) {
 					//The only entry for which the path size is 0 is a self entry, so it->first should == sourceNode
-					if(i == _FT.size() - 1) { _outFile << it->first << " " << it->first << " " << it->second.begin()->first; }
+					if(sourceNode == _FT.size() - 1) { _outFile << it->first << " " << it->first << " " << it->second.begin()->first; }
 					else { _outFile << it->first << " " << it->first << " " << it->second.begin()->first << std::endl; }
 				}
 				else {
-					if(i == _FT.size() - 1) { _outFile << it->first << " " << it->second.begin()->second[0] << " " << it->second.begin()->first << std::endl; }
+					if(sourceNode == _FT.size() - 1) { _outFile << it->first << " " << it->second.begin()->second[0] << " " << it->second.begin()->first << std::endl; }
 					else { _outFile << it->first << " " << it->second.begin()->second[0] << " " << it->second.begin()->first << std::endl; }
 				}
 			}
