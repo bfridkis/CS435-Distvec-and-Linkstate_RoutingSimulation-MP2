@@ -223,7 +223,7 @@ void processChanges(std::vector<std::map<int, std::multimap<int, std::vector<int
             //converge(sourceNode, -1, -1, _FT, nullptr);
         }*/
 		for (int sourceNode = _FT.size()-1; sourceNode > 0; sourceNode--) {
-            std::cout << "converging for node: << " << sourceNode << " (after change " << j << ")" << std::endl;
+            std::cout << "reconverging for node: << " << sourceNode << " (after change " << j << ", second reconvergence)" << std::endl;
             converge(sourceNode, -1, -1, _FT);
             //converge(sourceNode, -1, -1, _FT, nullptr);
         }
