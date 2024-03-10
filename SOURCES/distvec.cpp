@@ -86,9 +86,12 @@ int main(int argc, char** argv) {
         
         //Add additional entries up to largest number node found in topology.
         ////Padding by one in the front so index number = node number for semantic convenience. :)
-        if (a >= FT.size()) { FT.resize(a+1, -1); }
-        if (b >= FT.size()) { FT.resize(b+1, -1); }
-        
+        ////Load entries with entries of -1 to later identify and node numbers that were never actually added
+		tempMM.insert(std::make_pair(-1, std::vector<int>(-1,1)));
+		if (a >= FT.size()) { FT.resize(a+1, std::make_pair(-1, std::multimap<int, std::vector<int>>(tempMM))); }
+        if (b >= FT.size()) { FT.resize(b+1, std::make_pair(-1, std::multimap<int, std::vector<int>>(tempMM))); }
+        tempMM.clear();
+		
         //std::cout << "Line75..." << "FT Size: " << FT.size() << std::endl;
         
         //Load forwarding tables according to imported topology
@@ -97,6 +100,10 @@ int main(int argc, char** argv) {
         it = FT[a].find(b);
         //std::cout << "Line81..." << std::endl;
         if (it == FT[a].end()) {
+			//Clear -1 entry to denote node number introduced to topology
+			if(FT[a].find(-1) != FT[a].end()) {
+				FT[a].erase(FT[a].find(-1));
+			}
             tempMM.insert(std::make_pair(c, std::vector<int>(1,b)));
             FT[a].insert(std::make_pair(b, std::multimap<int, std::vector<int>>(tempMM)));
             tempMM.clear();
@@ -112,7 +119,11 @@ int main(int argc, char** argv) {
         it = FT[b].find(a);
         //std::cout << "Line94..." << std::endl;
         if (it == FT[b].end()) {
-            tempMM.insert(std::make_pair(c, std::vector<int>(1,a)));
+            //Clear -1 entry to denote node number introduced to topology
+			if(FT[b].find(-1) != FT[b].end()) {
+				FT[b].erase(FT[b].find(-1));
+			}
+			tempMM.insert(std::make_pair(c, std::vector<int>(1,a)));
             FT[b].insert(std::make_pair(a, std::multimap<int, std::vector<int>>(tempMM)));
             tempMM.clear();
             //std::cout << "Line97..." << std::endl;
