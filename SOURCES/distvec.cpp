@@ -138,6 +138,7 @@ int main(int argc, char** argv) {
 			FT[i].insert(std::make_pair(i, std::multimap<int, std::vector<int>>(tempMM)));
 		}
 		else {
+			std::cout << "adding -1 entry for this unused node number: " << i << std::endl;
 			tempMM.insert(std::make_pair(-1, std::vector<int>(0)));
 			FT[i].insert(std::make_pair(i, std::multimap<int, std::vector<int>>(tempMM)));
 		}
