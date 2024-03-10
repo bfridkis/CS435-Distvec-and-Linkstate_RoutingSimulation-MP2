@@ -89,9 +89,9 @@ int main(int argc, char** argv) {
         ////Load entries with entries of -1 to later identify and node numbers that were never actually added 
 		tempMM.insert(std::make_pair(-1, std::vector<int>(-1,1)));
 		//Temporary map used for initial map resizing
-		std::map<int, std::multimap<int, std::vector<int>>> tempM = std::make_pair(-1, tempMM);
-		if (a >= FT.size()) { FT.resize(a+1, std::make_pair(-1, std::multimap<int, std::vector<int>>(tempMM))); }
-        if (b >= FT.size()) { FT.resize(b+1, std::make_pair(-1, std::multimap<int, std::vector<int>>(tempMM))); }
+		std::map<int, std::multimap<int, std::vector<int>>> tempM = std::make_pair(-1, std::multimap<int, std::vector<int>>(tempMM));
+		if (a >= FT.size()) { FT.resize(a+1, std::map<int, std::multimap<int, std::vector<int>>(tempMM)); }
+        if (b >= FT.size()) { FT.resize(b+1, std::map<int, std::multimap<int, std::vector<int>>(tempMM)); }
         tempMM.clear();
 		
         //std::cout << "Line75..." << "FT Size: " << FT.size() << std::endl;
