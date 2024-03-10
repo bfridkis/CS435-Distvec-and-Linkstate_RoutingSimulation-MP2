@@ -86,8 +86,8 @@ int main(int argc, char** argv) {
         
         //Add additional entries up to largest number node found in topology.
         ////Padding by one in the front so index number = node number for semantic convenience. :)
-        if (a >= FT.size()) { FT.resize(a+1); }
-        if (b >= FT.size()) { FT.resize(b+1); }
+        if (a >= FT.size()) { FT.resize(a+1, -1); }
+        if (b >= FT.size()) { FT.resize(b+1, -1); }
         
         //std::cout << "Line75..." << "FT Size: " << FT.size() << std::endl;
         
