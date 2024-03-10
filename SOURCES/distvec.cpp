@@ -131,7 +131,7 @@ int main(int argc, char** argv) {
     for (int i = 1; i < FT.size(); i++) {
         
         //If node number added/part of topology, add path to self with cost of 0
-        if(nodeAdded.find(i) != nodeAdded.end()) {
+        if(nodesAdded.find(i) != nodesAdded.end()) {
 			tempMM.insert(std::make_pair(0, std::vector<int>(0)));
 			FT[i].insert(std::make_pair(i, std::multimap<int, std::vector<int>>(tempMM)));
 		}
