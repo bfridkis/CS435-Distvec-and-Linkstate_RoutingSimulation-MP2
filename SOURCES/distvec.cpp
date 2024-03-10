@@ -100,7 +100,7 @@ int main(int argc, char** argv) {
         it = FT[a].find(b);
         //std::cout << "Line81..." << std::endl;
         if (it == FT[a].end()) {
-			//Clear -1 entry to denote node number introduced to topology
+			//Clear -1 entry to denote node number introduced to topology 
 			if(FT[a].find(-1) != FT[a].end()) {
 				FT[a].erase(FT[a].find(-1));
 			}
