@@ -189,7 +189,7 @@ int main(int argc, char** argv) {
     }*/
     for (int i = FT.size()-1; i > 0; i--) {
         std::cout << std::endl;
-        std::cout << "Initial convergence for node: " << i << std::endl;
+        std::cout << "Initial convergence (2) for node: " << i << std::endl;
         converge(i, -1, -1, FT);
         //converge(i, -1, -1, FT, nullptr);
         //converge(i, -1, FT);
