@@ -42,7 +42,8 @@ void consoleOutFT(std::vector<std::map<int, std::multimap<int, std::vector<int>>
 //For Printing the Forwarding Table Elements to a File
 void fileOutFT(std::vector<std::map<int, std::multimap<int, std::vector<int>>>> &_FT, std::ofstream& _outFile) {
     for (unsigned short sourceNode = 1; sourceNode < _FT.size(); sourceNode++) {
-        if(_FT[sourceNode].find(-1) == _FT[sourceNode].end()) {
+        //If self-entry not marked with cost of -1 (which means this node number was never part of the topology)...
+		if(_FT[sourceNode].find(sourceNode)->second.find(-1) == _FT[sourceNode].find(sourceNode)->second.end()) {
 			for (std::map<int, std::multimap<int, std::vector<int>>>::iterator it=_FT[sourceNode].begin(); it!=_FT[sourceNode].end(); it++) {
 				//std::cout << "output file is getting... " << sourceNode << " " << it->first << " " << it->second.begin()->first << " size of path: " << it->second.begin()->second.size() << std::endl;
 				//_outFile << sourceNode << " " << it->first << " " << it->second.begin()->first << std::endl;

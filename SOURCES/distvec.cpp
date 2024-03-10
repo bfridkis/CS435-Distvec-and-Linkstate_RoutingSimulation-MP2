@@ -77,6 +77,8 @@ int main(int argc, char** argv) {
     //iterator to traverse and access elements of multimaps (forwarding tables / routes for a given destination)
     std::multimap<int, std::vector<int>>::iterator itMM;
     
+	std::map<int> nodesAdded;
+	
     //std::cout << "Line64..." << std::endl;
     //int i = 0;
     //while (topoInput >> a >> b >> c) {
@@ -86,13 +88,6 @@ int main(int argc, char** argv) {
         
         //Add additional entries up to largest number node found in topology.
         ////Padding by one in the front so index number = node number for semantic convenience. :)
-        ////Load entries with entries of -1 to later identify and node numbers that were never actually added 
-		tempMM.insert(std::make_pair(-1, std::vector<int>(-1,1)));
-		//Temporary map used for initial map resizing
-		std::map<int, std::multimap<int, std::vector<int>>> tempM = std::make_pair(-1, std::multimap<int, std::vector<int>>(tempMM));
-		if (a >= FT.size()) { FT.resize(a+1, std::map<int, std::multimap<int, std::vector<int>>(tempMM)); }
-        if (b >= FT.size()) { FT.resize(b+1, std::map<int, std::multimap<int, std::vector<int>>(tempMM)); }
-        tempMM.clear();
 		
         //std::cout << "Line75..." << "FT Size: " << FT.size() << std::endl;
         
@@ -102,13 +97,10 @@ int main(int argc, char** argv) {
         it = FT[a].find(b);
         //std::cout << "Line81..." << std::endl;
         if (it == FT[a].end()) {
-			//Clear -1 entry to denote node number introduced to topology 
-			if(FT[a].find(-1) != FT[a].end()) {
-				FT[a].erase(FT[a].find(-1));
-			}
             tempMM.insert(std::make_pair(c, std::vector<int>(1,b)));
             FT[a].insert(std::make_pair(b, std::multimap<int, std::vector<int>>(tempMM)));
             tempMM.clear();
+			nodesAdded.insert(a);
             //std::cout << "Line86..." << std::endl;
             //std::cout << FT[a].find(b)->first << " " << FT[a].find(b)->second. std::endl;
             //std::cout << "Destination Node: " << b << " Cost: " << FT[a].find(b)->second.begin()->first << " Path: " << FT[a].find(b)->second.begin()->second[0] << std::endl;
@@ -121,10 +113,6 @@ int main(int argc, char** argv) {
         it = FT[b].find(a);
         //std::cout << "Line94..." << std::endl;
         if (it == FT[b].end()) {
-            //Clear -1 entry to denote node number introduced to topology
-			if(FT[b].find(-1) != FT[b].end()) {
-				FT[b].erase(FT[b].find(-1));
-			}
 			tempMM.insert(std::make_pair(c, std::vector<int>(1,a)));
             FT[b].insert(std::make_pair(a, std::multimap<int, std::vector<int>>(tempMM)));
             tempMM.clear();
@@ -139,13 +127,19 @@ int main(int argc, char** argv) {
     
     //std::cout << "Line100..." << std::endl;
     
-    //Initialize fowarding tables with self-path cost = 0 and paths not yet discovered with placeholder value of -1.
+    //Initialize fowarding tables with self-path cost = 0, and node numbers not added with a self-path cost of -1.
     for (int i = 1; i < FT.size(); i++) {
         
-        //Add path to self with cost of 0
-        tempMM.insert(std::make_pair(0, std::vector<int>(0)));
-        FT[i].insert(std::make_pair(i, std::multimap<int, std::vector<int>>(tempMM)));
-        tempMM.clear();
+        //If node number added/part of topology, add path to self with cost of 0
+        if(nodeAdded.find(i) != nodeAdded.end()) {
+			tempMM.insert(std::make_pair(0, std::vector<int>(0)));
+			FT[i].insert(std::make_pair(i, std::multimap<int, std::vector<int>>(tempMM)));
+		}
+		else {
+			tempMM.insert(std::make_pair(-1, std::vector<int>(0)));
+			FT[i].insert(std::make_pair(i, std::multimap<int, std::vector<int>>(tempMM)));
+		}
+		tempMM.clear();
         
         //std::cout << "Source Node: " << i << " Destination Node: " << FT[i].find(i)->first << " Cost: " << FT[i].find(i)->second.begin()->first << " Path: " << FT[i].find(i)->second.begin()->second.size() << std::endl;
         
