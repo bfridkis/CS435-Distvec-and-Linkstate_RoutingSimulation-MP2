@@ -31,6 +31,7 @@
 #include <vector>
 #include <algorithm>
 #include <iterator>
+#include <set>
 
 #include "../HEADERS/converge.hpp"
 #include "../HEADERS/messagePrint.hpp"
