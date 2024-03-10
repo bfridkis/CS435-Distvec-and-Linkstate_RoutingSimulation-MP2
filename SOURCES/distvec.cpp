@@ -108,7 +108,15 @@ int main(int argc, char** argv) {
             //std::cout << "Destination Node: " << b << " Cost: " << FT[a].find(b)->second.begin()->first << " Path: " << FT[a].find(b)->second.begin()->second[0] << std::endl;
         }
         else {
-            it->second.insert(std::make_pair(c, std::vector<int>(1,b)));
+			bool linkAlreadyAdded = false;
+			for(auto&& [cost, path] : FT[a].find(b)->second) {
+				if(path[0] == b) {
+					linkAlreadyAdded = true;
+					break;
+				}
+			if(!linkAlreadyAdded) {
+				it->second.insert(std::make_pair(c, std::vector<int>(1,b)));
+			}
         }
         ////For b's map...
         //std::cout << "Line92..." << std::endl;
@@ -123,7 +131,15 @@ int main(int argc, char** argv) {
             std::cout << "Destination Node: " << a << " Cost: " << FT[b].find(a)->second.begin()->first << " Path: " << FT[b].find(a)->second.begin()->second[0] << std::endl;
         }
         else {
-            it->second.insert(std::make_pair(c, std::vector<int>(1,a)));
+            bool linkAlreadyAdded = false;
+			for(auto&& [cost, path] : FT[b].find(a)->second) {
+				if(path[0] == a) {
+					linkAlreadyAdded = true;
+					break;
+				}
+			if(!linkAlreadyAdded) {
+				it->second.insert(std::make_pair(c, std::vector<int>(1,a)));
+			}
         }
         
     }
