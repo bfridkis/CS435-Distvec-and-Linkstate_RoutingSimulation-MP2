@@ -238,7 +238,7 @@ void processChanges(std::vector<std::map<int, std::multimap<int, std::vector<int
         std::cout << std::endl;
         std::cout << "Forwarding tables after change " << j++ << " and subsequent reconvergence applied..." << std::endl;
         consoleOutFT(_FT);
-		fileOutFT(_FT, _outFile);
+		fileOutFT(_FT, _outFile, false);
 		
 		messagePrint(_FT, _messagesInput, _outFile);
     }

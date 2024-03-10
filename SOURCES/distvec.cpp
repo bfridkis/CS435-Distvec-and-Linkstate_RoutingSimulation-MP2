@@ -200,7 +200,8 @@ int main(int argc, char** argv) {
     std::cout << "Forwarding tables after initial converge..." << std::endl;
     consoleOutFT(FT);
 	
-	fileOutFT(FT, outFile);
+	//fileOutFT(FT, outFile);
+	fileOutFT(FT, outFile, true);
     
     /*std::cout << "\n2nd Convergence..." << std::endl;
     for (int i = 1; i < FT.size(); i++) {
