@@ -118,6 +118,7 @@ int main(int argc, char** argv) {
 			tempMM.insert(std::make_pair(c, std::vector<int>(1,a)));
             FT[b].insert(std::make_pair(a, std::multimap<int, std::vector<int>>(tempMM)));
             tempMM.clear();
+			nodesAdded.insert(b);
             //std::cout << "Line97..." << std::endl;
             std::cout << "Destination Node: " << a << " Cost: " << FT[b].find(a)->second.begin()->first << " Path: " << FT[b].find(a)->second.begin()->second[0] << std::endl;
         }
