@@ -196,7 +196,15 @@ void processChanges(std::vector<std::map<int, std::multimap<int, std::vector<int
                             else if(it_findLink != path.end() && _FT[sourceNode].find(destNode)->second.size() > 1) {
                                 std::cout << "destNodesPaths.size(): " << _FT[sourceNode].find(destNode)->second.size() << std::endl;
                                 std::cout << "Erasing multi-map entry here for node " << sourceNode << std::endl;
-                                _FT[sourceNode].find(destNode)->second.erase(_FT[sourceNode].find(destNode)->second.find(cost));
+                                //In case of a tie, must loop through paths and find the match (so as to not inadvertently delete the wrong entry/path 
+								for(std::pair<int, vector<int>>::iterator pathAtCost = _FT[sourceNode].find(destNode)->second.find(cost); pathAtCost != _FT[sourceNode].find(destNode)->second.end(); pathAtCost++) {
+									if(pathAtCost->second == path) {
+										_FT[sourceNode].find(destNode)->second.erase(pathAtCost);
+										break;
+									}
+								}
+								//This won't work in some cases for tie breakers, as it may delete the wrong entry...
+								//_FT[sourceNode].find(destNode)->second.erase(_FT[sourceNode].find(destNode)->second.find(cost));
                             }
                         }
                     }

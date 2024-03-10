@@ -211,6 +211,7 @@ void converge(int sourceNode, int neighbor, int prevDestNode, std::vector<std::m
 										newPath.insert(newPath.end(), nextHopRemoteNodePath.begin(), nextHopRemoteNodePath.end());
 										
 										//Make sure this path is not already in the table (need to search all paths to this node, as there may be multiple paths with the same lowest cost (i.e. tied paths, don't want to add duplicates of tied lowest cost paths that may or may not be highest priority)
+										//Could maybe just use == between two vectors here instead... :/
 										bool pathAlreadyInTable = false;
 										for(auto&& [existingNextHopRemoteNodePathCost, existingNextHopRemoteNodePath] : _FT[sourceNode].find(nextHopRemoteNode)->second) {
 											if(existingNextHopRemoteNodePath.size() == newPath.size()) { 
