@@ -121,7 +121,7 @@ void consoleOutFT(std::vector<std::map<int, std::pair<int,int>>> &_FT) {
 }
 
 //For Printing the Forwarding Table Elements to a File - For Link State
-void fileOutFT(std::vector<std::map<int, std::multimap<int, std::vector<int>>>> &_FT, std::ofstream& _outFile, bool _initialConverge) {
+void fileOutFT(std::vector<std::map<int, std::pair<int, int>>> &_FT, std::ofstream& _outFile, bool _initialConverge) {
 	if(_FT.size() > 1 && !_initialConverge) { 
 		_outFile << std::endl; 
 	}
