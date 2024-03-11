@@ -462,7 +462,7 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 	std::cout << std::endl;
 	std::cout << "dijkstras table after initialization with infinite values for all non-source nodes (and 0 for source):" << std::endl;
 	for(auto&& [destNode, prevNode_cost] : dijk) {
-		std::cout << "Source Node: " << sourceNode << "Dest Node: " << destNode << " Shortest Distance: " << prevNode_cost.second << " prev node: " << prevNode_cost.first << std::endl;
+		std::cout << "Source Node: " << sourceNode << " Dest Node: " << destNode << " Shortest Distance: " << prevNode_cost.second << " prev node: " << prevNode_cost.first << std::endl;
 		std::cout << "visitedNodes: " << vecToString(visitedNodes) << " unvisitedNodes: " << vecToString(unvisitedNodes) << std::endl;
 	}
 	std::cout << std::endl;
@@ -485,7 +485,7 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 	std::cout << std::endl;
 	std::cout << "dijkstras table after first initialization with source direct links:" << std::endl;
 	for(auto&& [destNode, prevNode_cost] : dijk) {
-		std::cout << "Source Node: " << sourceNode << "Dest Node: " << destNode << " Shortest Distance: " << prevNode_cost.second << " prev node: " << prevNode_cost.first << std::endl;
+		std::cout << "Source Node: " << sourceNode << " Dest Node: " << destNode << " Shortest Distance: " << prevNode_cost.second << " prev node: " << prevNode_cost.first << std::endl;
 		std::cout << "visitedNodes: " << vecToString(visitedNodes) << " unvisitedNodes: " << vecToString(unvisitedNodes) << std::endl;
 	}
 	std::cout << std::endl;
@@ -536,7 +536,7 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 		std::cout << std::endl;
 		std::cout << "dijkstras table after main loop for reachable node " << minDistNode << " (loop number: " << i+1 << ")" << std::endl;
 		for(auto&& [destNode, prevNode_cost] : dijk) {
-			std::cout << "Source Node: " << sourceNode << "Dest Node: " << destNode << " Shortest Distance: " << prevNode_cost.second << " prev node: " << prevNode_cost.first << std::endl;
+			std::cout << "Source Node: " << sourceNode << " Dest Node: " << destNode << " Shortest Distance: " << prevNode_cost.second << " prev node: " << prevNode_cost.first << std::endl;
 			std::cout << "visitedNodes: " << vecToString(visitedNodes) << " unvisitedNodes: " << vecToString(unvisitedNodes) << std::endl;
 		}
 		
@@ -554,7 +554,7 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 	std::cout << std::endl;
 	std::cout << "Final dijkstras table:" << std::endl;
 	for(auto&& [destNode, prevNode_cost] : dijk) {
-		std::cout << "Source Node: " << sourceNode << "Dest Node: " << destNode << " Shortest Distance: " << prevNode_cost.second << " prev node: " << prevNode_cost.first << std::endl;
+		std::cout << "Source Node: " << sourceNode << " Dest Node: " << destNode << " Shortest Distance: " << prevNode_cost.second << " prev node: " << prevNode_cost.first << std::endl;
 		std::cout << "visitedNodes: " << vecToString(visitedNodes) << " unvisitedNodes: " << vecToString(unvisitedNodes) << std::endl;
 	}
 	std::cout << std::endl;
