@@ -533,13 +533,6 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 			std::cout << "Tie encountered for nextMinDistNode update. nextMinDist now " << nextMinDist << " (should be same as just printed) and nextMinDistNode updated to " << nextMinDistNode << std::endl;
 		}
 		
-		std::cout << std::endl;
-		std::cout << "dijkstras table after main loop for reachable node " << minDistNode << " (loop number: " << i+1 << ")" << std::endl;
-		for(auto&& [destNode, prevNode_cost] : dijk) {
-			std::cout << "Source Node: " << sourceNode << " Dest Node: " << destNode << " Shortest Distance: " << prevNode_cost.second << " prev node: " << prevNode_cost.first << std::endl;
-		}
-		std::cout << "visitedNodes: " << vecToString(visitedNodes) << " unvisitedNodes: " << vecToString(unvisitedNodes) << std::endl;
-		
 		//Add node to visited Nodes
 		visitedNodes.insert(*minDistIt);
 		//Remove node from unvisitedNodes
@@ -547,6 +540,14 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 		//Update minDistNode and minDist
 		minDistNode = nextMinDistNode;
 		minDist = nextMinDist;
+		
+		std::cout << std::endl;
+		std::cout << "dijkstras table after main loop for reachable node " << minDistNode << " (loop number: " << i+1 << ")" << std::endl;
+		std::cout << "nextMinDistNode: " << nextMinDistNode << " nextMinDist: " << std::endl;
+		for(auto&& [destNode, prevNode_cost] : dijk) {
+			std::cout << "Source Node: " << sourceNode << " Dest Node: " << destNode << " Shortest Distance: " << prevNode_cost.second << " prev node: " << prevNode_cost.first << std::endl;
+		}
+		std::cout << "visitedNodes: " << vecToString(visitedNodes) << " unvisitedNodes: " << vecToString(unvisitedNodes) << std::endl;
 
 		std::cout << std::endl;
 	}
