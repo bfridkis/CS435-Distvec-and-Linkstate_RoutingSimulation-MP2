@@ -515,6 +515,9 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 				tiedForLowestNextMinDistance.push_back(reachableNode);
 				std::cout << "nextMinDist updated here to " << nextMinDist << " and nextMinDistNode updated to " << nextMinDistNode << std::endl;
 			}
+			if(unvisitedNodes.find(reachableNode) == unvisitedNodes.end()) {
+				std::cout << "node " << reachableNode << " already visited. Skipping over here..." << std::endl;
+			}
 		}
 		//Break tie for next min distance if needed
 		if(tiedForLowestNextMinDistance.size() > 0) {
