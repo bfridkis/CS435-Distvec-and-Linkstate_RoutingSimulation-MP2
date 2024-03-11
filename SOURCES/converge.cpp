@@ -351,16 +351,16 @@ void converge(std::vector<std::map<int, std::multimap<int, std::vector<int>>>> &
 		std::vector<int>* _newPath = new std::vector<int>();
 		newPath = _newPath;
 	}
-	else {
-		newPath->push_back(prevNode);
-	}
+	//else {
+	//	newPath->push_back(prevNode);
+	//}
 	//For node directly connected to the source node, recursively find paths to all other reachable nodes. (sourceNode == prevNode on first level of recursion)
 	for(auto&& [reachableNode, reachableNodePaths] : _FT[prevNode]) {
 		//Ignore source self entry
 		if(reachableNode != sourceNode) {
 			for(auto&& [reachableNodeCost, reachableNodePath] : reachableNodePaths) {
 				//if node is neighbor (i.e. directly connected) and this path is lowest cost option of direct links (in case multiple direct links of different costs)
-				//if(reachableNodePath.size() == 1 && reachableNodePath == *(_FT[prevNode].find(reachableNode)->second.find(reachableNodeCost)->begin())) {
+				newPath->push_back(prevNode);
 				if(reachableNodePath.size() == 1 && std::find(newPath->begin(), newPath->end(), reachableNode) == newPath->end()) {
 					newPathCost += reachableNodeCost;
 					std::cout << "New Converge... sourceNode: " << sourceNode << " prevNode: " << prevNode << " reachableNode: " << reachableNode << " reachableNodeCost: " << reachableNodeCost << " newPath: " << vecToString(*newPath) << " newPathCost: " << newPathCost << std::endl;
