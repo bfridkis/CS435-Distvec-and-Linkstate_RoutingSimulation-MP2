@@ -340,9 +340,7 @@ void converge(int sourceNode, int neighbor, int prevDestNode, std::vector<std::m
 void converge(std::vector<std::map<int, std::multimap<int, std::vector<int>>>> &_FT, int sourceNode, int prevNode, std::vector<int>* newPath, int newPathCost) {      
 //void converge(int sourceNode, int neighbor, int prevDestNode, std::vector<std::map<int, std::multimap<int, std::vector<int>>>> &_FT, std::vector<int>* newPath) {
 //void converge(int sourceNode, int neighbor, std::vector<std::map<int, std::multimap<int, std::vector<int>>>> &_FT) {  
-    
-	//temporary multimap used for constructors / inserting new forwarding table entries
-	std::multimap<int, std::vector<int>> tmpMM;
+	
 	//Initialize newPath vector with existing path to this prevNode
 	//std::vector<int> _newPath;
 	
@@ -367,13 +365,14 @@ void converge(std::vector<std::map<int, std::multimap<int, std::vector<int>>>> &
 					if(_FT[sourceNode].find(reachableNode) == _FT[sourceNode].end() || _FT[sourceNode].find(reachableNode)->second.begin()->first > newPathCost) {
 						//Add newly discovered path for this new node. 
 						//std::cout << "Got here: Line 370..." << std::endl;
-						tmpMM.insert(std::make_pair(newPathCost, *newPath));
 						if(_FT[sourceNode].find(reachableNode) == _FT[sourceNode].end()) {
+							std::multimap<int, std::vector<int>> tmpMM;
+							tmpMM.insert(std::make_pair(newPathCost, *newPath));
 							_FT[sourceNode].insert(std::make_pair(reachableNode, std::multimap<int, std::vector<int>>(tmpMM)));
 							std::cout << "New Converge - New node added!... sourceNode: " << sourceNode << " prevNode: " << prevNode << " reachableNode: " << reachableNode << " reachableNodeCost: " << reachableNodeCost << " newPath: " << vecToString(*newPath) << " newPathCost: " << newPathCost << std::endl;
 						}
 						else {
-							_FT[sourceNode].find(reachableNode)->second.insert(tmpMM);
+							_FT[sourceNode].find(reachableNode)->second.insert(std::make_pair(newPathCost, *newPath));
 							std::cout << "New Converge - New cheaper path added to existing node!... sourceNode: " << sourceNode << " prevNode: " << prevNode << " reachableNode: " << reachableNode << " reachableNodeCost: " << reachableNodeCost << " newPath: " << vecToString(*newPath) << " newPathCost: " << newPathCost << std::endl;
 						}
 					}
