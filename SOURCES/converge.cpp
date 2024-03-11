@@ -473,6 +473,13 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 		}
 	}
 	
+	std::cout << std::endl;
+	std::cout << "Initial dijkstras table:" << std::endl;
+	for(auto&& [destNode, prevNode_cost] : dijk) {
+		std::cout << "Dest Node: " << destNode << " Shortest Distance: " << prevNode_cost->second << " prev node: " << prevNode_cost->first << std::endl;
+	}
+	std::endl;
+	
 	for (int i = 0; i < unvisitedNodes.size(); i++) {
 		//Find next unvisited node with minimum distance from source node
 		std::set<int>::iterator minDistIt = unvisitedNodes.find(minDistNode);
@@ -512,6 +519,13 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 		minDistNode = nextMinDistNode;
 		minDist = nextMinDist;
 	}
+	
+	std::cout << std::endl;
+	std::cout << "Final dijkstras table:" << std::endl;
+	for(auto&& [destNode, prevNode_cost] : dijk) {
+		std::cout << "Dest Node: " << destNode << " Shortest Distance: " << prevNode_cost->second << " prev node: " << prevNode_cost->first << std::endl;
+	}
+	std::endl;
 	
 	//Dijkstras Table is now built for this sourceNode. Update the forwarding table (_FT) accordingly
 	for(auto&& [reachableNode, nextHop_cost] : dijk) {
