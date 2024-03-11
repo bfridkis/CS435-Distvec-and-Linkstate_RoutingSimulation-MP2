@@ -80,7 +80,7 @@ int main(int argc, char** argv) {
     //int i = 0;
     //while (topoInput >> a >> b >> c) {
 	//Padded with one extra element so index number can equal node number :)
-	TT.resize(2)
+	TT.resize(2);
 	while (topoInputFile >> a >> b >> c) {
         //std::cout << "i: " << ++i << std::endl;
         //std::cout << "Line68..." << "a: " << a << " b: " << b << " c: " << c << std::endl;
