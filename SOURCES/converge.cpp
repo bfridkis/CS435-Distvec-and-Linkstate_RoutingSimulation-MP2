@@ -419,5 +419,5 @@ void converge(std::vector<std::map<int, std::multimap<int, std::vector<int>>>> &
 			}
 		}
 	}
-	delete *_newPath;
+	delete _newPath;
 }
