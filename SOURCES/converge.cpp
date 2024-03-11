@@ -527,7 +527,7 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 		//Add node to visited Nodes
 		visitedNodes.insert(*minDistIt);
 		//Remove node from unvisitedNodes
-		unvisitedNodes.erase(*minDistIt));
+		unvisitedNodes.erase(*minDistIt);
 		//Update minDistNode and minDist
 		minDistNode = nextMinDistNode;
 		minDist = nextMinDist;
