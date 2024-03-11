@@ -96,7 +96,7 @@ int main(int argc, char** argv) {
         it = TT[a].find(b);
         //std::cout << "Line81..." << std::endl;
         if (it == TT[a].end()) {
-            TT[a].insert(b, c);
+            TT[a].insert(std::make_pair<int,int>(b,c));
 			nodesAdded.insert(a);
         }
         ////For b's map...
@@ -104,7 +104,7 @@ int main(int argc, char** argv) {
         it = TT[b].find(a);
         //std::cout << "Line94..." << std::endl;
         if (it == TT[b].end()) {
-			TT[b].insert(a, c);
+			TT[b].insert(std::make_pair<int,int>(a,c));
 			nodesAdded.insert(b);
         }
     }
@@ -116,11 +116,11 @@ int main(int argc, char** argv) {
         
         //If node number added/part of topology, add path to self with cost of 0
         if(nodesAdded.find(i) != nodesAdded.end()) {
-			TT[i].insert(i, 0);
+			TT[i].insert(std::make_pair<int,int>(i,0));
 		}
 		else {
 			std::cout << "adding -1 entry for this unused node number: " << i << std::endl;
-			TT[i].insert(i, -1);
+			TT[i].insert(std::make_pair<int,int>(i,-1));
 		}
     }
     
