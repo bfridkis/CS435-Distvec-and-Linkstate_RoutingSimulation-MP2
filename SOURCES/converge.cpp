@@ -366,7 +366,7 @@ void converge(std::vector<std::map<int, std::multimap<int, std::vector<int>>>> &
 					std::cout << "New Converge... sourceNode: " << sourceNode << " prevNode: " << prevNode << " reachableNode: " << reachableNode << " reachableNodeCost: " << reachableNodeCost << " newPath: " << vecToString(*newPath) << " newPathCost: " << std::endl;
 					//If there is not yet a path established from source to this node...(will never have to do this for a node's first level of recursion because initial topology loads all direct links into FT)
 					//if(_FT[sourceNode].find(reachableNode) == _FT[sourceNode].end() || _FT[sourceNode].find(reachableNode)->second.begin()->first > newPathCost) {
-					if(_FT[sourceNode].find(reachableNode) == _FT[sourceNode].end() || _FT[sourceNode].find(reachableNode)->second.begin()->first > newPathCost) {
+					if(_FT[sourceNode].find(reachableNode) == _FT[sourceNode].end()) {
 						//Add newly discovered path for this new node. 
 						std::cout << "Got here: Line 370..." << std::endl;
 						tmpMM.insert(std::make_pair(newPathCost, *newPath));
