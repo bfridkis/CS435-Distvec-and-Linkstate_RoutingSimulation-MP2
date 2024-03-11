@@ -22,6 +22,6 @@ int tieBreaker(std::vector<int> pathA, std::vector<int> pathB) {
 			return 0;
 		}
 	}
-	if(aIt == pathA.end() & bIt == pathB.end()) { return -1; }
+	if(aIt == pathA.end() && bIt == pathB.end()) { return -1; }
 	else { return -2; }
 }
