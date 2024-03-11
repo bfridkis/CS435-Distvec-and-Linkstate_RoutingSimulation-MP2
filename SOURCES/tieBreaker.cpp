@@ -15,7 +15,7 @@ int tieBreaker(std::vector<int> pathA, std::vector<int> pathB) {
 	for(aIt = pathA.begin(), bIt = pathB.begin(); aIt != pathA.end() && bIt != pathB.end(); aIt++, bIt++) {
 			//std::cout << "new path node: " << *aIt << " existing path node: " << *bIt << std::endl;
 		if (*aIt < *bIt) {
-			std::cout << "Did we get to aIt < bIt...?? *aIt: " << *aIt << " *bIt: " << *bIt << std::endl;
+			//std::cout << "Did we get to aIt < bIt...?? *aIt: " << *aIt << " *bIt: " << *bIt << std::endl;
 			return 1;
 		}
 		else if (*aIt > *bIt) {
