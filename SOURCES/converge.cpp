@@ -442,7 +442,8 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 	
 	//Initialize helper containers and min distance node tracker
 	std::set<int> visitedNodes, unvisitedNodes;
-	int minDistNode, minDist = std::numeric_limits<int>::max();
+	int minDistNode;
+	int minDist = std::numeric_limits<int>::max();
 	
 	//Initialize shortest distance values, with sourceNode = 0 and all other nodes set to infinity
 	for (int i = 1; i < _TT.size(); i++) {
