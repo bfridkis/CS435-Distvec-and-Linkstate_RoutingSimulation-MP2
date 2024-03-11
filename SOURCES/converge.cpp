@@ -373,12 +373,12 @@ void converge(std::vector<std::map<int, std::multimap<int, std::vector<int>>>> &
 					}
 					else if(_FT[sourceNode].find(reachableNode)->second.begin()->first == newPathCost) {
 						
-						tmpMM.insert(std::make_pair(newPathCost, *newPath));
+						//tmpMM.insert(std::make_pair(newPathCost, *newPath));
 						
 						//Can add straight in if tie breaker goes to the newly sought/established path
 						int tieBreakGoesToNewPath = tieBreaker(*newPath, reachableNodePath);
 						if(tieBreakGoesToNewPath) {
-							_FT[sourceNode].find(reachableNode)->second.insert(tmpMM);
+							_FT[sourceNode].find(reachableNode)->second.insert(std::make_pair(newPathCost, *newPath));
 							std::cout << "New Converge - New Path Added to Existing Node - New Path = Highest Priority... sourceNode: " << sourceNode << " prevNode: " << prevNode << " reachableNodeCost: " << reachableNodeCost << " newPath: " << vecToString(*newPath) << " newPathCost: " << std::endl;
 						}
 						//Else need to remove existing highest priority path, add new path, then restore/re-add highest priority to maintain proper ordering in multimap
