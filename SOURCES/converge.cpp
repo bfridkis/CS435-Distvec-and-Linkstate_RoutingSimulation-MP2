@@ -369,15 +369,17 @@ void converge(std::vector<std::map<int, std::multimap<int, std::vector<int>>>> &
 						//Add newly discovered path for this new node. 
 						tmpMM.insert(std::make_pair(newPathCost, newPath));
 						_FT[sourceNode].insert(std::make_pair(reachableNode, std::multimap<int, std::vector<int>>(tmpMM)));
+						std::cout << "New Converge - New node added!... sourceNode: " << sourceNode << " prevNode: " << prevNode << " reachableNodeCost: " << reachableNodeCost << " newPath: " << vecToString(newPath) << " newPathCost: " << std::endl;
 					}
 					else if(_FT[sourceNode].find(reachableNode)->second.begin()->first == newPathCost) {
 						
 						tmpMM.insert(std::make_pair(newPathCost, newPath));
 						
 						//Can add straight in if tie breaker goes to the newly sought/established path
-						int tieBreakGoesToCurrentPath = tieBreaker(newPath, reachableNodePath);
-						if(tieBreakGoesToCurrentPath) {
-							_FT[sourceNode].insert(std::make_pair(reachableNode, std::multimap<int, std::vector<int>>(tmpMM)));
+						int tieBreakGoesToNewPath = tieBreaker(newPath, reachableNodePath);
+						if(tieBreakGoesToNewPath) {
+							_FT[sourceNode].find(reachableNode)->second.insert(tmpMM);
+							std::cout << "New Converge - New Path Added to Existing Node - New Path = Highest Priority... sourceNode: " << sourceNode << " prevNode: " << prevNode << " reachableNodeCost: " << reachableNodeCost << " newPath: " << vecToString(newPath) << " newPathCost: " << std::endl;
 						}
 						//Else need to remove existing highest priority path, add new path, then restore/re-add highest priority to maintain proper ordering in multimap
 						else {
@@ -389,6 +391,7 @@ void converge(std::vector<std::map<int, std::multimap<int, std::vector<int>>>> &
 							_FT[sourceNode].find(destNode)->second.insert(std::make_pair(newPathCost, std::vector<int>(newPath)));
 							//Add back existing entry back in so it gets loaded into the multimap for destNode at this cost (==change) top priority
 							_FT[sourceNode].find(destNode)->second.insert(tmpMMEntry);
+							std::cout << "New Converge - New Path Added to Existing Node - Existing Path = Highest Priority... sourceNode: " << sourceNode << " prevNode: " << prevNode << " reachableNodeCost: " << reachableNodeCost << " newPath: " << vecToString(newPath) << " newPathCost: " << std::endl;
 						}
 					}
 					else {
