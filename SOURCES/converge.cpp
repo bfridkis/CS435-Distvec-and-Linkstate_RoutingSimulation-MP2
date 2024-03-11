@@ -435,15 +435,14 @@ void converge(std::vector<std::map<int, std::multimap<int, std::vector<int>>>> &
 }
 
 //For Link State
-void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<std::map<int, std::pair<int, int>>> &_FT);
+void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<std::map<int, std::pair<int, int>>> &_FT) {
 	
 	//Initialize container for Dijkstras. Map key is reachable node, first element of pair (int) is the "previous" node (or, alternatively from the view of the destination node itself, next hop to source), while the first element of the pair is the reachable node shortest path cost, 
 	std::map<int, std::pair<int,int>> dijk;
 	
 	//Initialize helper containers and min distance node tracker
 	std::set<int> visitedNodes, unvisitedNodes;
-	int minDistNode;
-	int minDist = std::numeric_limits<int>::max();
+	int minDistNode, minDist = std::numeric_limits<int>::max();
 	
 	//Initialize shortest distance values, with sourceNode = 0 and all other nodes set to infinity
 	for (int i = 1; i < _TT.size(); i++) {
