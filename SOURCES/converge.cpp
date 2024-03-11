@@ -337,7 +337,7 @@ void converge(int sourceNode, int neighbor, int prevDestNode, std::vector<std::m
     }
 }
 
-void converge(std::vector<std::map<int, std::multimap<int, std::vector<int>>>> &_FT, int sourceNode, int prevNode, std::vector<int>* _newPath, int newPathCost) {      
+void converge(std::vector<std::map<int, std::multimap<int, std::vector<int>>>> &_FT, int sourceNode, int prevNode, std::vector<int>* newPath, int newPathCost) {      
 //void converge(int sourceNode, int neighbor, int prevDestNode, std::vector<std::map<int, std::multimap<int, std::vector<int>>>> &_FT, std::vector<int>* newPath) {
 //void converge(int sourceNode, int neighbor, std::vector<std::map<int, std::multimap<int, std::vector<int>>>> &_FT) {  
     
@@ -348,7 +348,7 @@ void converge(std::vector<std::map<int, std::multimap<int, std::vector<int>>>> &
 	
 	//On first level of recursion, establish an empty path vector
 	if(sourceNode == prevNode) {
-		std::vector<int> newPath = std::vector<int>();
+		std::vector<int> _newPath = std::vector<int>();
 		newPath = &_newPath;
 	}
 	else {
