@@ -362,7 +362,7 @@ void converge(std::vector<std::map<int, std::multimap<int, std::vector<int>>>> &
 				//if node is neighbor (i.e. directly connected) and this path is lowest cost option of direct links (in case multiple direct links of different costs)
 				if(reachableNodePath.size() == 1 && reachableNode == reachableNodePath[0] && std::find(newPath->begin(), newPath->end(), reachableNode) == newPath->end()) {
 					newPathCost += reachableNodeCost;
-					std::cout << "New Converge... sourceNode: " << sourceNode << " prevNode: " << prevNode << " reachableNode: " << reachableNode << " reachableNodeCost: " << reachableNodeCost << " reachableNodePathSize: " << reachableNodePath.size() << " reachableNodePath: " << vecToString(reachableNodePath) << " newPath: " << vecToString(*newPath) << " newPathCost: " << newPathCost << std::endl;
+					std::cout << "New Converge... sourceNode: " << sourceNode << " prevNode: " << prevNode << " reachableNode: " << reachableNode << " reachableNodeCost: " << reachableNodeCost << " reachableNodePathSize: " << reachableNodePath.size() << " reachableNodePath: " << vecToString(reachableNodePath) << " reachableNodeFirstHop: " << reachableNodePath[0] << " newPath: " << vecToString(*newPath) << " newPathCost: " << newPathCost << std::endl;
 					//If there is not yet a path established from source to this node...(will never have to do this for a node's first level of recursion because initial topology loads all direct links into FT)
 					if(_FT[sourceNode].find(reachableNode) == _FT[sourceNode].end() || _FT[sourceNode].find(reachableNode)->second.begin()->first > newPathCost) {
 						//Add newly discovered path for this new node. 
