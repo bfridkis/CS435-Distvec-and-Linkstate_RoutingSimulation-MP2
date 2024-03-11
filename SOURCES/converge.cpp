@@ -498,7 +498,7 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 		//Used to find adjust nextMinDistNode in case of tie breaker
 		std::vector<int> tiedForLowestNextMinDistance;
 		for(std::map<int, int>::iterator it = _TT[*minDistIt].begin(); it != _TT[*minDistIt].end(); it++) {
-			int reachableNodeNextHop = it->first, reachableNodeCost = it->second;
+			int reachableNode = it->first, reachableNodeCost = it->second;
 			if(unvisitedNodes.find(reachableNode) != unvisitedNodes.end() && 
 			  ((reachableNodeCost + minDist < dijk.find(reachableNode)->second.second) ||
 			  (dijk.find(reachableNode)->second.second == reachableNodeCost + minDist && dijk.find(reachableNode)->second.first > minDistNode))) {
