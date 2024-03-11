@@ -501,7 +501,7 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 		std::cout << "minDistNode: " << minDistNode << " ";
 		for(std::map<int, int>::iterator it = _TT[*minDistIt].begin(); it != _TT[*minDistIt].end(); it++) {
 			int reachableNode = it->first, reachableNodeCost = it->second;
-			std::cout << "next node connected to minDistNode (" << reachableNode << ") ... cost = reachableNodeCost " << "(" << reachableNodeCost << ")". << So therefore, cost to reachableNode = minDist + reachableNodeCost = " << minDist+reachableNodeCost << std::endl;
+			std::cout << "next node connected to minDistNode (" << reachableNode << ") ... cost = reachableNodeCost " << "(" << reachableNodeCost << ")." << " So therefore, cost to reachableNode = minDist + reachableNodeCost = " << minDist+reachableNodeCost << std::endl;
 			if(unvisitedNodes.find(reachableNode) != unvisitedNodes.end() && 
 			  ((reachableNodeCost + minDist < dijk.find(reachableNode)->second.second) ||
 			  (dijk.find(reachableNode)->second.second == reachableNodeCost + minDist && dijk.find(reachableNode)->second.first > minDistNode))) {
