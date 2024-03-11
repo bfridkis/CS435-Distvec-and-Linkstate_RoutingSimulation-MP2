@@ -194,17 +194,18 @@ int main(int argc, char** argv) {
     for (int i = 1; i < FT.size(); i++) {
         std::cout << std::endl;
         std::cout << "Initial convergence (1) for node: " << i << std::endl;
-        converge(i, -1, -1, FT);
+        converge(_FT, sourceNode, sourceNode, nullptr, 0);
+		//converge(i, -1, -1, FT);
         //converge(i, -1, -1, FT, nullptr);
         //converge(i, -1, FT);
     }
-	for (int i = 1; i < FT.size(); i++) {
+	/*for (int i = 1; i < FT.size(); i++) {
         std::cout << std::endl;
         std::cout << "Initial convergence (2) for node: " << i << std::endl;
         converge(i, -1, -1, FT);
         //converge(i, -1, -1, FT, nullptr);
         //converge(i, -1, FT);
-    }
+    }*/
     /*for (int i = FT.size()-1; i > 0; i--) {
         std::cout << std::endl;
         std::cout << "Initial convergence (2) for node: " << i << std::endl;

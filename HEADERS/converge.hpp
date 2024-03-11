@@ -11,5 +11,6 @@
 #include "include.hpp"
 
 void converge(int sourceNode, int neighbor, int prevHop, std::vector<std::map<int, std::multimap<int, std::vector<int>>>> &_FT);
+void converge(std::vector<std::map<int, std::multimap<int, std::vector<int>>>> &_FT, int sourceNode, int prevNode, std::vector<int>* newPath, int newPathCost);
 
 #endif
