@@ -411,7 +411,7 @@ void converge(std::vector<std::map<int, std::multimap<int, std::vector<int>>>> &
 							_FT[sourceNode].find(reachableNode)->second.insert(std::make_pair(newPathCost, std::vector<int>(*newPath)));
 							newPath->pop_back();
 							//Add back existing entry back in so it gets loaded into the multimap for destNode at this cost (==change) top priority
-							_FT[sourceNode].find(reachableNode)->second.insert(tmpMMEntry);
+							//_FT[sourceNode].find(reachableNode)->second.insert(tmpMMEntry);
 							std::cout << "New Converge - New Path Added to Existing Node - Tie: Existing Path = Highest Priority... sourceNode: " << sourceNode << " prevNode: " << prevNode << " reachableNode: " << reachableNode << " reachableNodeCost: " << reachableNodeCost << " newPath: " << vecToString(*newPath) << " newPathCost: " << newPathCost << std::endl;
 						}
 					}
