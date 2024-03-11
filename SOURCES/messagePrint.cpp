@@ -164,7 +164,7 @@ void messagePrint(std::vector<std::map<int, std::pair<int, int>>> &_FT, std::ifs
 			getline(messageStr, message);
 			if(_FT[sourceNode].find(destNode) != _FT[sourceNode].end()) {
 				cost = _FT[sourceNode].find(destNode)->second.second;
-				std::vector<int> lowestCostPath(_FT[sourceNode].find(destNode)->second.begin()->second);
+				std::vector<int> cost(_FT[sourceNode].find(destNode)->second.second);
 				//if (lowestCostPath.size() == 1) {
 				//outFile << "from " << sourceNode << " to " << destNode << " cost " << cost << " hops " << sourceNode;
 				//}
@@ -173,24 +173,12 @@ void messagePrint(std::vector<std::map<int, std::pair<int, int>>> &_FT, std::ifs
 				std::map<int, std::pair<int, int>>::iterator it = _FT[sourceNode].find(destNode);
 				while(it->second.first != destNode) {
 					_outFile << it->second.first << " ";
+					it++;
 				}
-				
-				
-				
-					//std::vector<int> lowestCostPath(_FT[sourceNode].find(destNode)->second.begin()->second);
-					/*for(std::vector<int>::iterator it = lowestCostPath.begin(); it != lowestCostPath.end()-1; it++) {
-						if(it == lowestCostPath.end()-2) {
-							_outFile << *it;
-						}
-						else {
-							_outFile << *it << " ";
-						}
-					}*/
 				_outFile << " message" << message;
 				//_outFile << " message" << message << std::endl;
 			}
-				//_outFile << " message" << message << std::endl;
-			}
+		}
 		else {
 				//_outFile << "from " << sourceNode << " to " << destNode << " cost infinite hops unreachable message" << message << std::endl;
 				_outFile << "from " << sourceNode << " to " << destNode << " cost infinite hops unreachable message" << message;
