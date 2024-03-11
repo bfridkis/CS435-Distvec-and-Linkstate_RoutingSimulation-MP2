@@ -462,7 +462,7 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 	//First iteration, for all of sourceNode's directly connected nodes
 	for(auto&& [reachableNode, reachableNode_nexthop_cost] : _TT[sourceNode]) {
 		if(reachableNode != sourceNode) {
-			int reachableNodeNextHop = reachableNode_nexthop_cost->first, reachableNodeCost = reachableNode_nexthop_cost->second;
+			int reachableNodeNextHop = reachableNode_nexthop_cost.first, reachableNodeCost = reachableNode_nexthop_cost.second;
 			//Add cost to dijkstras entry from source node to this reachable node
 			dijk.find(reachableNode)->second.first = reachableNodeNextHop;
 			dijk.find(reachableNode)->second.second = reachableNodeCost;
