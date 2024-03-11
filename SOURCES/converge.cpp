@@ -401,6 +401,7 @@ void converge(std::vector<std::map<int, std::multimap<int, std::vector<int>>>> &
 					}
 					converge(_FT, sourceNode, reachableNode, newPath, newPathCost);
 					newPath->pop_back();
+					newPathCost -= reachableNodeCost;
 				}
 			}
 		}
