@@ -543,7 +543,7 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 	
 	//Dijkstras Table is now built for this sourceNode. Update the forwarding table (_FT) accordingly
 	for(auto&& [reachableNode, nextHop_cost] : dijk) {
-		int nextHop = nextHop_cost->first, cost = nextHop_cost->second;
+		int nextHop = nextHop_cost.first, cost = nextHop_cost.second;
 		if(_FT[sourceNode].find(reachableNode) != _FT[sourceNode].end()) {
 			_FT[sourceNode].find(reachableNode)->first = nextHop;
 			_FT[sourceNode].find(reachableNode)->second = cost;
