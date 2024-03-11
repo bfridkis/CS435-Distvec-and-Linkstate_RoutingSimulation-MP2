@@ -102,7 +102,7 @@ void processChanges(std::vector<std::map<int, std::multimap<int, std::vector<int
         //Reconverge for each node after changes applied (Run twice to ensure all lowest paths are found.)
         for (int sourceNode = 1; sourceNode < _FT.size(); sourceNode++) {
             std::cout << "converging for node: << " << sourceNode << " (after change " << j << ")" << std::endl;
-            converge(FT, i, i, nullptr, 0);
+            converge(_FT, i, i, nullptr, 0);
 			//converge(sourceNode, -1, -1, _FT);
             //converge(sourceNode, -1, -1, _FT, nullptr);
         }
