@@ -511,7 +511,7 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 			}
 			if(unvisitedNodes.find(reachableNode) != unvisitedNodes.end() && reachableNodeCost + minDist <= nextMinDist) {
 				nextMinDist = reachableNodeCost + minDist;
-				nextMinDistNode = minDistNode;
+				nextMinDistNode = reachableNode;
 				if(unvisitedNodes.find(reachableNode) != unvisitedNodes.end() && reachableNodeCost + minDist == nextMinDist) {
 					tiedForLowestNextMinDistance.push_back(reachableNode);
 				}
