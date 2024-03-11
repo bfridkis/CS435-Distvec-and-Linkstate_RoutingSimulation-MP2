@@ -31,7 +31,7 @@
 #include <vector>
 #include <algorithm>
 #include <iterator>
-//#include <set>
+#include <set>
 #include <limits>
 
 #include "../HEADERS/converge.hpp"
