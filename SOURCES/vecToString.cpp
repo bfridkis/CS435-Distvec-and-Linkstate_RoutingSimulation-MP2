@@ -17,3 +17,14 @@ std::string vecToString(std::vector<int>& vec) {
         std::string retStr = std::string("-");
         return retStr; }
 }
+
+std::string vecToString(std::set<int>& set) {
+    if (set.size() > 0) { 
+        std::stringstream pathSS;
+        std::copy(set.begin(), set.end(), std::ostream_iterator<int>(pathSS, ""));
+        return pathSS.str();
+    }
+    else { 
+        std::string retStr = std::string("-");
+        return retStr; }
+}
