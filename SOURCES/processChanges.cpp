@@ -273,7 +273,7 @@ void processChanges(std::vector<std::map<int, std::pair<int, int>>> &_FT, std::v
 			}
 			//If link is not yet present, add it
 			else {
-				_TT[changedLinkNode1].insert(std::make_pair(changedLinkNode2, cost));
+				_TT[changedLinkNode1].insert(std::make_pair(changedLinkNode2, change));
 			}
 			//If link is already present, update it's cost
 			if(_TT[changedLinkNode2].find(changedLinkNode1) != _TT[changedLinkNode2].end()) {

@@ -164,7 +164,7 @@ void messagePrint(std::vector<std::map<int, std::pair<int, int>>> &_FT, std::ifs
 			getline(messageStr, message);
 			if(_FT[sourceNode].find(destNode) != _FT[sourceNode].end()) {
 				cost = _FT[sourceNode].find(destNode)->second.second;
-				int cost(_FT[sourceNode].find(destNode)->second.second);
+				//int cost(_FT[sourceNode].find(destNode)->second.second);
 				//if (lowestCostPath.size() == 1) {
 				//outFile << "from " << sourceNode << " to " << destNode << " cost " << cost << " hops " << sourceNode;
 				//}
