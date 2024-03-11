@@ -527,7 +527,7 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 		}
 		
 		std::cout << std::endl;
-		std::cout << "dijkstras table after main loop for reachable node " << minDistNode << " (loop number: " << i << ")"std::endl;
+		std::cout << "dijkstras table after main loop for reachable node " << minDistNode << " (loop number: " << i << ")" << std::endl;
 		for(auto&& [destNode, prevNode_cost] : dijk) {
 			std::cout << "Dest Node: " << destNode << " Shortest Distance: " << prevNode_cost.second << " prev node: " << prevNode_cost.first << std::endl;
 			std::cout << "visitedNodes: " << vecToString(visitedNodes) << " unvisitedNodes: " << vecToString(unvisitedNodes) << std::endl;
