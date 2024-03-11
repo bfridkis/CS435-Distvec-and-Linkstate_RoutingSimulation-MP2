@@ -109,7 +109,7 @@ void consoleOutFT(std::vector<std::map<int, std::pair<int,int>>> &_FT) {
 
     for (unsigned short sourceNode = 1; sourceNode < _FT.size(); sourceNode++) {
         //std::cout << "sourceNode: " << sourceNode << " " << _FT.size() << std::endl;
-        for (std::vector<std::map<int, std::pair<int,int>>>::iterator it = _FT[sourceNode].begin(); it!=_FT[sourceNode].end(); it++) {
+        for (std::map<int, std::pair<int,int>>::iterator it = _FT[sourceNode].begin(); it!=_FT[sourceNode].end(); it++) {
            
 			std::cout << "source: " << sourceNode << " Destination: " << it->first << " Next Hop: " << it->second.first << " Cost: " << it->second.second << std::endl;
 			
@@ -128,7 +128,7 @@ void fileOutFT(std::vector<std::map<int, std::pair<int, int>>> &_FT, std::ofstre
 	for (unsigned short sourceNode = 1; sourceNode < _FT.size(); sourceNode++) {
         //std::cout << "sourceNode: " << sourceNode << " " << _FT.size() << std::endl;
 			if(_FT[sourceNode].find(sourceNode)->second.second != -1) {
-			for (std::vector<std::map<int, std::pair<int,int>>>::iterator it=_FT[sourceNode].begin(); it!=_FT[sourceNode].end(); it++) {
+			for (std::map<int, std::pair<int,int>>::iterator it=_FT[sourceNode].begin(); it!=_FT[sourceNode].end(); it++) {
 			   
 				_outFile << it->first << " " << it->second.first << " " << it->second.second << std::endl;
 				
