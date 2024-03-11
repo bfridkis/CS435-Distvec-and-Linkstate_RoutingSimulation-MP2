@@ -7,7 +7,7 @@
 
 #include "../HEADERS/tieBreaker.hpp"
 
-//Tie breaker function. Next hop lowest node number wins the tie. Returns 1 if pathA is winner, 0 if pathB is winner, and -1 if paths are identical. Will not handle paths that are identical for the entirety of one path but of dissimilar lenghts. (However, these should never be passed as they should never have the same cost.)
+//Tie breaker function. Next hop lowest node number wins the tie. Returns 1 if pathA is winner, 0 if pathB is winner, and -1 if paths are identical. Will return -2 for paths that are identical for the entirety of one path but of dissimilar lenghts.
 int tieBreaker(std::vector<int> pathA, std::vector<int> pathB) {
 	//if(pathA.size() == 1) { return 1; }
 	//if(pathB.size() == 1) { return 0; }
@@ -22,5 +22,6 @@ int tieBreaker(std::vector<int> pathA, std::vector<int> pathB) {
 			return 0;
 		}
 	}
-	return -1;
+	if(aIt == pathA.end() & bIt == pathB.end()) { return -1; }
+	else { return -2; }
 }

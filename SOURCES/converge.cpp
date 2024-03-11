@@ -399,10 +399,10 @@ void converge(std::vector<std::map<int, std::multimap<int, std::vector<int>>>> &
 							std::cout << "New Converge - New Path Added to Existing Node - Tie: New Path = Highest Priority... sourceNode: " << sourceNode << " prevNode: " << prevNode << " reachableNode: " << reachableNode << " reachableNodeCost: " << reachableNodeCost << " newPath: " << vecToString(*newPath) << " newPathCost: " << newPathCost << std::endl;
 						}
 						//Else need to remove existing highest priority path, add new path, then restore/re-add highest priority to maintain proper ordering in multimap
-						else {
+						else if (tieBreakGoesToNewPath != -1) {
 							//Save current entry in temp pair...
-							std::cout << "saving current highest priority... " << vecToString(_FT[prevNode].find(reachableNode)->second.begin()->second) << std::endl;
-							std::pair tmpMMEntry = std::make_pair(newPathCost, _FT[prevNode].find(reachableNode)->second.begin()->second);
+							std::cout << "saving current highest priority... " << vecToString(_FT[sourceNode].find(reachableNode)->second.begin()->second) << std::endl;
+							std::pair tmpMMEntry = std::make_pair(newPathCost, _FT[sourceNode].find(reachableNode)->second.begin()->second);
 							//Erase current entry...
 							//_FT[sourceNode].find(reachableNode)->second.erase(_FT[sourceNode].find(reachableNode)->second.find(newPathCost));
 							_FT[sourceNode].find(reachableNode)->second.erase(_FT[sourceNode].find(reachableNode)->second.begin());
