@@ -374,6 +374,7 @@ void converge(std::vector<std::map<int, std::multimap<int, std::vector<int>>>> &
 						}
 						else {
 							std::cout << "New Converge - New cheaper path added to existing node!... sourceNode: " << sourceNode << " prevNode: " << prevNode << " reachableNode: " << reachableNode << " reachableNodeCost: " << reachableNodeCost << " newPath: " << vecToString(*newPath) << " newPathCost: " << newPathCost << std::endl;
+						}
 					}
 					else if(_FT[sourceNode].find(reachableNode)->second.begin()->first == newPathCost && newPath->size() > 0) {
 						//std::cout << "Got here: Line 376..." << " new path size: " << newPath->size() << std::endl;
