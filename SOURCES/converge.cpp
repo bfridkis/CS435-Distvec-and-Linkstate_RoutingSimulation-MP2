@@ -449,11 +449,11 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 		//Do not add node numbers with no established links to dijkstras (if, for example, some node numbers were skipped in topology input file)
 		if (_FT[i].find(i)->second.second != -1) {
 			if(i == sourceNode) {
-				dijk.insert(sourceNode, std::make_pair(i,0));
+				dijk.insert(std::make_pair(sourceNode, std::make_pair(i,0)));
 				visitedNodes.insert(sourceNode);
 			}
 			else {			
-				dijk.insert(i, std::make_pair(-1, std::numeric_limits<int>::max()));
+				dijk.insert(std::make_pair(i, std::make_pair(-1, std::numeric_limits<int>::max())));
 				unvisitedNodes.insert(i);
 			}
 		}
@@ -521,7 +521,7 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 			_FT[sourceNode].find(reachableNode)->second = cost;
 		}
 		else {
-			_FT[sourceNode].insert(reachableNode, std::make_pair<int,int>(nextHop, cost));
+			_FT[sourceNode].insert(std::make_pair(reachableNode, std::make_pair<int,int>(nextHop, cost)));
 		}
 	}
 }
