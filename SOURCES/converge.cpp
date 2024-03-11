@@ -361,7 +361,7 @@ void converge(std::vector<std::map<int, std::multimap<int, std::vector<int>>>> &
 			for(auto&& [reachableNodeCost, reachableNodePath] : reachableNodePaths) {
 				//if node is neighbor (i.e. directly connected) and this path is lowest cost option of direct links (in case multiple direct links of different costs)
 				//if(reachableNodePath.size() == 1 && reachableNodePath == *(_FT[prevNode].find(reachableNode)->second.find(reachableNodeCost)->begin())) {
-				if(reachableNodePath.size() == 1 && newPath->find(reachableNode) == newPath->end()) {
+				if(reachableNodePath.size() == 1 && std::find(newPath->begin(), newPath->end(), reachableNode) == newPath->end()) {
 					newPathCost += reachableNodeCost;
 					std::cout << "New Converge... sourceNode: " << sourceNode << " prevNode: " << prevNode << " reachableNodeCost: " << reachableNodeCost << " newPath: " << vecToString(newPath) << " newPathCost: " << std::endl;
 					//If there is not yet a path established from source to this node...(will never have to do this for a node's first level of recursion because initial topology loads all direct links into FT)
