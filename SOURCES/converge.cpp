@@ -348,7 +348,7 @@ void converge(std::vector<std::map<int, std::multimap<int, std::vector<int>>>> &
 	
 	//On first level of recursion, establish an empty path vector
 	if(sourceNode == prevNode) {
-		std::vector<int> _nodesAddedOnCurrentPath = std::vector<int>();
+		std::vector<int> newPath = std::vector<int>();
 		newPath = &_newPath;
 	}
 	else {
@@ -388,9 +388,9 @@ void converge(std::vector<std::map<int, std::multimap<int, std::vector<int>>>> &
 							//Erase current entry...
 							_FT[sourceNode].find(reachableNode)->second.erase(_FT[sourceNode].find(reachableNode)->second.find(newPathCost));
 							//Add new direct link with updated cost..
-							_FT[sourceNode].find(destNode)->second.insert(std::make_pair(newPathCost, std::vector<int>(newPath)));
+							_FT[sourceNode].find(reachableNode)->second.insert(std::make_pair(newPathCost, std::vector<int>(newPath)));
 							//Add back existing entry back in so it gets loaded into the multimap for destNode at this cost (==change) top priority
-							_FT[sourceNode].find(destNode)->second.insert(tmpMMEntry);
+							_FT[sourceNode].find(reachableNode)->second.insert(tmpMMEntry);
 							std::cout << "New Converge - New Path Added to Existing Node - Existing Path = Highest Priority... sourceNode: " << sourceNode << " prevNode: " << prevNode << " reachableNodeCost: " << reachableNodeCost << " newPath: " << vecToString(newPath) << " newPathCost: " << std::endl;
 						}
 					}
