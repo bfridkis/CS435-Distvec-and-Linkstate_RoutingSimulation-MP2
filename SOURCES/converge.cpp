@@ -351,12 +351,11 @@ void converge(std::vector<std::map<int, std::multimap<int, std::vector<int>>>> &
 		std::vector<int>* _newPath = new std::vector<int>();
 		newPath = _newPath;
 	}
-	//else {
-	//	newPath->push_back(prevNode);
-	//}
+	else {
+		newPath->push_back(prevNode);
+	}
 	//For node directly connected to the source node, recursively find paths to all other reachable nodes. (sourceNode == prevNode on first level of recursion)
 	for(auto&& [reachableNode, reachableNodePaths] : _FT[prevNode]) {
-		newPath->push_back(prevNode);
 		//Ignore source self entry
 		if(reachableNode != sourceNode) {
 			for(auto&& [reachableNodeCost, reachableNodePath] : reachableNodePaths) {
