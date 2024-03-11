@@ -137,7 +137,7 @@ int main(int argc, char** argv) {
     std::cout << std::endl;
     
     //Initial Routing Table Convergences. (Needs to run twice to capture any lower cost options established later in convergence for lower numbered nodes.)
-    for (int i = 1; i < FT.size(); i++) {
+    for (int sourceNode = 1; i < FT.size(); sourceNode++) {
         std::cout << std::endl;
         std::cout << "Initial convergence (1) for node: " << i << std::endl;
         converge(sourceNode, TT, FT);
