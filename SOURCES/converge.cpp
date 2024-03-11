@@ -549,7 +549,7 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 			_FT[sourceNode].find(reachableNode)->second.second = cost;
 		}
 		else {
-			_FT[sourceNode].insert(std::make_pair(reachableNode, std::make_pair<int,int>(nextHop, cost)));
+			_FT[sourceNode].insert(std::make_pair(reachableNode, std::make_pair(nextHop, cost)));
 		}
 	}
 }
