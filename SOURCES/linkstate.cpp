@@ -80,15 +80,21 @@ int main(int argc, char** argv) {
     //int i = 0;
     //while (topoInput >> a >> b >> c) {
 	//Padded with one extra element so index number can equal node number :)
-	TT.resize(2);
+	//TT.resize(2);
 	while (topoInputFile >> a >> b >> c) {
         //std::cout << "i: " << ++i << std::endl;
         //std::cout << "Line68..." << "a: " << a << " b: " << b << " c: " << c << std::endl;
 		
 		//Add additional entries up to largest number node found in topology.
         ////Padding by one in the front so index number = node number for semantic convenience. :)
-        if (a >= FT.size()) { FT.resize(a+1); }
-        if (b >= FT.size()) { FT.resize(b+1); }
+        if (a >= FT.size()) { 
+			TT.resize(a+1);
+			FT.resize(a+1); 	
+		}
+        if (b >= FT.size()) { 
+			TT.resize(b+1);
+			FT.resize(b+1); 
+		}
 		
         //std::cout << "Line75..." << "FT Size: " << FT.size() << std::endl;
         
