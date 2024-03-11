@@ -368,11 +368,12 @@ void converge(std::vector<std::map<int, std::multimap<int, std::vector<int>>>> &
 						//Add newly discovered path for this new node. 
 						//std::cout << "Got here: Line 370..." << std::endl;
 						tmpMM.insert(std::make_pair(newPathCost, *newPath));
-						_FT[sourceNode].insert(std::make_pair(reachableNode, std::multimap<int, std::vector<int>>(tmpMM)));
 						if(_FT[sourceNode].find(reachableNode) == _FT[sourceNode].end()) {
+							_FT[sourceNode].insert(std::make_pair(reachableNode, std::multimap<int, std::vector<int>>(tmpMM)));
 							std::cout << "New Converge - New node added!... sourceNode: " << sourceNode << " prevNode: " << prevNode << " reachableNode: " << reachableNode << " reachableNodeCost: " << reachableNodeCost << " newPath: " << vecToString(*newPath) << " newPathCost: " << newPathCost << std::endl;
 						}
 						else {
+							_FT[sourceNode].find(reachableNode)->second.insert(tmpMM);
 							std::cout << "New Converge - New cheaper path added to existing node!... sourceNode: " << sourceNode << " prevNode: " << prevNode << " reachableNode: " << reachableNode << " reachableNodeCost: " << reachableNodeCost << " newPath: " << vecToString(*newPath) << " newPathCost: " << newPathCost << std::endl;
 						}
 					}
