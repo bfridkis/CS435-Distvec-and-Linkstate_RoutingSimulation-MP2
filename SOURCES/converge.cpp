@@ -545,8 +545,8 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 	for(auto&& [reachableNode, nextHop_cost] : dijk) {
 		int nextHop = nextHop_cost.first, cost = nextHop_cost.second;
 		if(_FT[sourceNode].find(reachableNode) != _FT[sourceNode].end()) {
-			_FT[sourceNode].find(reachableNode)->first = nextHop;
-			_FT[sourceNode].find(reachableNode)->second = cost;
+			_FT[sourceNode].find(reachableNode)->second.first = nextHop;
+			_FT[sourceNode].find(reachableNode)->second.second = cost;
 		}
 		else {
 			_FT[sourceNode].insert(std::make_pair(reachableNode, std::make_pair<int,int>(nextHop, cost)));
