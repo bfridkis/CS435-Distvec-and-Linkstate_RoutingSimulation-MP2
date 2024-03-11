@@ -7,7 +7,8 @@ LINKLIBS = -lpthread
 
 # The components of each program. When you create a foo.c source file, add obj/foo.o here, separated
 # by a space (e.g. SOMEOBJECTS = obj/foo.o obj/bar.o obj/baz.o).
-#LINKSTATEOBJECTS = obj/linkstate.o
+LINKSTATEOBJECTS = OBJECTS/linkstate.o OBJECTS/converge.o OBJECTS/messagePrint.o OBJECTS/processChanges.o  \
+				 OBJECTS/outputFunctions.o OBJECTS/tieBreaker.o OBJECTS/vecToString.o
 DISTVECOBJECTS = OBJECTS/distvec.o OBJECTS/converge.o OBJECTS/messagePrint.o OBJECTS/processChanges.o  \
 				 OBJECTS/outputFunctions.o OBJECTS/tieBreaker.o OBJECTS/vecToString.o
 
@@ -28,6 +29,7 @@ HDR = HEADERS/converge.hpp HEADERS/messagePrint.hpp HEADERS/processChanges.hpp H
 # all : obj server client talker listener
 all : OBJECTS linkstate distvec
 #all : OBJECTS distvec
+#all : OBJECTS linkstate
 
 # $@: name of rule's target: linkstate or distvec, for the respective rules.
 # $^: the entire dependency string (after expansions); for linkstate, it's $(LINKSTATEOBJECTS), and for distvec, it's $(DISTVECOBJECTS).
