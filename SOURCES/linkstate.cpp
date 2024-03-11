@@ -96,7 +96,7 @@ int main(int argc, char** argv) {
         it = TT[a].find(b);
         //std::cout << "Line81..." << std::endl;
         if (it == TT[a].end()) {
-            TT[a].insert(std::make_pair<int,int>(b,c));
+            TT[a].insert(std::make_pair<int,int>(std::move(b),c));
 			nodesAdded.insert(a);
         }
         ////For b's map...
@@ -104,7 +104,7 @@ int main(int argc, char** argv) {
         it = TT[b].find(a);
         //std::cout << "Line94..." << std::endl;
         if (it == TT[b].end()) {
-			TT[b].insert(std::make_pair<int,int>(a,c));
+			TT[b].insert(std::make_pair<int,int>(std::move(a),c));
 			nodesAdded.insert(b);
         }
     }
@@ -249,3 +249,4 @@ int main(int argc, char** argv) {
 //https://stackoverflow.com/questions/8234779/how-to-remove-from-a-map-while-iterating-it
 //https://cplusplus.com/reference/algorithm/adjacent_find/#google_vignette
 //https://stackoverflow.com/questions/28331017/rewind-an-ifstream-object-after-hitting-the-end-of-file
+//https://stackoverflow.com/questions/20583531/lvalue-to-rvalue-reference-binding
