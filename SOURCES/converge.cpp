@@ -520,7 +520,7 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 			_FT[sourceNode].find(reachableNode)->second = cost;
 		}
 		else {
-			_FT[sourceNode].insert(reachableNode, std::make_pair<int,int>(std::move(nextHop), cost));
+			_FT[sourceNode].insert(reachableNode, std::make_pair<int,int>(nextHop, cost));
 		}
 	}
 }
