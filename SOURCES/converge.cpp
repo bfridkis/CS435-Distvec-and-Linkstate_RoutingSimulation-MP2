@@ -446,7 +446,8 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 	
 	//Initialize shortest distance values, with sourceNode = 0 and all other nodes set to infinity
 	for (int i = 1; i < _TT.size(); i++) {
-		if (_TT[i].find(i)->second.find(-1) == _TT[i].find(i)->second.end()) {
+		//Do not add node numbers with no established links to dijkstras (if, for example, some node numbers were skipped in topology input file)
+		if (_FT[i].find(i)->second.second != -1) {
 			if(i == sourceNode) {
 				dijk.insert(sourceNode, std::make_pair(i,0));
 				visitedNodes.insert(sourceNode);

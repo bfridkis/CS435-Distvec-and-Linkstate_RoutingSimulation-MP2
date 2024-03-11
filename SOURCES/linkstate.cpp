@@ -79,14 +79,16 @@ int main(int argc, char** argv) {
     //std::cout << "Line64..." << std::endl;
     //int i = 0;
     //while (topoInput >> a >> b >> c) {
+	//Padded with one extra element so index number can equal node number :)
+	TT.resize(2)
 	while (topoInputFile >> a >> b >> c) {
         //std::cout << "i: " << ++i << std::endl;
         //std::cout << "Line68..." << "a: " << a << " b: " << b << " c: " << c << std::endl;
-        
+		
 		//Add additional entries up to largest number node found in topology.
         ////Padding by one in the front so index number = node number for semantic convenience. :)
-        if (a >= TT.size()) { TT.resize(a+1); }
-        if (b >= TT.size()) { TT.resize(b+1); }
+        if (a >= FT.size()) { FT.resize(a+1); }
+        if (b >= FT.size()) { FT.resize(b+1); }
 		
         //std::cout << "Line75..." << "FT Size: " << FT.size() << std::endl;
         
@@ -112,15 +114,16 @@ int main(int argc, char** argv) {
     //std::cout << "Line100..." << std::endl;
     
     //Initialize fowarding tables with self-path cost = 0, and node numbers not added with a self-path cost of -1.
-    for (int i = 1; i < TT.size(); i++) {
+    for (int i = 1; i < FT.size(); i++) {
         
         //If node number added/part of topology, add path to self with cost of 0
         if(nodesAdded.find(i) != nodesAdded.end()) {
-			TT[i].insert(std::make_pair(i,0));
+			FT[i].(i, std::make_pair(i,0));
 		}
+		//If a node is not part of the topology, add a self-entry with a cost of -1 (used to omit printing these place holder node numbers to output file)
 		else {
-			std::cout << "adding -1 entry for this unused node number: " << i << std::endl;
-			TT[i].insert(std::make_pair(i,-1));
+			std::cout << "adding -1 entry for this unused node's self cost: " << i << std::endl;
+			FT[i].(i, std::make_pair(i,-1));
 		}
     }
     
