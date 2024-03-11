@@ -348,8 +348,8 @@ void converge(std::vector<std::map<int, std::multimap<int, std::vector<int>>>> &
 	
 	//On first level of recursion, establish an empty path vector
 	if(sourceNode == prevNode) {
-		std::vector<int> _newPath = new std::vector<int>();
-		newPath = &_newPath;
+		std::vector<int>* _newPath = new std::vector<int>();
+		newPath = _newPath;
 	}
 	else {
 		newPath->push_back(prevNode);
