@@ -12,5 +12,6 @@
 
 void processChanges(std::vector<std::map<int, std::multimap<int, std::vector<int>>>> &_FT, std::stringstream& _changesInput);
 void processChanges(std::vector<std::map<int, std::multimap<int, std::vector<int>>>> &_FT, std::ifstream& _changesInput, std::ifstream& _messagesInput, std::ofstream& _outFile);
+void processChanges(std::vector<std::map<int, std::pair<int, int>>> &_FT, std::vector<std::map<int, int>> &_TT,  std::ifstream& _changesInput, std::ifstream& _messagesInput, std::ofstream& _outFile);
 
 #endif

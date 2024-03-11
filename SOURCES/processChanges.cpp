@@ -249,7 +249,7 @@ void processChanges(std::vector<std::map<int, std::multimap<int, std::vector<int
 }
 
 //For Link State
-void processChanges(std::vector<std::map<int, std::pair<int, int>>> &_FT, std::vector<std::map<int, int>> &_TT;  std::ifstream& _changesInput, std::ifstream& _messagesInput, std::ofstream& _outFile) {
+void processChanges(std::vector<std::map<int, std::pair<int, int>>> &_FT, std::vector<std::map<int, int>> &_TT,  std::ifstream& _changesInput, std::ifstream& _messagesInput, std::ofstream& _outFile) {
 
     int changedLinkNode1, changedLinkNode2, change, j=1;
     while (_changesInput >> changedLinkNode1 >> changedLinkNode2 >> change) {    
