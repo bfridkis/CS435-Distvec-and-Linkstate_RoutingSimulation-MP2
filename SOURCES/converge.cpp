@@ -499,7 +499,7 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 		std::vector<int> tiedForLowestNextMinDistance;
 		for(std::map<int, int>::iterator it = _TT[*minDistIt].begin(); it != _TT[*minDistIt].end(); it++) {
 			int reachableNodeNextHop = it->first, reachableNodeCost = it->second;
-			if(unVisitedNodes.find(reachableNode) != unvisitedNodes.end() && 
+			if(unvisitedNodes.find(reachableNode) != unvisitedNodes.end() && 
 			  ((reachableNodeCost + minDist < dijk.find(reachableNode)->second.second) ||
 			  (dijk.find(reachableNode)->second.second == reachableNodeCost + minDist && dijk.find(reachableNode)->second.first > minDistNode))) {
 				dijk.find(reachableNode)->second.first = minDistNode;
@@ -527,7 +527,7 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 		//Add node to visited Nodes
 		visitedNodes.insert(*minDistIt);
 		//Remove node from unvisitedNodes
-		unVisitedNodes.erase(*minDistIt));
+		unvisitedNodes.erase(*minDistIt));
 		//Update minDistNode and minDist
 		minDistNode = nextMinDistNode;
 		minDist = nextMinDist;
