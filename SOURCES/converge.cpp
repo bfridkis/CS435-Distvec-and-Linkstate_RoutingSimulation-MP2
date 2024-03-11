@@ -363,13 +363,13 @@ void converge(std::vector<std::map<int, std::multimap<int, std::vector<int>>>> &
 				//if(reachableNodePath.size() == 1 && reachableNodePath == *(_FT[prevNode].find(reachableNode)->second.find(reachableNodeCost)->begin())) {
 				if(reachableNodePath.size() == 1 && std::find(newPath->begin(), newPath->end(), reachableNode) == newPath->end()) {
 					newPathCost += reachableNodeCost;
-					std::cout << "New Converge... sourceNode: " << sourceNode << " prevNode: " << prevNode << " reachableNodeCost: " << reachableNodeCost << " newPath: " << vecToString(newPath) << " newPathCost: " << std::endl;
+					std::cout << "New Converge... sourceNode: " << sourceNode << " prevNode: " << prevNode << " reachableNodeCost: " << reachableNodeCost << " newPath: " << vecToString(*newPath) << " newPathCost: " << std::endl;
 					//If there is not yet a path established from source to this node...(will never have to do this for a node's first level of recursion because initial topology loads all direct links into FT)
 					if(_FT[sourceNode].find(reachableNode) == _FT[sourceNode].end() || _FT[sourceNode].find(reachableNode)->second.begin()->first > newPathCost) {
 						//Add newly discovered path for this new node. 
 						tmpMM.insert(std::make_pair(newPathCost, newPath));
 						_FT[sourceNode].insert(std::make_pair(reachableNode, std::multimap<int, std::vector<int>>(tmpMM)));
-						std::cout << "New Converge - New node added!... sourceNode: " << sourceNode << " prevNode: " << prevNode << " reachableNodeCost: " << reachableNodeCost << " newPath: " << vecToString(newPath) << " newPathCost: " << std::endl;
+						std::cout << "New Converge - New node added!... sourceNode: " << sourceNode << " prevNode: " << prevNode << " reachableNodeCost: " << reachableNodeCost << " newPath: " << vecToString(*newPath) << " newPathCost: " << std::endl;
 					}
 					else if(_FT[sourceNode].find(reachableNode)->second.begin()->first == newPathCost) {
 						
@@ -379,7 +379,7 @@ void converge(std::vector<std::map<int, std::multimap<int, std::vector<int>>>> &
 						int tieBreakGoesToNewPath = tieBreaker(newPath, reachableNodePath);
 						if(tieBreakGoesToNewPath) {
 							_FT[sourceNode].find(reachableNode)->second.insert(tmpMM);
-							std::cout << "New Converge - New Path Added to Existing Node - New Path = Highest Priority... sourceNode: " << sourceNode << " prevNode: " << prevNode << " reachableNodeCost: " << reachableNodeCost << " newPath: " << vecToString(newPath) << " newPathCost: " << std::endl;
+							std::cout << "New Converge - New Path Added to Existing Node - New Path = Highest Priority... sourceNode: " << sourceNode << " prevNode: " << prevNode << " reachableNodeCost: " << reachableNodeCost << " newPath: " << vecToString(*newPath) << " newPathCost: " << std::endl;
 						}
 						//Else need to remove existing highest priority path, add new path, then restore/re-add highest priority to maintain proper ordering in multimap
 						else {
@@ -391,7 +391,7 @@ void converge(std::vector<std::map<int, std::multimap<int, std::vector<int>>>> &
 							_FT[sourceNode].find(reachableNode)->second.insert(std::make_pair(newPathCost, std::vector<int>(newPath)));
 							//Add back existing entry back in so it gets loaded into the multimap for destNode at this cost (==change) top priority
 							_FT[sourceNode].find(reachableNode)->second.insert(tmpMMEntry);
-							std::cout << "New Converge - New Path Added to Existing Node - Existing Path = Highest Priority... sourceNode: " << sourceNode << " prevNode: " << prevNode << " reachableNodeCost: " << reachableNodeCost << " newPath: " << vecToString(newPath) << " newPathCost: " << std::endl;
+							std::cout << "New Converge - New Path Added to Existing Node - Existing Path = Highest Priority... sourceNode: " << sourceNode << " prevNode: " << prevNode << " reachableNodeCost: " << reachableNodeCost << " newPath: " << vecToString(*newPath) << " newPathCost: " << std::endl;
 						}
 					}
 					else {
