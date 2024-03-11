@@ -1,6 +1,6 @@
 # If you use threads, add -pthread here.
 CPP = g++
-COMPILERFLAGS = -g -Wall -Wextra -Wno-sign-compare -std=c++2a
+COMPILERFLAGS = -g -Wall -Wextra -Wno-sign-compare -std=c++2a -fmax-errors=1
 
 # Any libraries you might need linked in.
 LINKLIBS = -lpthread
