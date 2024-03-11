@@ -72,7 +72,7 @@ int main(int argc, char** argv) {
     //int variables to hold topology interger values
     int a, b, c;
     //iterator to traverse and access entries of each's nodes forwarding table
-    std::pair<int, int>::iterator it;
+    std::map<int, int>::iterator it;
 	
 	std::set<int> nodesAdded;
 	
