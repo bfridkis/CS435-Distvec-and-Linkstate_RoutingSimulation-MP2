@@ -378,6 +378,7 @@ void converge(std::vector<std::map<int, std::multimap<int, std::vector<int>>>> &
 						
 						//Can add straight in if tie breaker goes to the newly sought/established path
 						int tieBreakGoesToNewPath = tieBreaker(*newPath, reachableNodePath);
+						std::cout << "Got here: Line 381..." << std::endl;
 						if(tieBreakGoesToNewPath) {
 							_FT[sourceNode].find(reachableNode)->second.insert(std::make_pair(newPathCost, *newPath));
 							std::cout << "New Converge - New Path Added to Existing Node - New Path = Highest Priority... sourceNode: " << sourceNode << " prevNode: " << prevNode << " reachableNodeCost: " << reachableNodeCost << " newPath: " << vecToString(*newPath) << " newPathCost: " << newPathCost << std::endl;
