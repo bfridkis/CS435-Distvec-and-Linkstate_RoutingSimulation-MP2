@@ -372,7 +372,7 @@ void converge(std::vector<std::map<int, std::multimap<int, std::vector<int>>>> &
 						_FT[sourceNode].insert(std::make_pair(reachableNode, std::multimap<int, std::vector<int>>(tmpMM)));
 						std::cout << "New Converge - New node added!... sourceNode: " << sourceNode << " prevNode: " << prevNode << " reachableNodeCost: " << reachableNodeCost << " newPath: " << vecToString(*newPath) << " newPathCost: " << newPathCost << std::endl;
 					}
-					else if(_FT[sourceNode].find(reachableNode)->second.begin()->first == newPathCost && newPath.size() > 0) {
+					else if(_FT[sourceNode].find(reachableNode)->second.begin()->first == newPathCost && newPath->size() > 0) {
 						std::cout << "Got here: Line 376..." << std::endl;
 						//tmpMM.insert(std::make_pair(newPathCost, *newPath));
 						
