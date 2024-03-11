@@ -465,7 +465,7 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 		std::cout << "Dest Node: " << destNode << " Shortest Distance: " << prevNode_cost.second << " prev node: " << prevNode_cost.first << std::endl;
 		std::cout << "visitedNodes: " << vecToString(visitedNodes) << " unvisitedNodes: " << vecToString(unvisitedNodes) << std::endl;
 	}
-	std::endl;
+	std::cout << std::endl;
 	
 	//First iteration, for all of sourceNode's directly connected nodes
 	for(std::map<int, int>::iterator it = _TT[sourceNode].begin(); it != _TT[sourceNode].end(); it++) {
