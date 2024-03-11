@@ -522,7 +522,7 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 			}
 		}
 		//Break tie for next min distance if needed
-		if(tiedForLowestNextMinDistance.size() > 0) {
+		if(tiedForLowestNextMinDistance.size() > 1) {
 			int winner = std::numeric_limits<int>::max();
 			for(auto node : tiedForLowestNextMinDistance) {
 				if(dijk.find(node)->second.first < winner) {
@@ -530,7 +530,7 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 				}
 			}
 			nextMinDistNode = winner;
-			std::cout << "Tie encountered for nextMinDistNode update. nextMinDist now " << nextMinDist << "(should be same as just printed) and nextMinDistNode updated to " << nextMinDistNode << std::endl;
+			std::cout << "Tie encountered for nextMinDistNode update. nextMinDist now " << nextMinDist << " (should be same as just printed) and nextMinDistNode updated to " << nextMinDistNode << std::endl;
 		}
 		
 		std::cout << std::endl;
