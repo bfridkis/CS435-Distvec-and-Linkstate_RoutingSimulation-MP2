@@ -401,6 +401,7 @@ void converge(std::vector<std::map<int, std::multimap<int, std::vector<int>>>> &
 						}
 						//Else need to remove existing highest priority path, add new path, then restore/re-add highest priority to maintain proper ordering in multimap
 						else if (tieBreakGoesToNewPath != -1) {
+							std::cout << "tieBreakGoesToNewPath: " << tieBreakGoesToNewPath << std::endl;
 							//Save current entry in temp pair...
 							std::cout << "saving current highest priority... " << vecToString(_FT[sourceNode].find(reachableNode)->second.begin()->second) << std::endl;
 							std::pair tmpMMEntry = std::make_pair(newPathCost, _FT[sourceNode].find(reachableNode)->second.begin()->second);
