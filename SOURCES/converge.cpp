@@ -402,9 +402,10 @@ void converge(std::vector<std::map<int, std::multimap<int, std::vector<int>>>> &
 						else {
 							//Save current entry in temp pair...
 							std::cout << "saving current highest priority... " << vecToString(_FT[prevNode].find(reachableNode)->second.begin()->second) << std::endl;
-							std::pair tmpMMEntry = std::make_pair(newPathCost, _FT[prevNode].find(reachableNode)->second.find(newPathCost)->second);
+							std::pair tmpMMEntry = std::make_pair(newPathCost, _FT[prevNode].find(reachableNode)->second.begin()->second);
 							//Erase current entry...
-							_FT[sourceNode].find(reachableNode)->second.erase(_FT[sourceNode].find(reachableNode)->second.find(newPathCost));
+							//_FT[sourceNode].find(reachableNode)->second.erase(_FT[sourceNode].find(reachableNode)->second.find(newPathCost));
+							_FT[sourceNode].find(reachableNode)->second.erase(_FT[sourceNode].find(reachableNode)->second.begin());
 							//Add new direct link with updated cost..
 							newPath->push_back(reachableNode);
 							_FT[sourceNode].find(reachableNode)->second.insert(std::make_pair(newPathCost, std::vector<int>(*newPath)));
