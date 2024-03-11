@@ -373,7 +373,7 @@ void converge(std::vector<std::map<int, std::multimap<int, std::vector<int>>>> &
 						std::cout << "New Converge - New node added!... sourceNode: " << sourceNode << " prevNode: " << prevNode << " reachableNode: " << reachableNode << " reachableNodeCost: " << reachableNodeCost << " newPath: " << vecToString(*newPath) << " newPathCost: " << newPathCost << std::endl;
 					}
 					else if(_FT[sourceNode].find(reachableNode)->second.begin()->first == newPathCost && newPath->size() > 0) {
-						std::cout << "Got here: Line 376..." << " new path size: " << newPath->size() << std::endl;
+						//std::cout << "Got here: Line 376..." << " new path size: " << newPath->size() << std::endl;
 						//tmpMM.insert(std::make_pair(newPathCost, *newPath));
 						
 						//Can add straight in if tie breaker goes to the newly sought/established path
