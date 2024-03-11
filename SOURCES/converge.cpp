@@ -397,7 +397,7 @@ void converge(std::vector<std::map<int, std::multimap<int, std::vector<int>>>> &
 						//Else need to remove existing highest priority path, add new path, then restore/re-add highest priority to maintain proper ordering in multimap
 						else {
 							//Save current entry in temp pair...
-							std::pair tmpMMEntry = std::make_pair(newPathCost, reachableNodePaths.find(newPathCost)->second);
+							std::pair tmpMMEntry = std::make_pair(newPathCost, _FT[prevNode].find(reachableNode)->second.find(newPathCost)->begin()->second);
 							//Erase current entry...
 							_FT[sourceNode].find(reachableNode)->second.erase(_FT[sourceNode].find(reachableNode)->second.find(newPathCost));
 							//Add new direct link with updated cost..
