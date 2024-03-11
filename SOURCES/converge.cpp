@@ -344,11 +344,11 @@ void converge(std::vector<std::map<int, std::multimap<int, std::vector<int>>>> &
 	//temporary multimap used for constructors / inserting new forwarding table entries
 	std::multimap<int, std::vector<int>> tmpMM;
 	//Initialize newPath vector with existing path to this prevNode
-	std::vector<int> newPath;
+	//std::vector<int> _newPath;
 	
 	//On first level of recursion, establish an empty path vector
 	if(sourceNode == prevNode) {
-		std::vector<int> _newPath = std::vector<int>();
+		_newPath = std::vector<int>();
 		newPath = &_newPath;
 	}
 	else {
