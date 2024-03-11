@@ -118,12 +118,12 @@ int main(int argc, char** argv) {
         
         //If node number added/part of topology, add path to self with cost of 0
         if(nodesAdded.find(i) != nodesAdded.end()) {
-			FT[i].(i, std::make_pair(i,0));
+			FT[i].insert(i, std::make_pair(i,0));
 		}
 		//If a node is not part of the topology, add a self-entry with a cost of -1 (used to omit printing these place holder node numbers to output file)
 		else {
 			std::cout << "adding -1 entry for this unused node's self cost: " << i << std::endl;
-			FT[i].(i, std::make_pair(i,-1));
+			FT[i].insert(i, std::make_pair(i,-1));
 		}
     }
     
