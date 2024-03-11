@@ -445,7 +445,7 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 	int minDistNode, minDist = std::numeric_limits<int>::max();
 	
 	//Initialize shortest distance values, with sourceNode = 0 and all other nodes set to infinity
-	for (int i = 1; i < _TT.size(); i++) {
+	for (int i = 1; i < _FT.size(); i++) {
 		//Do not add node numbers with no established links to dijkstras (if, for example, some node numbers were skipped in topology input file)
 		if (_FT[i].find(i)->second.second != -1) {
 			if(i == sourceNode) {
@@ -459,12 +459,21 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 		}
 	}
 	
+	std::cout << std::endl;
+	std::cout << "dijkstras table after initialization with infinite values for all non-source nodes (and 0 for source):" << std::endl;
+	for(auto&& [destNode, prevNode_cost] : dijk) {
+		std::cout << "Dest Node: " << destNode << " Shortest Distance: " << prevNode_cost->second << " prev node: " << prevNode_cost->first << std::endl;
+		std::cout << "visitedNodes: " << vecToString(visitedNodes) << " unvisitedNodes: " << vecToString(unvisitedNodes) << std::endl;
+	}
+	std::endl;
+	
 	//First iteration, for all of sourceNode's directly connected nodes
 	for(std::map<int, int>::iterator it = _TT[sourceNode].begin(); it != _TT[sourceNode].end(); it++) {
+		int reachableNode = it->first;
 		if(reachableNode != sourceNode) {
-			int reachableNodeNextHop = it->first, reachableNodeCost = it->second;
+			int reachableNodeCost = it->second;
 			//Add cost to dijkstras entry from source node to this reachable node
-			dijk.find(reachableNode)->second.first = reachableNodeNextHop;
+			dijk.find(reachableNode)->second.first = sourceNode;
 			dijk.find(reachableNode)->second.second = reachableNodeCost;
 			if(reachableNodeCost < minDist) {
 				minDist = reachableNodeCost;
@@ -474,9 +483,10 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 	}
 	
 	std::cout << std::endl;
-	std::cout << "Initial dijkstras table:" << std::endl;
+	std::cout << "dijkstras table after first initialization with source direct links:" << std::endl;
 	for(auto&& [destNode, prevNode_cost] : dijk) {
 		std::cout << "Dest Node: " << destNode << " Shortest Distance: " << prevNode_cost->second << " prev node: " << prevNode_cost->first << std::endl;
+		std::cout << "visitedNodes: " << vecToString(visitedNodes) << " unvisitedNodes: " << vecToString(unvisitedNodes) << std::endl;
 	}
 	std::endl;
 	
@@ -494,11 +504,13 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 			  (dijk.find(reachableNode)->second.second == reachableNodeCost + minDist && dijk.find(reachableNode)->second.first > minDistNode))) {
 				dijk.find(reachableNode)->second.first = minDistNode;
 				dijk.find(reachableNode)->second.second = reachableNodeCost + minDist;
+				std::cout << "Adding previous node " << minDistNode << " and cost of " << reachableNodeCost + minDist << " for reachableNode " << reachableNode << " to sourceNode " << sourceNode << std::endl;
 			}
 			if(reachableNodeCost + minDist < nextMinDist) {
 				nextMinDist = reachableNodeCost + minDist;
 				nextMinDistNode = minDistNode;
 				tiedForLowestNextMinDistance.push_back(reachableNode);
+				std::cout << "nextMinDist updated here to " << nextMinDist << " and nextMinDistNode updated to " << nextMinDistNode << std::endl;
 			}
 		}
 		//Break tie for next min distance if needed
@@ -510,6 +522,7 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 				}
 			}
 			nextMinDistNode = winner;
+			std::cout << "Tie encountered for nextMinDistNode update. nextMinDist now " << nextMinDist << "(should be same as just printed) and nextMinDistNode updated to " << nextMinDistNode << std::endl;
 		}
 		//Add node to visited Nodes
 		visitedNodes.insert(*minDistIt);
@@ -524,6 +537,7 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 	std::cout << "Final dijkstras table:" << std::endl;
 	for(auto&& [destNode, prevNode_cost] : dijk) {
 		std::cout << "Dest Node: " << destNode << " Shortest Distance: " << prevNode_cost->second << " prev node: " << prevNode_cost->first << std::endl;
+		std::cout << "visitedNodes: " << vecToString(visitedNodes) << " unvisitedNodes: " << vecToString(unvisitedNodes) << std::endl;
 	}
 	std::endl;
 	

@@ -290,7 +290,9 @@ void processChanges(std::vector<std::map<int, std::pair<int, int>>> &_FT, std::v
 		
 		//Reconverge
 		for(int sourceNode = 1; sourceNode < _TT.size(); sourceNode++) {
-			converge(sourceNode, _TT, _FT);
+			if(_FT[sourceNode].find(sourceNode)->second.second != -1) {
+				converge(sourceNode, TT, FT);
+			}
 		}
 		
         //std::cout << std::endl;
