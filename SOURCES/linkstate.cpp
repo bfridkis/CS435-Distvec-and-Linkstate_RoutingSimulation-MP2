@@ -116,11 +116,11 @@ int main(int argc, char** argv) {
         
         //If node number added/part of topology, add path to self with cost of 0
         if(nodesAdded.find(i) != nodesAdded.end()) {
-			TT[i].insert(std::make_pair<int,int>(i,0));
+			TT[i].insert(std::make_pair(i,0));
 		}
 		else {
 			std::cout << "adding -1 entry for this unused node number: " << i << std::endl;
-			TT[i].insert(std::make_pair<int,int>(i,-1));
+			TT[i].insert(std::make_pair(i,-1));
 		}
     }
     
