@@ -7,6 +7,7 @@
 
 #include "../HEADERS/processChanges.hpp"
 
+//For Dist Vec
 void processChanges(std::vector<std::map<int, std::multimap<int, std::vector<int>>>> &_FT, std::stringstream& _changesInput) {
 
     int changedLinkNode1, changedLinkNode2, change, j=1;
@@ -117,6 +118,7 @@ void processChanges(std::vector<std::map<int, std::multimap<int, std::vector<int
     }
 }
 
+//For Dist Vec
 void processChanges(std::vector<std::map<int, std::multimap<int, std::vector<int>>>> &_FT, std::ifstream& _changesInput, std::ifstream& _messagesInput, std::ofstream& _outFile) {
 
     int changedLinkNode1, changedLinkNode2, change, j=1;
@@ -238,6 +240,65 @@ void processChanges(std::vector<std::map<int, std::multimap<int, std::vector<int
             //converge(sourceNode, -1, -1, _FT, nullptr);
         }*/
         std::cout << std::endl;
+        std::cout << "Forwarding tables after change " << j++ << " and subsequent reconvergence applied..." << std::endl;
+        consoleOutFT(_FT);
+		fileOutFT(_FT, _outFile, false);
+		
+		messagePrint(_FT, _messagesInput, _outFile);
+    }
+}
+
+//For Link State
+void processChanges(std::vector<std::map<int, std::pair<int, int>>> &_FT, std::vector<std::map<int, int>> &_TT;  std::ifstream& _changesInput, std::ifstream& _messagesInput, std::ofstream& _outFile) {
+
+    int changedLinkNode1, changedLinkNode2, change, j=1;
+    while (_changesInput >> changedLinkNode1 >> changedLinkNode2 >> change) {    
+        std::cout << "\nChanges to be applied: changedLinkNode1 - " << changedLinkNode1 << " changedLinkNode2 - " << changedLinkNode2 << " change - " << change << std::endl;
+        std::cout << std::endl;
+		
+		//Update topology table with link cost change
+		//If link is to be removed, erase it from topology
+		if(change == -999) {
+			if(_TT[changedLinkNode1].find(changedLinkNode2) != _TT[changedLinkNode1].end()) {
+				_TT[changedLinkNode1].erase(_TT[changedLinkNode1].find(changedLinkNode2));
+			}
+			if(_TT[changedLinkNode2].find(changedLinkNode1) != _TT[changedLinkNode2].end()) {
+				_TT[changedLinkNode2].erase(_TT[changedLinkNode2].find(changedLinkNode1));
+			}
+		}
+		else {
+			//If link is already present, update it's cost
+			if(_TT[changedLinkNode1].find(changedLinkNode2) != _TT[changedLinkNode1].end()) {
+				_TT[changedLinkNode1].find(changedLinkNode2)->second = change;
+			}
+			//If link is not yet present, add it
+			else {
+				_TT[changedLinkNode1].insert(std::make_pair(changedLinkNode2, cost));
+			}
+			//If link is already present, update it's cost
+			if(_TT[changedLinkNode2].find(changedLinkNode1) != _TT[changedLinkNode2].end()) {
+				_TT[changedLinkNode2].find(changedLinkNode1)->second = change;
+			}
+			//If link is not yet present, add it
+			else {
+				_TT[changedLinkNode2].insert(std::make_pair(changedLinkNode1, cost));
+			}
+		}
+		
+		//Clear forwarding table
+		_FT.clear();
+		
+		//Reconverge
+		for(int sourceNode = 1; sourceNode < _TT.size(); sourceNode++) {
+			converge(sourceNode, _TT, _FT);
+		}
+		
+        //std::cout << std::endl;
+        //std::cout << "Forwarding Table After Change " << j << " Applied, Before Reconverge..." << std::endl;
+        //consoleOutFT(_FT);
+		
+        std::cout << std::endl;
+        
         std::cout << "Forwarding tables after change " << j++ << " and subsequent reconvergence applied..." << std::endl;
         consoleOutFT(_FT);
 		fileOutFT(_FT, _outFile, false);

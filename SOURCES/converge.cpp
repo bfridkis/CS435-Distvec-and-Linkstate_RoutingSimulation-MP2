@@ -10,6 +10,7 @@
 
 #include "../HEADERS/converge.hpp"
 
+//For Dist Vec (Attempt 1)
 void converge(int sourceNode, int neighbor, int prevDestNode, std::vector<std::map<int, std::multimap<int, std::vector<int>>>> &_FT) {      
 //void converge(int sourceNode, int neighbor, int prevDestNode, std::vector<std::map<int, std::multimap<int, std::vector<int>>>> &_FT, std::vector<int>* nodesAddedOnCurrentPath) {
 //void converge(int sourceNode, int neighbor, std::vector<std::map<int, std::multimap<int, std::vector<int>>>> &_FT) {  
@@ -337,7 +338,7 @@ void converge(int sourceNode, int neighbor, int prevDestNode, std::vector<std::m
     }
 }
 
-
+//For Dist Vec (Attempt 2)
 void converge(std::vector<std::map<int, std::multimap<int, std::vector<int>>>> &_FT, int sourceNode, int prevNode, std::vector<int>* newPath, int newPathCost) {      
 //void converge(int sourceNode, int neighbor, int prevDestNode, std::vector<std::map<int, std::multimap<int, std::vector<int>>>> &_FT, std::vector<int>* newPath) {
 //void converge(int sourceNode, int neighbor, std::vector<std::map<int, std::multimap<int, std::vector<int>>>> &_FT) {  
@@ -433,99 +434,88 @@ void converge(std::vector<std::map<int, std::multimap<int, std::vector<int>>>> &
 	delete _newPath;
 }
 
-/*
-void converge(std::vector<std::map<int, std::multimap<int, std::vector<int>>>> &_FT, int sourceNode, int prevNode, std::vector<int>* newPath, int newPathCost) {      
-//void converge(int sourceNode, int neighbor, int prevDestNode, std::vector<std::map<int, std::multimap<int, std::vector<int>>>> &_FT, std::vector<int>* newPath) {
-//void converge(int sourceNode, int neighbor, std::vector<std::map<int, std::multimap<int, std::vector<int>>>> &_FT) {  
+//For Link State
+void converge(int sourceNode, std::vector<std::map<int, std::map<int, std::pair<int, int>> &_TT, std::vector<std::map<int, std::pair<int, int>>> &_FT) {      
 	
-	//Initialize newPath vector with existing path to this prevNode
-	//std::vector<int> _newPath;
+	//Initialize container for Dijkstras. Map key is reachable node, first element of pair (int) is the "previous" node (or, alternatively from the view of the destination node itself, next hop to source), while the first element of the pair is the reachable node shortest path cost, 
+	std::map<int, std::pair<int,int> dijk;
 	
-	std::vector<int>* _newPath = new std::vector<int>();
+	//Initialize helper containers and min distance node tracker
+	std::set<int> visitedNodes, unvisitedNodes;
+	int minDistNode, minDist = std::numeric_limits<int>::max();
 	
-	//On first level of recursion, establish an empty path vector
-	if(sourceNode == prevNode) {
-		newPath = _newPath;
-	}
-	else {
-		newPath->push_back(prevNode);
-	}
-	//For node directly connected to the source node, recursively find paths to all other reachable nodes. (sourceNode == prevNode on first level of recursion)
-	//for (auto it_m = _FT[prevNode].begin(), next_it = it_m; it_m != _FT[prevNode].end(); it_m = next_it) {
-	//	next_it++;
-	 //	int reachableNode = it_m->first;
-	//	std::multimap<int, std::vector<int>> reachableNodePaths = it_m->second;
-	for(auto&& [reachableNode, reachableNodePaths] : _FT[prevNode]) {
-		//Ignore source self entry
-		if(reachableNode != sourceNode) {
-			for(auto&& [reachableNodeCost, reachableNodePath] : reachableNodePaths) {
-				//if node is neighbor (i.e. directly connected) and this path is lowest cost option of direct links (in case multiple direct links of different costs)
-				if(reachableNodePath.size() == 1 && reachableNode == reachableNodePath[0] && std::find(newPath->begin(), newPath->end(), reachableNode) == newPath->end()) {
-					newPathCost += reachableNodeCost;
-					newPath->push_back(reachableNode);
-					std::cout << "New Converge... sourceNode: " << sourceNode << " prevNode: " << prevNode << " reachableNode: " << reachableNode << " reachableNodeCost: " << reachableNodeCost << " reachableNodePathSize: " << reachableNodePath.size() << " reachableNodePath: " << vecToString(reachableNodePath) << " reachableNodeFirstHop: " << reachableNodePath[0] << " newPath: " << vecToString(*newPath) << " newPathCost: " << newPathCost << std::endl;
-					//If there is not yet a path established from source to this node...(will never have to do this for a node's first level of recursion because initial topology loads all direct links into FT)
-					if(_FT[sourceNode].find(reachableNode) == _FT[sourceNode].end() || _FT[sourceNode].find(reachableNode)->second.begin()->first > newPathCost) {
-						//Add newly discovered path for this new node. 
-						//std::cout << "Got here: Line 370..." << std::endl;
-						if(_FT[sourceNode].find(reachableNode) == _FT[sourceNode].end()) {
-							std::multimap<int, std::vector<int>> tmpMM;
-							//newPath->push_back(reachableNode);
-							tmpMM.insert(std::make_pair(newPathCost, *newPath));
-							_FT[sourceNode].insert(std::make_pair(reachableNode, std::multimap<int, std::vector<int>>(tmpMM)));
-							//newPath->pop_back();
-							std::cout << "New Converge - New node added!... sourceNode: " << sourceNode << " prevNode: " << prevNode << " reachableNode: " << reachableNode << " reachableNodeCost: " << reachableNodeCost << " newPath: " << vecToString(*newPath) << " newPathCost: " << newPathCost << std::endl;
-						}
-						else {
-							//newPath->push_back(reachableNode);
-							_FT[sourceNode].find(reachableNode)->second.insert(std::make_pair(newPathCost, *newPath));
-							//newPath->pop_back();
-							std::cout << "New Converge - New cheaper path added to existing node!... sourceNode: " << sourceNode << " prevNode: " << prevNode << " reachableNode: " << reachableNode << " reachableNodeCost: " << reachableNodeCost << " newPath: " << vecToString(*newPath) << " newPathCost: " << newPathCost << std::endl;
-						}
-					}
-					else if(_FT[sourceNode].find(reachableNode)->second.begin()->first == newPathCost && newPath->size() > 0) {
-						//std::cout << "Got here: Line 376..." << " new path size: " << newPath->size() << std::endl;
-						//tmpMM.insert(std::make_pair(newPathCost, *newPath));
-						
-						//Can add straight in if tie breaker goes to the newly sought/established path
-						int tieBreakGoesToNewPath = tieBreaker(*newPath, _FT[sourceNode].find(reachableNode)->second.begin()->second);
-						//std::cout << "Got here: Line 381..." << std::endl;
-						if(!tieBreakGoesToNewPath) {
-							//newPath->push_back(reachableNode);
-							_FT[sourceNode].find(reachableNode)->second.insert(std::make_pair(newPathCost, *newPath));
-							//newPath->pop_back();
-							std::cout << "New Converge - New Path Added to Existing Node - Tie: New Path = Highest Priority... sourceNode: " << sourceNode << " prevNode: " << prevNode << " reachableNode: " << reachableNode << " reachableNodeCost: " << reachableNodeCost << " newPath: " << vecToString(*newPath) << " newPathCost: " << newPathCost << std::endl;
-						}
-						//Else need to remove existing highest priority path, add new path, then restore/re-add highest priority to maintain proper ordering in multimap
-						else if (tieBreakGoesToNewPath != -1) {
-							std::cout << "tieBreakGoesToNewPath: " << tieBreakGoesToNewPath << std::endl;
-							//Save current entry in temp pair...
-							std::cout << "saving current highest priority... " << vecToString(_FT[sourceNode].find(reachableNode)->second.begin()->second) << std::endl;
-							std::pair tmpMMEntry = std::make_pair(newPathCost, _FT[sourceNode].find(reachableNode)->second.begin()->second);
-							//Erase current entry...
-							//_FT[sourceNode].find(reachableNode)->second.erase(_FT[sourceNode].find(reachableNode)->second.find(newPathCost));
-							_FT[sourceNode].find(reachableNode)->second.erase(_FT[sourceNode].find(reachableNode)->second.begin());
-							//Add new direct link with updated cost..
-							//newPath->push_back(reachableNode);
-							_FT[sourceNode].find(reachableNode)->second.insert(std::make_pair(newPathCost, std::vector<int>(*newPath)));
-							//newPath->pop_back();
-							//Add back existing entry back in so it gets loaded into the multimap for destNode at this cost (==change) top priority
-							_FT[sourceNode].find(reachableNode)->second.insert(tmpMMEntry);
-							std::cout << "New Converge - New Path Added to Existing Node - Tie: Existing Path = Highest Priority... sourceNode: " << sourceNode << " prevNode: " << prevNode << " reachableNode: " << reachableNode << " reachableNodeCost: " << reachableNodeCost << " newPath: " << vecToString(*newPath) << " newPathCost: " << newPathCost << std::endl;
-						}
-					}
-					else {
-						//Could add newly discovered higher cost paths here if wanted...
-						std::cout << "Cheaper path already available for and/or this direct link already exists in table" << sourceNode << "->" << reachableNode << ". Skipping this path..." << std::endl;
-					}
-					newPath->pop_back();
-					converge(_FT, sourceNode, reachableNode, newPath, newPathCost);
-					newPath->pop_back();
-					newPathCost -= reachableNodeCost;
-				}
+	//Initialize shortest distance values, with sourceNode = 0 and all other nodes set to infinity
+	for (int i = 1; i < _TT.size(); i++) {
+		if (_TT[i].find(i)->second.find(-1) == _TT[i].find(i)->second.end()) {
+			if(i == sourceNode) {
+				dijk.insert(sourceNode, std::make_pair(i,0));
+				visitedNodes.insert(sourceNode);
+			}
+			else {			
+				dijk.insert(i, std::make_pair(-1, std::numeric_limits<int>::max()));
+				unvisitedNodes.insert(i);
 			}
 		}
 	}
-	delete _newPath;
+	
+	//First iteration, for all of sourceNode's directly connected nodes
+	for(auto&& [reachableNode, reachableNode_nexthop_cost] : _TT[sourceNode]) {
+		if(reachableNode != sourceNode) {
+			int reachableNodeNextHop = reachableNode_nexthop_cost->first, reachableNodeCost = reachableNode_nexthop_cost->second;
+			//Add cost to dijkstras entry from source node to this reachable node
+			dijk.find(reachableNode)->second.first = reachableNodeNextHop;
+			dijk.find(reachableNode)->second.second = reachableNodeCost;
+			if(reachableNodeCost < minDist) {
+				minDist = reachableNodeCost;
+				minDistNode = reachableNode;
+			}
+		}
+	}
+	
+	for (int i = 0; i < unvisitedNodes.size(); i++) {
+		//Find next unvisited node with minimum distance from source node
+		std::set<int>::iterator minDistIt = unvisitedNodes.find(minDistNode);
+		//Used to track min distance update needed for next loop iteration...
+		int nextMinDistNode, nextMinDist = std::numeric_limits<int>::max();
+		//Used to find adjust nextMinDistNode in case of tie breaker
+		std::vector<int> tiedForLowestNextMinDistance;
+		for(auto&& [reachableNode, reachableNode_nexthop_cost] : _TT[*minDistIt]) {
+			int reachableNodeNextHop = reachableNode_nexthop_cost->first, reachableNodeCost = reachableNode_nexthop_cost->second;
+			if(unVisitedNodes.find(reachableNode) != unvisitedNodes.end() && 
+			  ((reachableNodeCost + minDist < dijk.find(reachableNode)->second.second) ||
+			  (dijk.find(reachableNode)->second.second == reachableNodeCost + minDist && dijk.find(reachableNode)->second.first > minDistNode))) {
+				dijk.find(reachableNode)->second.first = minDistNode;
+				dijk.find(reachableNode)->second.second = reachableNodeCost + minDist;
+			}
+			if(reachableNodeCost + minDist < nextMinDist) {
+				nextMinDist = reachableNodeCost + minDist;
+				nextMinDistNode = minDistNode;
+				tiedForLowestNextMinDistance.push_back(reachableNode);
+			}
+		}
+		//Break tie for next min distance if needed
+		if(tiedForLowestNextMinDistance.size() > 0) {
+			int winner = std::numeric_limits<int>::max();
+			for(auto node : tiedForLowestNextMinDistance) {
+				if(dijk.find(node)->second.first < winner) {
+					winner = node;
+				}
+			}
+			nextMinDistNode = winner;
+		}
+		//Add node to visited Nodes
+		visitedNodes.insert(*minDistIt);
+		//Remove node from unvisitedNodes
+		unVisitedNodes.erase(*minDistIt));
+		//Update minDistNode and minDist
+		minDistNode = nextMinDistNode;
+		minDist = nextMinDist;
+	}
+	
+	//Dijkstras Table is now built for this sourceNode. Update the forwarding table (_FT) accordingly
+	for(auto&& [reachableNode, nextHop_cost] : dijk) {
+		int nextHop = nextHop_cost->first, cost = nextHop_cost->second;
+		_FT[sourceNode].find(reachableNode)->first = nextHop;
+		_FT[sourceNode].find(reachableNode)->second = cost;
+	}
 }
-*/

@@ -26,8 +26,8 @@ HDR = HEADERS/converge.hpp HEADERS/messagePrint.hpp HEADERS/processChanges.hpp H
 # Since 'all' is first in this file, both `make all` and `make` do the same thing.
 # (`make obj server client talker listener` would also have the same effect).
 # all : obj server client talker listener
-#all : OBJECTS linkstate distvec
-all : OBJECTS distvec
+all : OBJECTS linkstate distvec
+#all : OBJECTS distvec
 
 # $@: name of rule's target: linkstate or distvec, for the respective rules.
 # $^: the entire dependency string (after expansions); for linkstate, it's $(LINKSTATEOBJECTS), and for distvec, it's $(DISTVECOBJECTS).
@@ -41,8 +41,8 @@ all : OBJECTS distvec
 #
 # In this case, LINKSTATEOBJECTS might include files like obj/linkstate.o. So, if obj/linkstate.o doesn't exist or is out of date, 
 # make will first look for a rule to build it. That rule is the 'obj/%.o' one, below; the % is a wildcard.
-#linkstate: $(LINKSTATEOBJECTS)
-#	$(CPP) $(COMPILERFLAGS) $^ -o $@ $(LINKLIBS)
+linkstate: $(LINKSTATEOBJECTS)
+	$(CPP) $(COMPILERFLAGS) $^ -o $@ $(LINKLIBS)
 
 distvec: $(DISTVECOBJECTS)
 	$(CPP) $(COMPILERFLAGS) $^ -o $@ $(LINKLIBS)

@@ -7,7 +7,7 @@
 
 #include "../HEADERS/outputFunctions.hpp"
 
-//For testing/debugging only
+//For testing/debugging only - For DistVec
 void consoleOutFT(std::vector<std::map<int, std::multimap<int, std::vector<int>>>> &_FT) {
     //Print converged FT (testing/troubleshooting only)
     std::cout << std::endl;
@@ -39,7 +39,7 @@ void consoleOutFT(std::vector<std::map<int, std::multimap<int, std::vector<int>>
     }
 }
 
-//For Printing the Forwarding Table Elements to a File
+//For Printing the Forwarding Table Elements to a File - For DistVec
 void fileOutFT(std::vector<std::map<int, std::multimap<int, std::vector<int>>>> &_FT, std::ofstream& _outFile) {
 	for (unsigned short sourceNode = 1; sourceNode < _FT.size(); sourceNode++) {
         //If self-entry not marked with cost of -1 (which means this node number was never part of the topology)...
@@ -69,7 +69,7 @@ void fileOutFT(std::vector<std::map<int, std::multimap<int, std::vector<int>>>> 
     }
 }
 
-//For Printing the Forwarding Table Elements to a File
+//For Printing the Forwarding Table Elements to a File - For DistVec
 void fileOutFT(std::vector<std::map<int, std::multimap<int, std::vector<int>>>> &_FT, std::ofstream& _outFile, bool _initialConverge) {
 	if(_FT.size() > 1 && !_initialConverge) { 
 		_outFile << std::endl; 
@@ -100,4 +100,40 @@ void fileOutFT(std::vector<std::map<int, std::multimap<int, std::vector<int>>>> 
 			}
 		}
     }
+}
+
+//For testing/debugging only - For Link State
+void consoleOutFT(std::vector<std::map<int, std::pair<int,int>>> &_FT) {
+    //Print converged FT (testing/troubleshooting only)
+    std::cout << std::endl;
+
+    for (unsigned short sourceNode = 1; sourceNode < _FT.size(); sourceNode++) {
+        //std::cout << "sourceNode: " << sourceNode << " " << _FT.size() << std::endl;
+        for (std::vector<std::map<int, std::pair<int,int>>>::iterator it=_FT[sourceNode].begin(); it!=_FT[sourceNode].end(); it++) {
+           
+			std::cout << "source: " << sourceNode << " Destination: " << it->first << " Next Hop: " << it->second.first << " Cost: " << it->second.second << std::endl;
+			
+			//std::cout << "source: " << sourceNode << " Destination: " << it->first << " Cost: " << itMM->first << " Path: " << pathToPrint << std::endl;
+			//std::cout << "source: " << sourceNode << " Destination: " << it->first << " Cost: " << itMM->first << " First Hop: " << itMM->second.size() << std::endl;
+			//std::cout << "-------------------------------------" << std::endl;
+		}
+	}
+}
+
+//For Printing the Forwarding Table Elements to a File - For Link State
+void fileOutFT(std::vector<std::map<int, std::multimap<int, std::vector<int>>>> &_FT, std::ofstream& _outFile, bool _initialConverge) {
+	if(_FT.size() > 1 && !_initialConverge) { 
+		_outFile << std::endl; 
+	}
+	for (unsigned short sourceNode = 1; sourceNode < _FT.size(); sourceNode++) {
+        //std::cout << "sourceNode: " << sourceNode << " " << _FT.size() << std::endl;
+        for (std::vector<std::map<int, std::pair<int,int>>>::iterator it=_FT[sourceNode].begin(); it!=_FT[sourceNode].end(); it++) {
+           
+			_outFile << it->first << " " << it->second.first << " " << it->second.second << std::endl;
+			
+			//std::cout << "source: " << sourceNode << " Destination: " << it->first << " Cost: " << itMM->first << " Path: " << pathToPrint << std::endl;
+			//std::cout << "source: " << sourceNode << " Destination: " << it->first << " Cost: " << itMM->first << " First Hop: " << itMM->second.size() << std::endl;
+			//std::cout << "-------------------------------------" << std::endl;
+		}
+	}
 }
