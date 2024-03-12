@@ -285,6 +285,18 @@ void processChanges(std::vector<std::map<int, std::pair<int, int>>> &_FT, std::v
 			}
 		}
 		
+		//Print topology table after changes
+		std::cout << std::endl;
+		std::cout << "Intial TT" << std::endl;
+		std::cout << "---------" << std::endl;
+		for (unsigned short i = 1; i < TT.size(); i++) {
+			//std::cout << "i: " << i << " " << FT.size() << std::endl;
+			for (it=TT[i].begin(); it!=TT[i].end(); it++) {
+				std::cout << i << it->first << it->second << std::endl;
+			}
+		}
+		std::cout << std::endl;
+		
 		//Clear forwarding table
 		_FT.clear();
 		
