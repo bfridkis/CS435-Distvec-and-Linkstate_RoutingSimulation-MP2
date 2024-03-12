@@ -287,7 +287,7 @@ void processChanges(std::vector<std::map<int, std::pair<int, int>>> &_FT, std::v
 		
 		//Print topology table after changes
 		std::cout << std::endl;
-		std::cout << "New Topology after chance " << j << std::endl;
+		std::cout << "New Topology after change " << j << std::endl;
 		std::cout << "---------" << std::endl;
 		for (unsigned short i = 1; i < _TT.size(); i++) {
 			//std::cout << "i: " << i << " " << FT.size() << std::endl;
@@ -297,8 +297,18 @@ void processChanges(std::vector<std::map<int, std::pair<int, int>>> &_FT, std::v
 		}
 		std::cout << std::endl;
 		
-		//Clear forwarding table
-		_FT.clear();
+		//Clear forwarding table except for self entries
+		for(int sourceNode = 1; sourceNode < _FT.size(); sourceNode++) {
+			for(auto&& [reachableNode, nextHop_cost] : _FT[sourceNode]) {
+				if(reachableNode != sourceNode) {
+					_FT[sourceNode].erase(_FT[sourceNode].find(reachableNode);
+				}
+			}
+		}
+		
+		//Should be empty except for self-entries here...
+		std::cout << "Stripped FT before recovergence... " << std::endl;
+		consoleOutFT(_FT);
 		
 		//Reconverge
 		for(int sourceNode = 1; sourceNode < _TT.size(); sourceNode++) {
