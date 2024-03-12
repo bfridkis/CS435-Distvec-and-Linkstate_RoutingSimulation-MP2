@@ -372,11 +372,11 @@ void processChanges(std::vector<std::map<int, std::pair<int, int>>> &_FT, std::v
 		for (int sourceNode = 1; sourceNode < FT_.size(); sourceNode++) {
 			for(auto&& [reachableNode, nextHop_cost_invert] : FT_invert[sourceNode]) {
 				if(FT[reachableNode].find(sourceNode) == FT[reachableNode].end()) {
-					FT[reachableNode].insert(sourceNode, std::make_pair(nextHop_cost_invert->first, nextHop_cost_invert->second));
+					FT[reachableNode].insert(sourceNode, std::make_pair(nextHop_cost_invert.first, nextHop_cost_invert.second));
 				}
 				else {
-					FT[reachableNode].find(sourceNode)->second.first = nextHop_cost_invert->first;
-					FT[reachableNode].find(sourceNode)->second.second = nextHop_cost_invert->second;
+					FT[reachableNode].find(sourceNode)->second.first = nextHop_cost_invert.first;
+					FT[reachableNode].find(sourceNode)->second.second = nextHop_cost_invert.second;
 				}
 			}
 		}
