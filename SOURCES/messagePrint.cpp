@@ -100,7 +100,7 @@ void messagePrint(std::vector<std::map<int, std::multimap<int, std::vector<int>>
     std::cout << std::endl;
     //_outFile << std::endl;
     auto str = std::string{};
-    while (!messages.eof()) {
+    while (!(messages.eof())) {
         std::string line, message;
         getline(messages, line);
 		//std::cout << "Line in messagePrint: " << line << "Line is Empty Check: " << line.empty() << std::endl;
