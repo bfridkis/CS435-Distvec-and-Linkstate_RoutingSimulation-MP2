@@ -593,6 +593,7 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 	std::cout << std::endl;
 	
 	std::cout << "FT Table before loaded with dijkstras..." << std::endl;
+	consoleOutFT(_FT);
 	
 	//Dijkstras Table is now built for this sourceNode. Update the forwarding table (_FT) accordingly
 	//for(auto&& [reachableNode, nextHop_cost] : dijk) {
