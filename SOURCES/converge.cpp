@@ -510,13 +510,15 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 				dijk.find(reachableNode)->second.second = reachableNodeCost + minDist;
 				std::cout << "Adding previous node " << minDistNode << " and cost of " << reachableNodeCost + minDist << " for reachableNode " << reachableNode << " to sourceNode " << sourceNode << std::endl;
 			}
-			if(unvisitedNodes.find(reachableNode) != unvisitedNodes.end() && reachableNodeCost + minDist <= nextMinDist) {
+			if(unvisitedNodes.find(reachableNode) != unvisitedNodes.end() && reachableNodeCost + minDist < nextMinDist) {
 				nextMinDist = reachableNodeCost + minDist;
 				nextMinDistNode = reachableNode;
-				if(unvisitedNodes.find(reachableNode) != unvisitedNodes.end() && reachableNodeCost + minDist == nextMinDist) {
-					tiedForLowestNextMinDistance.push_back(reachableNode);
-				}
+				tiedForLowestNextMinDistance.clear();
+				tiedForLowestNextMinDistance.push_back(reachableNode);
 				std::cout << "nextMinDist updated here to " << nextMinDist << " and nextMinDistNode updated to " << nextMinDistNode << std::endl;
+			}
+			if(unvisitedNodes.find(reachableNode) != unvisitedNodes.end() && reachableNodeCost + minDist == nextMinDist) {
+				tiedForLowestNextMinDistance.push_back(reachableNode);
 			}
 			if(unvisitedNodes.find(reachableNode) == unvisitedNodes.end()) {
 				std::cout << "node " << reachableNode << " already visited. Skipping over here..." << std::endl;
@@ -589,12 +591,12 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 		int nextHop = nextHop_cost.first, cost = nextHop_cost.second;
 		//Note: if cost does equal std::numeric_limits<int>::max(), a path was not discovered to the node in question and it is therefore unreachable from source
 		if(cost != std::numeric_limits<int>::max()) {
-			if(_FT[sourceNode].find(reachableNode) != _FT[sourceNode].end()) {
-				_FT[sourceNode].find(reachableNode)->second.first = nextHop;
-				_FT[sourceNode].find(reachableNode)->second.second = cost;
+			if(_FT[reachableNode].find(sourceNode) != _FT[sourceNode].end()) {
+				_FT[reachableNode].find(sourceNode)->second.first = nextHop;
+				_FT[reachableNode].find(sourceNode)->second.second = cost;
 			}
 			else {
-				_FT[sourceNode].insert(std::make_pair(reachableNode, std::make_pair(nextHop, cost)));
+				_FT[reachableNode].insert(std::make_pair(sourceNode, std::make_pair(nextHop, cost)));
 			}
 		}
 	}
