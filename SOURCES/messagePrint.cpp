@@ -117,7 +117,7 @@ void messagePrint(std::vector<std::map<int, std::multimap<int, std::vector<int>>
 				std::vector<int> lowestCostPath(_FT[sourceNode].find(destNode)->second.begin()->second);
 				if (lowestCostPath.size() == 1) {
 					_outFile << "from " << sourceNode << " to " << destNode << " cost " << cost << " hops " << sourceNode;
-					std::cout << "from " << sourceNode << " to " << destNode << " cost " << cost << " hops " << sourceNode;
+					//std::cout << "from " << sourceNode << " to " << destNode << " cost " << cost << " hops " << sourceNode;
 				}
 				else if (lowestCostPath.size() > 1) {
 					_outFile << "from " << sourceNode << " to " << destNode << " cost " << cost << " hops " << sourceNode << " ";
