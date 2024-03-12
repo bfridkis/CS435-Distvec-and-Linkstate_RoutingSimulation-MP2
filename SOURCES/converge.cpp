@@ -492,7 +492,7 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 	
 	std::cout << "dijkstras main run..." << std::endl;
 	int unvisitedNodesInitialSize = unvisitedNodes.size();
-	for (int i = 0; i < unvisitedNodesInitialSize - 1; i++) {
+	for (int i = 0; i < unvisitedNodesInitialSize; i++) {
 		//Find next unvisited node with minimum distance from source node
 		std::set<int>::iterator minDistIt = unvisitedNodes.find(minDistNode);
 		//Used to track min distance update needed for next loop iteration...
