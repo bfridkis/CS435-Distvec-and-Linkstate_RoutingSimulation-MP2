@@ -593,16 +593,17 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 	std::cout << std::endl;
 	
 	//Dijkstras Table is now built for this sourceNode. Update the forwarding table (_FT) accordingly
-	for(auto&& [reachableNode, nextHop_cost] : dijk) {
-	//for(std::map<int, std::pair<int,int>>::iterator it = dijk.begin(); it != dijk.end(); it++) {
-		int nextHop = nextHop_cost.first, cost = nextHop_cost.second;
+	//for(auto&& [reachableNode, nextHop_cost] : dijk) {
+	for(std::map<int, std::pair<int,int>>::iterator it = dijk.begin(); it != dijk.end(); it++) {
+		//int nextHop = nextHop_cost.first, cost = nextHop_cost.second;
+		int nextHop = it->first, cost = it->second;
 		std::cout << "Should be adding entry for reachableNode " << reachableNode << " to source node: " << sourceNode << " with next hop of " << nextHop << " and cost of " << cost << std::endl;
 		//Note: if cost does equal std::numeric_limits<int>::max(), a path was not discovered to the node in question and it is therefore unreachable from source
 		if(cost != std::numeric_limits<int>::max() && reachableNode != sourceNode) {
 			if(_FT[reachableNode].find(sourceNode) != _FT[sourceNode].end()) {
-				//_FT[reachableNode].find(sourceNode)->second.first = nextHop;
-				//_FT[reachableNode].find(sourceNode)->second.second = cost;
-				_FT[reachableNode].find(sourceNode)->insert(std::make_pair(nextHop, cost);
+				_FT[reachableNode].find(sourceNode)->second.first = nextHop;
+				_FT[reachableNode].find(sourceNode)->second.second = cost;
+				//_FT[reachableNode].find(sourceNode)->insert(std::make_pair(nextHop, cost);
 				std::cout << "Just added to FT here, existing entry for source node " << sourceNode << " already present. FT[reachableNode].find(sourceNode)->second.first = " << _FT[reachableNode].find(sourceNode)->second.first << " _FT[reachableNode].find(sourceNode)->second.second = " << _FT[reachableNode].find(sourceNode)->second.second << std::endl;
 				//consoleOutFT(_FT);
 			}
