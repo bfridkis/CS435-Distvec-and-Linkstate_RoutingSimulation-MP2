@@ -603,7 +603,7 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 				_FT[reachableNode].find(sourceNode)->second.first = nextHop;
 				_FT[reachableNode].find(sourceNode)->second.second = cost;
 				std::cout << "Just added to FT here, existing entry for source node " << sourceNode << " already present. FT[reachableNode].find(sourceNode)->second.first = " << _FT[reachableNode].find(sourceNode)->second.first << " _FT[reachableNode].find(sourceNode)->second.second = " << _FT[reachableNode].find(sourceNode)->second.second << std::endl;
-				//consoleOutFT(_FT);
+				consoleOutFT(_FT);
 			}
 			else {
 				_FT[reachableNode].insert(std::make_pair(sourceNode, std::make_pair(std::move(nextHop), cost)));
