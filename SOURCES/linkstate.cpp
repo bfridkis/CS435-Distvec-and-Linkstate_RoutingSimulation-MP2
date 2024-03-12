@@ -199,7 +199,7 @@ int main(int argc, char** argv) {
      //   i++;
     //}
     
-    processChanges(FT, changeInput);
+    //processChanges(FT, changeInput);
 	
 	std::cout << "Did we get to processChanges?" << std::endl;
 	
