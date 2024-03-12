@@ -592,6 +592,8 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 	std::cout << "visitedNodes: " << setToString(visitedNodes) << " unvisitedNodes: " << setToString(unvisitedNodes) << std::endl;
 	std::cout << std::endl;
 	
+	std::cout << "FT Table before loaded with dijkstras..." << std::endl;
+	
 	//Dijkstras Table is now built for this sourceNode. Update the forwarding table (_FT) accordingly
 	//for(auto&& [reachableNode, nextHop_cost] : dijk) {
 	for(std::map<int, std::pair<int,int>>::iterator it = dijk.begin(); it != dijk.end(); it++) {
