@@ -186,6 +186,6 @@ void messagePrint(std::vector<std::map<int, std::pair<int, int>>> &_FT, std::ifs
 	}		
     //_outFile << std::endl;
 	//Rewind input stream to beginning for next print job...
-	//messages.clear();
-	//messages.seekg(0);
+	messages.clear();
+	messages.seekg(0);
 }

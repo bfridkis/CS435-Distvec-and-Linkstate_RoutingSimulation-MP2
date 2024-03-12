@@ -182,7 +182,7 @@ int main(int argc, char** argv) {
     //auto iss = std::istringstream{"2 1 here is a message from 2 to 1\n3 5 this one gets sent from 3 to 5!"};
     //messagePrint(FT, iss);
 	
-	//messagePrint(FT, messagesInputFile, outFile);
+	messagePrint(FT, messagesInputFile, outFile);
     
     std::cout << std::endl;
     
@@ -199,7 +199,7 @@ int main(int argc, char** argv) {
      //   i++;
     //}
     
-    //processChanges(FT, changeInput);
+    processChanges(FT, changeInput);
 	
 	std::cout << "Did we get to processChanges?" << std::endl;
 	
