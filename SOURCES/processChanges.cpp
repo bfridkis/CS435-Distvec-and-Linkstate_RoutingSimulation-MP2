@@ -266,7 +266,7 @@ void processChanges(std::vector<std::map<int, std::pair<int, int>>> &_FT, std::v
 					_FT[i].insert(std::make_pair(i, std::make_pair(i,0)));
 				}
 				else {
-					FT[i].insert(std::make_pair(i, std::make_pair(i,-1)));
+					_FT[i].insert(std::make_pair(i, std::make_pair(i,-1)));
 				}
 			}
 		}
@@ -279,7 +279,7 @@ void processChanges(std::vector<std::map<int, std::pair<int, int>>> &_FT, std::v
 					_FT[i].insert(std::make_pair(i, std::make_pair(i,0)));
 				}
 				else {
-					FT[i].insert(std::make_pair(i, std::make_pair(i,-1)));
+					_FT[i].insert(std::make_pair(i, std::make_pair(i,-1)));
 				}
 			}
 		}
