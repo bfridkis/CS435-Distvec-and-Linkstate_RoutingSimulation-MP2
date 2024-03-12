@@ -598,8 +598,8 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 		//int nextHop = nextHop_cost.first, cost = nextHop_cost.second;
 		int reachableNode = it->first, nextHop = it->second.first, cost = it->second.second;
 		//Note: if cost does equal std::numeric_limits<int>::max(), a path was not discovered to the node in question and it is therefore unreachable from source
-		//if(cost != std::numeric_limits<int>::max() && reachableNode != sourceNode) {
-		if(nextHop != -1 && reachableNode != sourceNode) {
+		if(cost != std::numeric_limits<int>::max() && reachableNode != sourceNode) {
+		//if(nextHop != -1 && reachableNode != sourceNode) {
 			if(_FT[reachableNode].find(sourceNode) != _FT[reachableNode].end()) {
 				std::cout << "Should be updating entry for reachableNode " << reachableNode << " to source node: " << sourceNode << " with next hop of " << nextHop << " and cost of " << cost << std::endl;
 				_FT[reachableNode].find(sourceNode)->second.first = nextHop;
