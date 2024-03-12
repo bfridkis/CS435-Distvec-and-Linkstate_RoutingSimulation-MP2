@@ -271,6 +271,7 @@ void processChanges(std::vector<std::map<int, std::pair<int, int>>> &_FT, std::v
 			}
 		}
 		if(changedLinkNode2 > _TT.size()) {
+			int prevSize = _TT.size();
 			_TT.resize(changedLinkNode2+1);
 			_FT.resize(changedLinkNode2+1);
 			//Resize forwarding table and initialize added node with self link cost of 0 (and if any nodes are skipped in between previous highest node number and newest node, initialize those node number placeholders with cost of -1, to denote not part of topology)
