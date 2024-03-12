@@ -596,7 +596,7 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 	//for(auto&& [reachableNode, nextHop_cost] : dijk) {
 	for(std::map<int, std::pair<int,int>>::iterator it = dijk.begin(); it != dijk.end(); it++) {
 		//int nextHop = nextHop_cost.first, cost = nextHop_cost.second;
-		int nextHop = it->first, cost = it->second;
+		int reachableNode = it->first, nextHop = it->second.first, cost = it->second.second;
 		std::cout << "Should be adding entry for reachableNode " << reachableNode << " to source node: " << sourceNode << " with next hop of " << nextHop << " and cost of " << cost << std::endl;
 		//Note: if cost does equal std::numeric_limits<int>::max(), a path was not discovered to the node in question and it is therefore unreachable from source
 		if(cost != std::numeric_limits<int>::max() && reachableNode != sourceNode) {
