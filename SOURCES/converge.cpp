@@ -600,7 +600,7 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 		//Note: if cost does equal std::numeric_limits<int>::max(), a path was not discovered to the node in question and it is therefore unreachable from source
 		if(cost != std::numeric_limits<int>::max() && reachableNode != sourceNode) {
 			if(_FT[reachableNode].find(sourceNode) != _FT[sourceNode].end()) {
-				_FT[reachableNode].find(sourceNode)->second.first = std::copy(nextHop);
+				_FT[reachableNode].find(sourceNode)->second.first = std::move(nextHop);
 				_FT[reachableNode].find(sourceNode)->second.second = cost;
 				std::cout << "Just added to FT here, existing entry for source node " << sourceNode << " already present. FT[reachableNode].find(sourceNode)->second.first = " << _FT[reachableNode].find(sourceNode)->second.first << " _FT[reachableNode].find(sourceNode)->second.second = " << _FT[reachableNode].find(sourceNode)->second.second << std::endl;
 			}
