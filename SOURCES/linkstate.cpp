@@ -71,8 +71,6 @@ int main(int argc, char** argv) {
     
     //int variables to hold topology interger values
     int a, b, c;
-    //iterator to traverse and access entries of each's nodes forwarding table
-    std::map<int, int>::iterator it;
 	
 	std::set<int> nodesAdded;
 	
@@ -139,7 +137,7 @@ int main(int argc, char** argv) {
     std::cout << "---------" << std::endl;
     for (unsigned short i = 1; i < TT.size(); i++) {
         //std::cout << "i: " << i << " " << FT.size() << std::endl;
-        for (it=TT[i].begin(); it!=TT[i].end(); it++) {
+        for (std::map<int, int>::iterator it=TT[i].begin(); it!=TT[i].end(); it++) {
             std::cout << i << it->first << it->second << std::endl;
         }
     }
