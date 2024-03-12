@@ -289,9 +289,9 @@ void processChanges(std::vector<std::map<int, std::pair<int, int>>> &_FT, std::v
 		std::cout << std::endl;
 		std::cout << "Intial TT" << std::endl;
 		std::cout << "---------" << std::endl;
-		for (unsigned short i = 1; i < TT.size(); i++) {
+		for (unsigned short i = 1; i < _TT.size(); i++) {
 			//std::cout << "i: " << i << " " << FT.size() << std::endl;
-			for (it=TT[i].begin(); it!=TT[i].end(); it++) {
+			for (it=_TT[i].begin(); it!=_TT[i].end(); it++) {
 				std::cout << i << it->first << it->second << std::endl;
 			}
 		}
