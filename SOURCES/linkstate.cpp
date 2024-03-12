@@ -160,7 +160,7 @@ int main(int argc, char** argv) {
 	//After converge, need to swap routes between each source and destination to ensure tie breaking rule of lowest last hop node number is followed (due to the fact that dijkstra's algo builds the routes in reverse order, i.e. from destination to source... see converge.cpp)
 	//Do this by building a new FT with swapped values from the dijkstra inverted output
 	//(If this makes program run too slow, for this assignment/exercise just need to swap the final source / destination next hops for consoleOutFT and print dest path as source's and vis versa in messagePrint...)
-	for (int sourceNode = 1; sourceNode < FT_.size(); sourceNode++) {
+	for (int sourceNode = 1; sourceNode < FT_invert.size(); sourceNode++) {
 		for(auto&& [reachableNode, nextHop_cost_invert] : FT_invert[sourceNode]) {
 			if(FT[reachableNode].find(sourceNode) == FT[reachableNode].end()) {
 				FT[reachableNode].insert(sourceNode, std::make_pair(nextHop_cost_invert->first, nextHop_cost_invert->second));
