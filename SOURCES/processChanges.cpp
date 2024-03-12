@@ -269,7 +269,7 @@ void processChanges(std::vector<std::map<int, std::pair<int, int>>> &_FT, std::v
 				}
 				else {
 					_FT[i].insert(std::make_pair(i, std::make_pair(i,-1)));
-					_FT[i]_invert.insert(std::make_pair(i, std::make_pair(i,-1)));
+					_FT_[i]invert.insert(std::make_pair(i, std::make_pair(i,-1)));
 				}
 			}
 		}
@@ -282,7 +282,7 @@ void processChanges(std::vector<std::map<int, std::pair<int, int>>> &_FT, std::v
 			for(int i = prevSize ; i < _FT.size(); i++) {
 				if(i == changedLinkNode2) {
 					_FT[i].insert(std::make_pair(i, std::make_pair(i,0)));
-					_FT[i]_invert.insert(std::make_pair(i, std::make_pair(i,0)));
+					_FT_invert[i]invert.insert(std::make_pair(i, std::make_pair(i,0)));
 				}
 				else {
 					_FT[i].insert(std::make_pair(i, std::make_pair(i,-1)));
