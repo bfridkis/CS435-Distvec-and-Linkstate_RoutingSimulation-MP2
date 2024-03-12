@@ -575,7 +575,7 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 			}
 		//}
 		
-		std::cout << "nextMinDistNode: " << nextMinDistNode << " nextMinDist: " << nextMinDist << std::endl;
+		std::cout << "nextMinDistNode: " << minDistNode << " nextMinDist: " << minDist << std::endl;
 		for(auto&& [destNode, prevNode_cost] : dijk) {
 			std::cout << "Source Node: " << sourceNode << " Dest Node: " << destNode << " Shortest Distance: " << prevNode_cost.second << " prev node: " << prevNode_cost.first << std::endl;
 		}
