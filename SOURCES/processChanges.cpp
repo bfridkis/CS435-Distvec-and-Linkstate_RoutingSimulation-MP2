@@ -256,7 +256,7 @@ void processChanges(std::vector<std::map<int, std::pair<int, int>>> &_FT, std::v
         std::cout << "\nChanges to be applied: changedLinkNode1 - " << changedLinkNode1 << " changedLinkNode2 - " << changedLinkNode2 << " change - " << change << std::endl;
         std::cout << std::endl;
 		
-		if(changedLinkNode1 > _FT.size() + 1) {
+		if(changedLinkNode1 > _FT.size() - 1) {
 			int prevSize = _TT.size();
 			_TT.resize(changedLinkNode1+1);
 			_FT.resize(changedLinkNode1+1);
@@ -270,7 +270,7 @@ void processChanges(std::vector<std::map<int, std::pair<int, int>>> &_FT, std::v
 				}
 			}
 		}
-		if(changedLinkNode2 > _FT.size() + 1) {
+		if(changedLinkNode2 > _FT.size() - 1) {
 			int prevSize = _TT.size();
 			_TT.resize(changedLinkNode2+1);
 			_FT.resize(changedLinkNode2+1);
@@ -305,7 +305,7 @@ void processChanges(std::vector<std::map<int, std::pair<int, int>>> &_FT, std::v
 				_TT[changedLinkNode1].insert(std::make_pair(changedLinkNode2, change));
 			}
 			//If link is already present, update it's cost
-			std::cout << "_TT.size() : " << _TT.size() << std::endl;
+			//std::cout << "_TT.size() : " << _TT.size() << std::endl;
 			if(_TT[changedLinkNode2].find(changedLinkNode1) != _TT[changedLinkNode2].end()) {
 				_TT[changedLinkNode2].find(changedLinkNode1)->second = change;
 			}
