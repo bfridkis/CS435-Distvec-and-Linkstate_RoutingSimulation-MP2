@@ -128,9 +128,13 @@ void fileOutFT(std::vector<std::map<int, std::pair<int, int>>> &_FT, std::ofstre
 	for (unsigned short sourceNode = 1; sourceNode < _FT.size(); sourceNode++) {
         //std::cout << "sourceNode: " << sourceNode << " " << _FT.size() << std::endl;
 			if(_FT[sourceNode].find(sourceNode)->second.second != -1) {
-			for (std::map<int, std::pair<int,int>>::iterator it=_FT[sourceNode].begin(); it!=_FT[sourceNode].end(); it++) {
-			   
-				_outFile << it->first << " " << it->second.first << " " << it->second.second << std::endl;
+			for (std::map<int, std::pair<int,int>>::iterator it=_FT[sourceNode].begin(); it !=_FT[sourceNode].end(); it++) {
+			   if(sourceNode == FT.size()-1 && it == _FT[sourceNode].end()-1) {
+					_outFile << it->first << " " << it->second.first << " " << it->second.second;
+			   }
+			   else {
+				   _outFile << it->first << " " << it->second.first << " " << it->second.second << std::endl;
+			   }
 				
 				//std::cout << "source: " << sourceNode << " Destination: " << it->first << " Cost: " << itMM->first << " Path: " << pathToPrint << std::endl;
 				//std::cout << "source: " << sourceNode << " Destination: " << it->first << " Cost: " << itMM->first << " First Hop: " << itMM->second.size() << std::endl;
