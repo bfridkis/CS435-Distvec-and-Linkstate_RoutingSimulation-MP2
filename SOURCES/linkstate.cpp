@@ -163,7 +163,7 @@ int main(int argc, char** argv) {
 	for (int sourceNode = 1; sourceNode < FT_invert.size(); sourceNode++) {
 		for(auto&& [reachableNode, nextHop_cost_invert] : FT_invert[sourceNode]) {
 			if(FT[reachableNode].find(sourceNode) == FT[reachableNode].end()) {
-				FT[reachableNode].insert(sourceNode, std::make_pair(nextHop_cost_invert.first, nextHop_cost_invert.second));
+				FT[reachableNode].insert(std::make_pair(sourceNode, std::make_pair(nextHop_cost_invert.first, nextHop_cost_invert.second)));
 			}
 			else {
 				FT[reachableNode].find(sourceNode)->second.first = nextHop_cost_invert.first;
