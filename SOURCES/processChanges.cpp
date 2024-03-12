@@ -256,6 +256,34 @@ void processChanges(std::vector<std::map<int, std::pair<int, int>>> &_FT, std::v
         std::cout << "\nChanges to be applied: changedLinkNode1 - " << changedLinkNode1 << " changedLinkNode2 - " << changedLinkNode2 << " change - " << change << std::endl;
         std::cout << std::endl;
 		
+		if(changedLinkNode1 > _TT.size()) {
+			int prevSize = _TT.size();
+			_TT.resize(changedLinkNode1+1);
+			_FT.resize(changedLinkNode1+1);
+			//Resize forwarding table and initialize added node with self link cost of 0 (and if any nodes are skipped in between previous highest node number and newest node, initialize those node number placeholders with cost of -1, to denote not part of topology)
+			for(int sourceNode = prevSize ; sourceNode < _FT.size(); sourceNode++) {
+				if(sourceNode == changedLinkNode1) {
+					_FT[sourceNode].insert(std::make_pair(i, std::make_pair(i,0)));
+				}
+				else {
+					FT[i].insert(std::make_pair(i, std::make_pair(i,-1)));
+				}
+			}
+		}
+		if(changedLinkNode2 > _TT.size()) {
+			_TT.resize(changedLinkNode2+1);
+			_FT.resize(changedLinkNode2+1);
+			//Resize forwarding table and initialize added node with self link cost of 0 (and if any nodes are skipped in between previous highest node number and newest node, initialize those node number placeholders with cost of -1, to denote not part of topology)
+			for(int sourceNode = prevSize ; sourceNode < _FT.size(); sourceNode++) {
+				if(sourceNode == changedLinkNode2) {
+					_FT[sourceNode].insert(std::make_pair(i, std::make_pair(i,0)));
+				}
+				else {
+					FT[i].insert(std::make_pair(i, std::make_pair(i,-1)));
+				}
+			}
+		}
+		
 		//Update topology table with link cost change
 		//If link is to be removed, erase it from topology
 		if(change == -999) {
