@@ -610,6 +610,7 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 				//consoleOutFT(_FT);
 			}
 			else {
+				std::cout << "Line 613 inside converge..." << std::endl;
 				_FT[reachableNode].insert(std::make_pair(sourceNode, std::make_pair(std::move(nextHop), cost)));
 				//std::cout << "Just added to FT here, new entry for source node " << sourceNode << ". FT[reachableNode].find(sourceNode)->second.first = " << _FT[reachableNode].find(sourceNode)->second.first << " _FT[reachableNode].find(sourceNode)->second.second = " << _FT[reachableNode].find(sourceNode)->second.second << std::endl;
 			}
