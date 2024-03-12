@@ -369,7 +369,7 @@ void processChanges(std::vector<std::map<int, std::pair<int, int>>> &_FT, std::v
 		//After before after the initial converge (linkstate.cpp), need to swap routes between each source and destination to ensure tie breaking rule of lowest last hop node number is followed (due to the fact that dijkstra's algo builds the routes in reverse order, i.e. from destination to source... see converge.cpp)
 		//Do this by building a new FT with swapped values from the dijkstra inverted output
 		//(If this makes program run too slow, for this assignment/exercise just need to swap the final source / destination next hops for consoleOutFT and print dest path as source's and vis versa in messagePrint...)
-		for (int sourceNode = 1; sourceNode < _FT_.size(); sourceNode++) {
+		for (int sourceNode = 1; sourceNode < _FT_invert.size(); sourceNode++) {
 			for(auto&& [reachableNode, nextHop_cost_invert] : _FT_invert[sourceNode]) {
 				if(_FT[reachableNode].find(sourceNode) == _FT[reachableNode].end()) {
 					_FT[reachableNode].insert(std::make_pair(sourceNode, std::make_pair(nextHop_cost_invert.first, nextHop_cost_invert.second)));
