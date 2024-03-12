@@ -599,21 +599,21 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 		//for(auto&& [reachableNode, nextHop_cost] : dijk) {
 		for(std::map<int, std::pair<int,int>>::iterator it = dijk.begin(); it != dijk.end(); it++) {
 			//int nextHop = nextHop_cost.first, cost = nextHop_cost.second;
-			int reachableNode = it->first, nextHop = it->second.first, cost = it->second.second;
+			int reachableNode = it->first, lastHop = it->second.first, cost = it->second.second;
 			//Note: if cost does equal std::numeric_limits<int>::max(), a path was not discovered to the node in question and it is therefore unreachable from source
 			if(cost != std::numeric_limits<int>::max() && reachableNode != sourceNode) {
-			//if(nextHop != -1 && reachableNode != sourceNode) {
-				if(_FT[reachableNode].find(sourceNode) != _FT[reachableNode].end()) {
-					std::cout << "Should be updating entry for reachableNode " << reachableNode << " to source node: " << sourceNode << " with next hop of " << nextHop << " and cost of " << cost << std::endl;
-					_FT[reachableNode].find(sourceNode)->second.first = nextHop;
-					_FT[reachableNode].find(sourceNode)->second.second = cost;
-					//_FT[reachableNode].find(sourceNode)->insert(std::make_pair(nextHop, cost);
+			//if(lastHop != -1 && reachableNode != sourceNode) {
+				if(_FT[sourceNode].find(reachableNode) != _FT[sourceNode].end()) {
+					std::cout << "Should be updating entry for reachableNode " << reachableNode << " to source node: " << sourceNode << " with next hop of " << lastHop << " and cost of " << cost << std::endl;
+					_FT[sourceNode].find(reachableNode)->second.first = lastHop;
+					_FT[sourceNode].find(reachableNode)->second.second = cost;
+					//_FT[reachableNode].find(sourceNode)->insert(std::make_pair(lastHop, cost);
 					//std::cout << "Just added to FT here, existing entry for source node " << sourceNode << " already present. FT[reachableNode].find(sourceNode)->second.first = " << _FT[reachableNode].find(sourceNode)->second.first << " _FT[reachableNode].find(sourceNode)->second.second = " << _FT[reachableNode].find(sourceNode)->second.second << std::endl;
 					//consoleOutFT(_FT);
 				}
 				else {
-					std::cout << "Should be adding entry for reachableNode " << reachableNode << " to source node: " << sourceNode << " with next hop of " << nextHop << " and cost of " << cost << std::endl;
-					_FT[reachableNode].insert(std::make_pair(sourceNode, std::make_pair(std::move(nextHop), cost)));
+					std::cout << "Should be adding entry for reachableNode " << reachableNode << " to source node: " << sourceNode << " with next hop of " << lastHop << " and cost of " << cost << std::endl;
+					_FT[sourceNode].insert(std::make_pair(reachableNode, std::make_pair(std::move(lastHop), cost)));
 					//std::cout << "Just added to FT here, new entry for source node " << sourceNode << ". FT[reachableNode].find(sourceNode)->second.first = " << _FT[reachableNode].find(sourceNode)->second.first << " _FT[reachableNode].find(sourceNode)->second.second = " << _FT[reachableNode].find(sourceNode)->second.second << std::endl;
 				}
 			}
