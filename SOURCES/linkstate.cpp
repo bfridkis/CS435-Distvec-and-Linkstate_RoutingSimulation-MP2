@@ -158,7 +158,7 @@ int main(int argc, char** argv) {
     std::cout << std::endl;
     std::cout << "Forwarding tables after initial converge..." << std::endl;
     consoleOutFT(FT);
-	std::cout << "Got past consoleOutFT?" << std::endl;
+	//std::cout << "Got past consoleOutFT?" << std::endl;
 	
 	//fileOutFT(FT, outFile);
 	fileOutFT(FT, outFile, true);
@@ -201,7 +201,7 @@ int main(int argc, char** argv) {
     
     //processChanges(FT, changeInput);
 	
-	std::cout << "Did we get to processChanges?" << std::endl;
+	//std::cout << "Did we get to processChanges?" << std::endl;
 	
 	processChanges(FT, TT, changesInputFile, messagesInputFile, outFile);
     
