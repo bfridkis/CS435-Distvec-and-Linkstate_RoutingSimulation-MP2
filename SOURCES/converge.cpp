@@ -601,11 +601,11 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 		if(cost != std::numeric_limits<int>::max() && reachableNode != sourceNode) {
 			if(_FT[reachableNode].find(sourceNode) != _FT[sourceNode].end()) {
 				_FT[reachableNode].find(sourceNode)->second.first = std::move(nextHop);
-				_FT[reachableNode].find(sourceNode)->second.second = cost;
+				_FT[reachableNode].find(sourceNode)->second.second = std::move(cost);
 				std::cout << "Just added to FT here, existing entry for source node " << sourceNode << " already present. FT[reachableNode].find(sourceNode)->second.first = " << _FT[reachableNode].find(sourceNode)->second.first << " _FT[reachableNode].find(sourceNode)->second.second = " << _FT[reachableNode].find(sourceNode)->second.second << std::endl;
 			}
 			else {
-				_FT[reachableNode].insert(std::make_pair(sourceNode, std::make_pair(nextHop, cost)));
+				_FT[reachableNode].insert(std::make_pair(sourceNode, std::make_pair(std::move(nextHop), std::move(cost))));
 				std::cout << "Just added to FT here, new entry for source node " << sourceNode << ". FT[reachableNode].find(sourceNode)->second.first = " << _FT[reachableNode].find(sourceNode)->second.first << " _FT[reachableNode].find(sourceNode)->second.second = " << _FT[reachableNode].find(sourceNode)->second.second << std::endl;
 			}
 		}
