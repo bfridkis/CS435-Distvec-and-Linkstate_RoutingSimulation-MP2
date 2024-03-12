@@ -105,7 +105,7 @@ void messagePrint(std::vector<std::map<int, std::multimap<int, std::vector<int>>
         getline(messages, line);
 		//std::cout << "Line in messagePrint: " << line << "Line is Empty Check: " << line.empty() << std::endl;
         if((!line.empty()) && (std::find_if_not(line.begin(),line.end(),[](char c){return std::isspace(c);}) != line.end())) {
-			std::cout << "Line 108..." << std::endl;
+			//std::cout << "Line 108..." << std::endl;
 			_outFile << std::endl;
 			int sourceNode, destNode, cost;
 			std::istringstream messageStr(line);
@@ -148,7 +148,7 @@ void messagePrint(std::vector<std::map<int, std::multimap<int, std::vector<int>>
 }
 
 //For Link State
-/*void messagePrint(std::vector<std::map<int, std::pair<int, int>>> &_FT, std::ifstream& messages, std::ofstream& _outFile) {
+void messagePrint(std::vector<std::map<int, std::pair<int, int>>> &_FT, std::ifstream& messages, std::ofstream& _outFile) {
     
     std::cout << std::endl;
     //_outFile << std::endl;
@@ -190,4 +190,4 @@ void messagePrint(std::vector<std::map<int, std::multimap<int, std::vector<int>>
 	//Rewind input stream to beginning for next print job...
 	messages.clear();
 	messages.seekg(0);
-}*/
+}
