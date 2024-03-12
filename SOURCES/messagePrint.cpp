@@ -176,7 +176,7 @@ void messagePrint(std::vector<std::map<int, std::pair<int, int>>> &_FT, std::ifs
 				while(it->second.first != destNode) {
 					_outFile << it->second.first << " ";
 					it = _FT[it->second.first].find(destNode);
-				//}
+				}
 				//_outFile << " message" << message;
 				_outFile << " message" << message;
 			}
