@@ -435,7 +435,7 @@ void converge(std::vector<std::map<int, std::multimap<int, std::vector<int>>>> &
 }
 
 //For Link State
-void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<std::map<int, std::pair<int, int>>> &_FT) {
+void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<std::map<int, std::pair<int, int>>> &_FT_invert) {
 	
 	//Initialize container for Dijkstras. Map key is reachable node, first element of pair (int) is the "previous" node (or, alternatively from the view of the destination node itself, next hop to source), while the first element of the pair is the reachable node shortest path cost, 
 	std::map<int, std::pair<int,int>> dijk;
@@ -445,9 +445,9 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 	int minDistNode, minDist = std::numeric_limits<int>::max();
 	
 	//Initialize shortest distance values, with sourceNode = 0 and all other nodes set to infinity
-	for (int i = 1; i < _FT.size(); i++) {
+	for (int i = 1; i < _FT_invert.size(); i++) {
 		//Do not add node numbers with no established links to dijkstras (if, for example, some node numbers were skipped in topology input file)
-		if (_FT[i].find(i)->second.second != -1) {
+		if (_FT_invert[i].find(i)->second.second != -1) {
 			if(i == sourceNode) {
 				dijk.insert(std::make_pair(sourceNode, std::make_pair(i,0)));
 				visitedNodes.insert(sourceNode);
@@ -593,9 +593,9 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 		std::cout << std::endl;
 		
 		std::cout << "FT Table before loaded with dijkstras..." << std::endl;
-		consoleOutFT(_FT);
+		consoleOutFT(_FT_invert);
 		
-		//Dijkstras Table is now built for this sourceNode. Update the forwarding table (_FT) accordingly
+		//Dijkstras Table is now built for this sourceNode. Update the forwarding table (_FT_invert) accordingly
 		//for(auto&& [reachableNode, nextHop_cost] : dijk) {
 		for(std::map<int, std::pair<int,int>>::iterator it = dijk.begin(); it != dijk.end(); it++) {
 			//int nextHop = nextHop_cost.first, cost = nextHop_cost.second;
@@ -603,18 +603,18 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 			//Note: if cost does equal std::numeric_limits<int>::max(), a path was not discovered to the node in question and it is therefore unreachable from source
 			if(cost != std::numeric_limits<int>::max() && reachableNode != sourceNode) {
 			//if(nextHop != -1 && reachableNode != sourceNode) {
-				if(_FT[reachableNode].find(sourceNode) != _FT[reachableNode].end()) {
+				if(_FT_invert[reachableNode].find(sourceNode) != _FT_invert[reachableNode].end()) {
 					std::cout << "Should be updating entry for reachableNode " << reachableNode << " to source node: " << sourceNode << " with next hop of " << nextHop << " and cost of " << cost << std::endl;
-					_FT[reachableNode].find(sourceNode)->second.first = nextHop;
-					_FT[reachableNode].find(sourceNode)->second.second = cost;
-					//_FT[reachableNode].find(sourceNode)->insert(std::make_pair(nextHop, cost);
-					//std::cout << "Just added to FT here, existing entry for source node " << sourceNode << " already present. FT[reachableNode].find(sourceNode)->second.first = " << _FT[reachableNode].find(sourceNode)->second.first << " _FT[reachableNode].find(sourceNode)->second.second = " << _FT[reachableNode].find(sourceNode)->second.second << std::endl;
-					//consoleOutFT(_FT);
+					_FT_invert[reachableNode].find(sourceNode)->second.first = nextHop;
+					_FT_invert[reachableNode].find(sourceNode)->second.second = cost;
+					//_FT_invert[reachableNode].find(sourceNode)->insert(std::make_pair(nextHop, cost);
+					//std::cout << "Just added to FT here, existing entry for source node " << sourceNode << " already present. FT[reachableNode].find(sourceNode)->second.first = " << _FT_invert[reachableNode].find(sourceNode)->second.first << " _FT_invert[reachableNode].find(sourceNode)->second.second = " << _FT_invert[reachableNode].find(sourceNode)->second.second << std::endl;
+					//consoleOutFT(_FT_invert);
 				}
 				else {
 					std::cout << "Should be adding entry for reachableNode " << reachableNode << " to source node: " << sourceNode << " with next hop of " << nextHop << " and cost of " << cost << std::endl;
-					_FT[reachableNode].insert(std::make_pair(sourceNode, std::make_pair(std::move(nextHop), cost)));
-					//std::cout << "Just added to FT here, new entry for source node " << sourceNode << ". FT[reachableNode].find(sourceNode)->second.first = " << _FT[reachableNode].find(sourceNode)->second.first << " _FT[reachableNode].find(sourceNode)->second.second = " << _FT[reachableNode].find(sourceNode)->second.second << std::endl;
+					_FT_invert[reachableNode].insert(std::make_pair(sourceNode, std::make_pair(std::move(nextHop), cost)));
+					//std::cout << "Just added to FT here, new entry for source node " << sourceNode << ". FT[reachableNode].find(sourceNode)->second.first = " << _FT_invert[reachableNode].find(sourceNode)->second.first << " _FT_invert[reachableNode].find(sourceNode)->second.second = " << _FT_invert[reachableNode].find(sourceNode)->second.second << std::endl;
 				}
 			}
 		}
@@ -622,7 +622,7 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 	std::cout << std::endl;
 	std::cout << "FT after final dijkstras inside converge... just ran for source node: " << sourceNode << std::endl;
 	std::cout << std::endl;
-	consoleOutFT(_FT);
+	consoleOutFT(_FT_invert);
 	
 	//Print converged FT (testing/troubleshooting only)
     std::cout << std::endl;

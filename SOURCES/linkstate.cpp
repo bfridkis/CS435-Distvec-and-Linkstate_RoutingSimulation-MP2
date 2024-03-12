@@ -46,7 +46,7 @@ int main(int argc, char** argv) {
 	std::vector<std::map<int, int>> TT; 
 	
     //Forwarding tables stored as vector of maps, with each vector element corresponding to a forwarding table for a given node, and each (map) entry of that table is that node's forwarding entry, indexed by destination and with the resulting pair first element == to the next hop, and second element == path cost
-	std::vector<std::map<int, std::pair<int, int>>> FT; 
+	std::vector<std::map<int, std::pair<int, int>>> FT, FT_invert; 		//FT_invert is used for the converge function's dijkstra results, since dijkstra essentially builds paths /resolves ties in reverse order. The results of invert will be swapped/inverted to produce the final FT
     
     //Build initial forwarding table from topology input file
     //std::ifstream topoInput(argv[1]);
@@ -89,11 +89,13 @@ int main(int argc, char** argv) {
         ////Padding by one in the front so index number = node number for semantic convenience. :)
         if (a >= FT.size()) { 
 			TT.resize(a+1);
-			FT.resize(a+1); 	
+			FT.resize(a+1);
+			FT_invert.resize(a+1);
 		}
         if (b >= FT.size()) { 
 			TT.resize(b+1);
 			FT.resize(b+1); 
+			FT_invert.resize(b+1); 
 		}
 		
         //std::cout << "Line75..." << "FT Size: " << FT.size() << std::endl;
@@ -125,11 +127,13 @@ int main(int argc, char** argv) {
         //If node number added/part of topology, add path to self with cost of 0
         if(nodesAdded.find(i) != nodesAdded.end()) {
 			FT[i].insert(std::make_pair(i, std::make_pair(i,0)));
+			FT_invert[i].insert(std::make_pair(i, std::make_pair(i,0)));
 		}
 		//If a node is not part of the topology, add a self-entry with a cost of -1 (used to omit printing these place holder node numbers to output file)
 		else {
 			std::cout << "adding -1 entry for this unused node's self cost: " << i << std::endl;
 			FT[i].insert(std::make_pair(i, std::make_pair(i,-1)));
+			FT_invert[i].insert(std::make_pair(i, std::make_pair(i,-1)));
 		}
     }
     
@@ -146,11 +150,25 @@ int main(int argc, char** argv) {
     std::cout << std::endl;
     
     //Initial Routing Table Convergences. 
-    for (int sourceNode = 1; sourceNode < FT.size(); sourceNode++) {
+    for (int sourceNode = 1; sourceNode < FT_invert.size(); sourceNode++) {
         std::cout << std::endl;
         std::cout << "Initial convergence for node: " << sourceNode << std::endl;
-        if(FT[sourceNode].find(sourceNode)->second.second != -1) {
-			converge(sourceNode, TT, FT);
+        if(FT_invert[sourceNode].find(sourceNode)->second.second != -1) {
+			converge(sourceNode, TT, FT_invert);
+		}
+	}
+	//After converge, need to swap routes between each source and destination to ensure tie breaking rule of lowest last hop node number is followed (due to the fact that dijkstra's algo builds the routes in reverse order, i.e. from destination to source... see converge.cpp)
+	//Do this by building a new FT with swapped values from the dijkstra inverted output
+	//(If this makes program run too slow, for this assignment/exercise just need to swap the final source / destination next hops for consoleOutFT and print dest path as source's and vis versa in messagePrint...)
+	for (int sourceNode = 1; sourceNode < FT_.size(); sourceNode++) {
+		for(auto&& [reachableNode, nextHop_cost_invert] : FT_invert[sourceNode]) {
+			if(FT[reachableNode].find(sourceNode) == FT[reachableNode].end()) {
+				FT[reachableNode].insert(sourceNode, std::make_pair(nextHop_cost_invert->first, nextHop_cost_invert->second));
+			}
+			else {
+				FT[reachableNode].find(sourceNode)->second.first = nextHop_cost_invert->first;
+				FT[reachableNode].find(sourceNode)->second.second = nextHop_cost_invert->second;
+			}
 		}
 	}
 	
