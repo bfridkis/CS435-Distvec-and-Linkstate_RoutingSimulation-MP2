@@ -129,7 +129,7 @@ void fileOutFT(std::vector<std::map<int, std::pair<int, int>>> &_FT, std::ofstre
         //std::cout << "sourceNode: " << sourceNode << " " << _FT.size() << std::endl;
 			if(_FT[sourceNode].find(sourceNode)->second.second != -1) {
 			for (std::map<int, std::pair<int,int>>::iterator it=_FT[sourceNode].begin(); it !=_FT[sourceNode].end(); it++) {
-			   if(sourceNode == _FT.size()-1 && it == _FT[sourceNode].end()) {
+			   if(sourceNode == _FT.size()-1 && it != std::prev(_FT[sourceNode].end())) {
 					_outFile << it->first << " " << it->second.first << " " << it->second.second;
 			   }
 			   else {
@@ -143,3 +143,6 @@ void fileOutFT(std::vector<std::map<int, std::pair<int, int>>> &_FT, std::ofstre
 		}
 	}
 }
+
+//References
+//https://stackoverflow.com/questions/6430960/iterator-for-second-to-last-element-in-a-list
