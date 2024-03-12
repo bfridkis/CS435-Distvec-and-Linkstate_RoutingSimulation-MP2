@@ -162,12 +162,12 @@ int main(int argc, char** argv) {
 	//(If this makes program run too slow, for this assignment/exercise just need to swap the final source / destination next hops for consoleOutFT and print dest path as source's and vis versa in messagePrint...)
 	for (int sourceNode = 1; sourceNode < FT_invert.size(); sourceNode++) {
 		for(auto&& [reachableNode, nextHop_cost_invert] : FT_invert[sourceNode]) {
-			if(FT[reachableNode].find(sourceNode) == FT[reachableNode].end()) {
-				FT[reachableNode].insert(std::make_pair(sourceNode, std::make_pair(nextHop_cost_invert.first, nextHop_cost_invert.second)));
+			if(FT[sourceNode].find(reachableNode) == FT[reachableNode].end()) {
+				FT[sourceNode].insert(std::make_pair(reachableNode, std::make_pair(FT_invert[reachableNode].find(sourceNode)->first, nextHop_cost_invert.second)));
 			}
 			else {
-				FT[reachableNode].find(sourceNode)->second.first = nextHop_cost_invert.first;
-				FT[reachableNode].find(sourceNode)->second.second = nextHop_cost_invert.second;
+				FT[sourceNode].find(reachableNode)->second.first = FT_invert[reachableNode].find(sourceNode)->first;
+				FT[sourceNode].find(reachableNode)->second.second = nextHop_cost_invert.second;
 			}
 		}
 	}
@@ -200,8 +200,9 @@ int main(int argc, char** argv) {
     //auto iss = std::istringstream{"2 1 here is a message from 2 to 1\n3 5 this one gets sent from 3 to 5!"};
     //messagePrint(FT, iss);
 	
-	messagePrint(FT_invert, messagesInputFile, outFile);
-    
+	//messagePrint(FT_invert, messagesInputFile, outFile);
+    messagePrint(FT, messagesInputFile, outFile);
+	
     std::cout << std::endl;
     
     //Changes simulation...

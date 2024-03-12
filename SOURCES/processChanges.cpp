@@ -371,12 +371,12 @@ void processChanges(std::vector<std::map<int, std::pair<int, int>>> &_FT, std::v
 		//(If this makes program run too slow, for this assignment/exercise just need to swap the final source / destination next hops for consoleOutFT and print dest path as source's and vis versa in messagePrint...)
 		for (int sourceNode = 1; sourceNode < _FT_invert.size(); sourceNode++) {
 			for(auto&& [reachableNode, nextHop_cost_invert] : _FT_invert[sourceNode]) {
-				if(_FT[reachableNode].find(sourceNode) == _FT[reachableNode].end()) {
-					_FT[reachableNode].insert(std::make_pair(sourceNode, std::make_pair(nextHop_cost_invert.first, nextHop_cost_invert.second)));
+				if(_FT[sourceNode].find(reachableNode) == _FT[reachableNode].end()) {
+					_FT[sourceNode].insert(std::make_pair(reachableNode, std::make_pair(_FT_invert[reachableNode].find(sourceNode)->first, nextHop_cost_invert.second)));
 				}
 				else {
-					_FT[reachableNode].find(sourceNode)->second.first = nextHop_cost_invert.first;
-					_FT[reachableNode].find(sourceNode)->second.second = nextHop_cost_invert.second;
+					_FT[sourceNode].find(reachableNode)->second.first = _FT_invert[reachableNode].find(sourceNode)->first;
+					_FT[sourceNode].find(reachableNode)->second.second = nextHop_cost_invert.second;
 				}
 			}
 		}
