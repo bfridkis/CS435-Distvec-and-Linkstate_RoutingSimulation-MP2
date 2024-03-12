@@ -604,12 +604,12 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 				_FT[reachableNode].find(sourceNode)->second.first = nextHop;
 				_FT[reachableNode].find(sourceNode)->second.second = cost;
 				//_FT[reachableNode].find(sourceNode)->insert(std::make_pair(nextHop, cost);
-				std::cout << "Just added to FT here, existing entry for source node " << sourceNode << " already present. FT[reachableNode].find(sourceNode)->second.first = " << _FT[reachableNode].find(sourceNode)->second.first << " _FT[reachableNode].find(sourceNode)->second.second = " << _FT[reachableNode].find(sourceNode)->second.second << std::endl;
+				//std::cout << "Just added to FT here, existing entry for source node " << sourceNode << " already present. FT[reachableNode].find(sourceNode)->second.first = " << _FT[reachableNode].find(sourceNode)->second.first << " _FT[reachableNode].find(sourceNode)->second.second = " << _FT[reachableNode].find(sourceNode)->second.second << std::endl;
 				//consoleOutFT(_FT);
 			}
 			else {
 				_FT[reachableNode].insert(std::make_pair(sourceNode, std::make_pair(std::move(nextHop), cost)));
-				std::cout << "Just added to FT here, new entry for source node " << sourceNode << ". FT[reachableNode].find(sourceNode)->second.first = " << _FT[reachableNode].find(sourceNode)->second.first << " _FT[reachableNode].find(sourceNode)->second.second = " << _FT[reachableNode].find(sourceNode)->second.second << std::endl;
+				//std::cout << "Just added to FT here, new entry for source node " << sourceNode << ". FT[reachableNode].find(sourceNode)->second.first = " << _FT[reachableNode].find(sourceNode)->second.first << " _FT[reachableNode].find(sourceNode)->second.second = " << _FT[reachableNode].find(sourceNode)->second.second << std::endl;
 			}
 		}
 	}
@@ -620,18 +620,4 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 	
 	//Print converged FT (testing/troubleshooting only)
     std::cout << std::endl;
-
-    for (unsigned short i = 1; i < _FT.size(); i++) {
-        //std::cout << "sourceNode: " << sourceNode << " " << _FT.size() << std::endl;
-        for (std::map<int, std::pair<int,int>>::iterator it = _FT[sourceNode].begin(); it!=_FT[sourceNode].end(); it++) {
-         //for(auto&& [destNode, nextHop_cost] : _FT[i]) {  
-			std::cout << "source: " << sourceNode << " Destination: " << it->first << " Next Hop: " << it->second.first << " Cost: " << it->second.second << " _FT[i].size(): " << _FT[i].size() << std::endl;
-			//std::cout << "source: " << i << " Destination: " << destNode << " Next Hop: " << nextHop_cost.first << " Cost: " << nextHop_cost.second << std::endl;
-			//std::cout << "source: " << sourceNode << " Destination: " << it->first << " Cost: " << itMM->first << " Path: " << pathToPrint << std::endl;
-			//std::cout << "source: " << sourceNode << " Destination: " << it->first << " Cost: " << itMM->first << " First Hop: " << itMM->second.size() << std::endl;
-			//std::cout << "-------------------------------------" << std::endl;
-		}
-		//std::cout << "What the hell? " << _FT[3].find(i)->second.first << _FT[3].find(i)->second.second << std::endl;
-		//std::cout << "_FT.size(): " << _FT.size() << std::endl;
-	}
 }
