@@ -263,10 +263,10 @@ void processChanges(std::vector<std::map<int, std::pair<int, int>>> &_FT, std::v
 			//Resize forwarding table and initialize added node with self link cost of 0 (and if any nodes are skipped in between previous highest node number and newest node, initialize those node number placeholders with cost of -1, to denote not part of topology)
 			for(int sourceNode = prevSize ; sourceNode < _FT.size(); sourceNode++) {
 				if(sourceNode == changedLinkNode1) {
-					_FT[sourceNode].insert(std::make_pair(i, std::make_pair(i,0)));
+					_FT[sourceNode].insert(std::make_pair(sourceNode, std::make_pair(i,0)));
 				}
 				else {
-					FT[i].insert(std::make_pair(i, std::make_pair(i,-1)));
+					FT[i].insert(std::make_pair(sourceNode, std::make_pair(i,-1)));
 				}
 			}
 		}
@@ -279,7 +279,7 @@ void processChanges(std::vector<std::map<int, std::pair<int, int>>> &_FT, std::v
 					_FT[sourceNode].insert(std::make_pair(i, std::make_pair(i,0)));
 				}
 				else {
-					FT[i].insert(std::make_pair(i, std::make_pair(i,-1)));
+					FT[i].insert(std::make_pair(sourceNode, std::make_pair(i,-1)));
 				}
 			}
 		}
