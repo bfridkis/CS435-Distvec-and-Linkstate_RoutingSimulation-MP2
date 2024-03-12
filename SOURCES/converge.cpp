@@ -630,5 +630,6 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 			//std::cout << "-------------------------------------" << std::endl;
 		}
 		std::cout << "What the hell? " << _FT[3].find(i)->second.first << _FT[3].find(i)->second.second << std::endl;
+		std::cout << "_FT.size(): " << _FT.size() << std::endl;
 	}
 }
