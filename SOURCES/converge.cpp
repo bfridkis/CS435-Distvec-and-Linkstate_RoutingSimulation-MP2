@@ -482,7 +482,9 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 			//Break tie here if needed
 			else if(reachableNodeCost == minDist) {
 				if(reachableNode < minDistNode) {
+					std::cout << "Initial tie breaking here... reachableNode " << reachableNode << " and minDistNode " << minDistNode << "before reassignment..." << std::endl;
 					minDistNode = reachableNode;
+					std::cout << "Initial tie breaking here... reachableNode " << reachableNode << " and minDistNode " << minDistNode << "after reassignment..." << std::endl;
 				}
 			}
 		}
