@@ -623,15 +623,15 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 
     for (unsigned short i = 1; i < _FT.size(); i++) {
         //std::cout << "sourceNode: " << sourceNode << " " << _FT.size() << std::endl;
-        //for (std::map<int, std::pair<int,int>>::iterator it = _FT[sourceNode].begin(); it!=_FT[sourceNode].end(); it++) {
-         for(auto&& [destNode, nextHop_cost] : _FT[i]) {  
-			//std::cout << "source: " << sourceNode << " Destination: " << it->first << " Next Hop: " << it->second.first << " Cost: " << it->second.second << std::endl;
-			std::cout << "source: " << i << " Destination: " << destNode << " Next Hop: " << nextHop_cost.first << " Cost: " << nextHop_cost.second << std::endl;
+        for (std::map<int, std::pair<int,int>>::iterator it = _FT[sourceNode].begin(); it!=_FT[sourceNode].end(); it++) {
+         //for(auto&& [destNode, nextHop_cost] : _FT[i]) {  
+			std::cout << "source: " << sourceNode << " Destination: " << it->first << " Next Hop: " << it->second.first << " Cost: " << it->second.second << std::endl;
+			//std::cout << "source: " << i << " Destination: " << destNode << " Next Hop: " << nextHop_cost.first << " Cost: " << nextHop_cost.second << std::endl;
 			//std::cout << "source: " << sourceNode << " Destination: " << it->first << " Cost: " << itMM->first << " Path: " << pathToPrint << std::endl;
 			//std::cout << "source: " << sourceNode << " Destination: " << it->first << " Cost: " << itMM->first << " First Hop: " << itMM->second.size() << std::endl;
 			//std::cout << "-------------------------------------" << std::endl;
 		}
-		std::cout << "What the hell? " << _FT[3].find(i)->second.first << _FT[3].find(i)->second.second << std::endl;
-		std::cout << "_FT.size(): " << _FT.size() << std::endl;
+		//std::cout << "What the hell? " << _FT[3].find(i)->second.first << _FT[3].find(i)->second.second << std::endl;
+		//std::cout << "_FT.size(): " << _FT.size() << std::endl;
 	}
 }
