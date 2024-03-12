@@ -172,10 +172,10 @@ void messagePrint(std::vector<std::map<int, std::pair<int, int>>> &_FT, std::ifs
 				//}
 				//else if (lowestCostPath.size() > 1) { 
 				_outFile << "from " << sourceNode << " to " << destNode << " cost " << cost << " hops " << sourceNode << " ";
-				std::map<int, std::pair<int, int>>::iterator it = _FT[sourceNode].find(destNode);
-				//while(it->second.first != destNode) {
-				//	_outFile << it->second.first << " ";
-				//	it++;
+				std::map<int, std::pair<int, int>>::iterator it = _FT[sourceNode].find(destNode)->second.first;
+				while(*it != destNode) {
+					_outFile << it->second.first << " ";
+					it = _FT[it->second.first].find(destNode)->second.first;
 				//}
 				//_outFile << " message" << message;
 				_outFile << " message" << message;
