@@ -600,7 +600,7 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 		std::cout << "Should be adding entry for reachableNode " << reachableNode << " to source node: " << sourceNode << " with next hop of " << nextHop << " and cost of " << cost << std::endl;
 		//Note: if cost does equal std::numeric_limits<int>::max(), a path was not discovered to the node in question and it is therefore unreachable from source
 		if(cost != std::numeric_limits<int>::max() && reachableNode != sourceNode) {
-			if(_FT[reachableNode].find(sourceNode) != _FT[sourceNode].end()) {
+			if(_FT[reachableNode].find(sourceNode) != _FT[reachableNode].end()) {
 				_FT[reachableNode].find(sourceNode)->second.first = nextHop;
 				_FT[reachableNode].find(sourceNode)->second.second = cost;
 				//_FT[reachableNode].find(sourceNode)->insert(std::make_pair(nextHop, cost);
