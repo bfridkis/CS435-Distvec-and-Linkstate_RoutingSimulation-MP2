@@ -154,7 +154,7 @@ void messagePrint(std::vector<std::map<int, std::pair<int, int>>> &_FT, std::ifs
     while (!messages.eof()) {
         std::string line, message;
         getline(messages, line);
-		//std::cout << "Line in messagePrint: " << line << "Line is Empty Check: " << line.empty() << std::endl;
+		std::cout << "Line in messagePrint: " << line << "Line is Empty Check: " << line.empty() << std::endl;
 		int sourceNode, destNode, cost;
         if((!line.empty()) && (std::find_if_not(line.begin(),line.end(),[](char c){return std::isspace(c);}) != line.end())) {
 			_outFile << std::endl;
