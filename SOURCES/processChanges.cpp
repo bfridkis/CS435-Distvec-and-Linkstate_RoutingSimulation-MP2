@@ -287,7 +287,7 @@ void processChanges(std::vector<std::map<int, std::pair<int, int>>> &_FT, std::v
 		
 		//Print topology table after changes
 		std::cout << std::endl;
-		std::cout << "Intial TT" << std::endl;
+		std::cout << "New Topology after chance " << j << std::endl;
 		std::cout << "---------" << std::endl;
 		for (unsigned short i = 1; i < _TT.size(); i++) {
 			//std::cout << "i: " << i << " " << FT.size() << std::endl;
