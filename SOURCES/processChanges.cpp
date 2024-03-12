@@ -328,8 +328,10 @@ void processChanges(std::vector<std::map<int, std::pair<int, int>>> &_FT, std::v
 		
 		//Clear forwarding table except for self entries
 		for(int sourceNode = 1; sourceNode < _FT.size(); sourceNode++) {
-			//if(
-			for(auto&& [reachableNode, nextHop_cost] : _FT[sourceNode]) {
+			//for(auto&& [reachableNode, nextHop_cost] : _FT[sourceNode]) {
+			for(auto it_m = _FT[sourceNode].begin(), next_it=it_m; it_m != _FT[sourceNode].end(); it_m = next_it){
+				next_it++;
+				int reachableNode = it_m->first;
 				if(reachableNode != sourceNode) {
 					_FT[sourceNode].erase(_FT[sourceNode].find(reachableNode));
 				}
