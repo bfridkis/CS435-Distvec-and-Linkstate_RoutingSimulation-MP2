@@ -544,8 +544,28 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 		unvisitedNodes.erase(*minDistIt);
 		std::cout << "UnvisitedNodes after erasure attempt: " << setToString(unvisitedNodes) << std::endl;
 		//Update minDistNode and minDist
-		minDistNode = nextMinDistNode;
-		minDist = nextMinDist;
+		if(minDistNode != nextMinDistNode) {
+			minDistNode = nextMinDistNode;
+			minDist = nextMinDist;
+		}
+		//If we get here it means we got to the end of a path with no loop back to the source, and we are out of remaining reachable unvisited nodes but not done with the algorithm. Therefore, we need to search back through our dijkstras table so far to find the next lowest cost path (that is not the source, of course)
+		else {
+			minDist = std::numeric_limits<int>::max();
+			for(std::set<int>::iterator it = unvisitedNodes.begin(); it != unvisitedNodes.end(); it++ ) { 
+				//Ignore self-entry, where cost == 0
+				if(dijk.find(*it)->second.second > 0 && dijk.find(*it)->second.second < minDist) {
+					minDist = dijk.find(*it)->second.second;
+					minDistNode = *it;
+				}
+				//In case of tie (that is not max int limit)
+				if(dijk.find(*it)->second.second > 0 && dijk.find(*it)->second.second != std::numeric_limits<int>::max() && dijk.find(*it)->second.second == minDist) {
+					if(dijk.find(*it)->second.first < dijk.find(minDistNode)->second.first) {
+						minDist = dijk.find(*it)->second.second;
+						minDistNode = *it;
+					}
+				}
+			}
+		}
 		
 		std::cout << "nextMinDistNode: " << nextMinDistNode << " nextMinDist: " << nextMinDist << std::endl;
 		for(auto&& [destNode, prevNode_cost] : dijk) {
@@ -567,12 +587,15 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 	//Dijkstras Table is now built for this sourceNode. Update the forwarding table (_FT) accordingly
 	for(auto&& [reachableNode, nextHop_cost] : dijk) {
 		int nextHop = nextHop_cost.first, cost = nextHop_cost.second;
-		if(_FT[sourceNode].find(reachableNode) != _FT[sourceNode].end()) {
-			_FT[sourceNode].find(reachableNode)->second.first = nextHop;
-			_FT[sourceNode].find(reachableNode)->second.second = cost;
-		}
-		else {
-			_FT[sourceNode].insert(std::make_pair(reachableNode, std::make_pair(nextHop, cost)));
+		//Note: if cost does equal std::numeric_limits<int>::max(), a path was not discovered to the node in question and it is therefore unreachable from source
+		if(cost != std::numeric_limits<int>::max()) {
+			if(_FT[sourceNode].find(reachableNode) != _FT[sourceNode].end()) {
+				_FT[sourceNode].find(reachableNode)->second.first = nextHop;
+				_FT[sourceNode].find(reachableNode)->second.second = cost;
+			}
+			else {
+				_FT[sourceNode].insert(std::make_pair(reachableNode, std::make_pair(nextHop, cost)));
+			}
 		}
 	}
 }
