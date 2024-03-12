@@ -87,11 +87,11 @@ int main(int argc, char** argv) {
 		
 		//Add additional entries up to largest number node found in topology.
         ////Padding by one in the front so index number = node number for semantic convenience. :)
-        if (a >= TT.size()) { 
+        if (a >= FT.size()) { 
 			TT.resize(a+1);
 			FT.resize(a+1); 	
 		}
-        if (b >= TT.size()) { 
+        if (b >= FT.size()) { 
 			TT.resize(b+1);
 			FT.resize(b+1); 
 		}
