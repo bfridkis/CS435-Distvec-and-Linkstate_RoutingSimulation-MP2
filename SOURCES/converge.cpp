@@ -464,7 +464,7 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 	for(auto&& [destNode, prevNode_cost] : dijk) {
 		std::cout << "Source Node: " << sourceNode << " Dest Node: " << destNode << " Shortest Distance: " << prevNode_cost.second << " prev node: " << prevNode_cost.first << std::endl;
 	}
-	std::cout << "visitedNodes: " << setToString(visitedNodes) << " unvisitedNodes: " << setToString(unvisitedNodes) << std::endl;
+	std::cout << "visitedNodes: " << setToString(visitedNodes) << " unvisitedNodes: " << setToString(unvisitedNodes) << " _TT[sourceNode].size() " << _TT[sourceNode].size() << std::endl;
 	std::cout << std::endl;
 	
 	//First iteration, for all of sourceNode's directly connected nodes. (If a source node has only one entry in the topology table, it is isolated, so no need to run dijkstras)
