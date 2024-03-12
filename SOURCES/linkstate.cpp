@@ -221,7 +221,7 @@ int main(int argc, char** argv) {
 	
 	//std::cout << "Did we get to processChanges?" << std::endl;
 	
-	processChanges(FT, TT, changesInputFile, messagesInputFile, outFile);
+	processChanges(FT, FT_invert, TT, changesInputFile, messagesInputFile, outFile);
     
     std::cout << std::endl;
     
