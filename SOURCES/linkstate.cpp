@@ -160,7 +160,8 @@ int main(int argc, char** argv) {
 	//After converge, need to swap routes between each source and destination to ensure tie breaking rule of lowest last hop node number is followed (due to the fact that dijkstra's algo builds the routes in reverse order, i.e. from destination to source... see converge.cpp)
 	//Do this by building a new FT with swapped values from the dijkstra inverted output
 	//(If this makes program run too slow, for this assignment/exercise just need to swap the final source / destination next hops for consoleOutFT and print dest path as source's and vis versa in messagePrint...)
-	for (int sourceNode = 1; sourceNode < FT_invert.size(); sourceNode++) {
+	//This doesn't work... need more thought...
+	/* for (int sourceNode = 1; sourceNode < FT_invert.size(); sourceNode++) {
 		for(auto&& [reachableNode, nextHop_cost_invert] : FT_invert[sourceNode]) {
 			if(FT[sourceNode].find(reachableNode) == FT[reachableNode].end()) {
 				FT[sourceNode].insert(std::make_pair(reachableNode, std::make_pair(FT_invert[reachableNode].find(sourceNode)->first, nextHop_cost_invert.second)));
@@ -170,16 +171,17 @@ int main(int argc, char** argv) {
 				FT[sourceNode].find(reachableNode)->second.second = nextHop_cost_invert.second;
 			}
 		}
-	}
+	} */
 	
     //Print converged FT (testing/troubleshooting only)
     std::cout << std::endl;
     std::cout << "Forwarding tables after initial converge..." << std::endl;
-    consoleOutFT(FT);
+    //consoleOutFT(FT);
+	consoleOutFT(FT_invert);
 	//std::cout << "Got past consoleOutFT?" << std::endl;
 	
 	//fileOutFT(FT, outFile);
-	fileOutFT(FT, outFile, true);
+	fileOutFT(FT_invert, outFile, true);
     
     /*std::cout << "\n2nd Convergence..." << std::endl;
     for (int i = 1; i < FT.size(); i++) {
@@ -200,8 +202,8 @@ int main(int argc, char** argv) {
     //auto iss = std::istringstream{"2 1 here is a message from 2 to 1\n3 5 this one gets sent from 3 to 5!"};
     //messagePrint(FT, iss);
 	
-	//messagePrint(FT_invert, messagesInputFile, outFile);
-    messagePrint(FT, messagesInputFile, outFile);
+	messagePrint(FT_invert, messagesInputFile, outFile);
+    //messagePrint(FT, messagesInputFile, outFile);
 	
     std::cout << std::endl;
     
@@ -218,7 +220,7 @@ int main(int argc, char** argv) {
      //   i++;
     //}
     
-    //processChanges(FT, changeInput);
+    processChanges(FT_invert, changeInput);
 	
 	//std::cout << "Did we get to processChanges?" << std::endl;
 	

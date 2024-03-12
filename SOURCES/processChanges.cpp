@@ -369,7 +369,8 @@ void processChanges(std::vector<std::map<int, std::pair<int, int>>> &_FT, std::v
 		//After before after the initial converge (linkstate.cpp), need to swap routes between each source and destination to ensure tie breaking rule of lowest last hop node number is followed (due to the fact that dijkstra's algo builds the routes in reverse order, i.e. from destination to source... see converge.cpp)
 		//Do this by building a new FT with swapped values from the dijkstra inverted output
 		//(If this makes program run too slow, for this assignment/exercise just need to swap the final source / destination next hops for consoleOutFT and print dest path as source's and vis versa in messagePrint...)
-		for (int sourceNode = 1; sourceNode < _FT_invert.size(); sourceNode++) {
+		//Doesn't work, needs more thought...
+		/* for (int sourceNode = 1; sourceNode < _FT_invert.size(); sourceNode++) {
 			for(auto&& [reachableNode, nextHop_cost_invert] : _FT_invert[sourceNode]) {
 				if(_FT[sourceNode].find(reachableNode) == _FT[reachableNode].end()) {
 					_FT[sourceNode].insert(std::make_pair(reachableNode, std::make_pair(_FT_invert[reachableNode].find(sourceNode)->first, nextHop_cost_invert.second)));
@@ -379,7 +380,7 @@ void processChanges(std::vector<std::map<int, std::pair<int, int>>> &_FT, std::v
 					_FT[sourceNode].find(reachableNode)->second.second = nextHop_cost_invert.second;
 				}
 			}
-		}
+		} */
 		
         //std::cout << std::endl;
         //std::cout << "Forwarding Table After Change " << j << " Applied, Before Reconverge..." << std::endl;
@@ -388,9 +389,9 @@ void processChanges(std::vector<std::map<int, std::pair<int, int>>> &_FT, std::v
         std::cout << std::endl;
         
         std::cout << "Forwarding tables after change " << j++ << " and subsequent reconvergence applied..." << std::endl;
-        consoleOutFT(_FT);
-		fileOutFT(_FT, _outFile, false);
+        consoleOutFT(_FT_invert);
+		fileOutFT(_FT_invert, _outFile, false);
 		
-		messagePrint(_FT, _messagesInput, _outFile);
+		messagePrint(_FT_invert, _messagesInput, _outFile);
     }
 }
