@@ -301,7 +301,7 @@ void processChanges(std::vector<std::map<int, std::pair<int, int>>> &_FT, std::v
 		for(int sourceNode = 1; sourceNode < _FT.size(); sourceNode++) {
 			for(auto&& [reachableNode, nextHop_cost] : _FT[sourceNode]) {
 				if(reachableNode != sourceNode) {
-					_FT[sourceNode].erase(_FT[sourceNode].find(reachableNode);
+					_FT[sourceNode].erase(_FT[sourceNode].find(reachableNode));
 				}
 			}
 		}
