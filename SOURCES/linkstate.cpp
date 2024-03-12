@@ -220,7 +220,7 @@ int main(int argc, char** argv) {
      //   i++;
     //}
     
-    processChanges(FT_invert, changeInput);
+    //processChanges(FT_invert, changeInput);
 	
 	//std::cout << "Did we get to processChanges?" << std::endl;
 	
