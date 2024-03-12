@@ -18,7 +18,7 @@ std::string vecToString(std::vector<int>& vec) {
         return retStr; }
 }
 
-std::string vecToString(std::set<int>& set) {
+std::string setToString(std::set<int>& set) {
     if (set.size() > 0) { 
         std::stringstream pathSS;
         std::copy(set.begin(), set.end(), std::ostream_iterator<int>(pathSS, ""));

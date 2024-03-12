@@ -11,6 +11,6 @@
 #include "include.hpp"
 
 std::string vecToString(std::vector<int>& vec);
-std::string vecToString(std::set<int>& set);
+std::string setToString(std::set<int>& set);
 
 #endif

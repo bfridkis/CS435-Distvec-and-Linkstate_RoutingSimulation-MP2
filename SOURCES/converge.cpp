@@ -464,7 +464,7 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 	for(auto&& [destNode, prevNode_cost] : dijk) {
 		std::cout << "Source Node: " << sourceNode << " Dest Node: " << destNode << " Shortest Distance: " << prevNode_cost.second << " prev node: " << prevNode_cost.first << std::endl;
 	}
-	std::cout << "visitedNodes: " << vecToString(visitedNodes) << " unvisitedNodes: " << vecToString(unvisitedNodes) << std::endl;
+	std::cout << "visitedNodes: " << setToString(visitedNodes) << " unvisitedNodes: " << setToString(unvisitedNodes) << std::endl;
 	std::cout << std::endl;
 	
 	//First iteration, for all of sourceNode's directly connected nodes
@@ -487,7 +487,7 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 	for(auto&& [destNode, prevNode_cost] : dijk) {
 		std::cout << "Source Node: " << sourceNode << " Dest Node: " << destNode << " Shortest Distance: " << prevNode_cost.second << " prev node: " << prevNode_cost.first << std::endl;
 	}
-	std::cout << "visitedNodes: " << vecToString(visitedNodes) << " unvisitedNodes: " << vecToString(unvisitedNodes) << std::endl;
+	std::cout << "visitedNodes: " << setToString(visitedNodes) << " unvisitedNodes: " << setToString(unvisitedNodes) << std::endl;
 	std::cout << std::endl;
 	
 	std::cout << "dijkstras main run..." << std::endl;
@@ -540,7 +540,9 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 		//Add node to visited Nodes
 		visitedNodes.insert(*minDistIt);
 		//Remove node from unvisitedNodes
+		std::cout << "Trying to erase " << *minDistIt << " here from univistedNodes... unvisitedNodes before erasure attempt: " << setToString(unvisitedNodes) << std::endl;
 		unvisitedNodes.erase(*minDistIt);
+		std::cout << "UnvisitedNodes after erasure attempt: " << setToString(unvisitedNodes) << std::endl;
 		//Update minDistNode and minDist
 		minDistNode = nextMinDistNode;
 		minDist = nextMinDist;
@@ -549,7 +551,7 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 		for(auto&& [destNode, prevNode_cost] : dijk) {
 			std::cout << "Source Node: " << sourceNode << " Dest Node: " << destNode << " Shortest Distance: " << prevNode_cost.second << " prev node: " << prevNode_cost.first << std::endl;
 		}
-		std::cout << "visitedNodes: " << vecToString(visitedNodes) << " unvisitedNodes: " << vecToString(unvisitedNodes) << std::endl;
+		std::cout << "visitedNodes: " << setToString(visitedNodes) << " unvisitedNodes: " << setToString(unvisitedNodes) << std::endl;
 
 		std::cout << std::endl;
 	}
@@ -559,7 +561,7 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 	for(auto&& [destNode, prevNode_cost] : dijk) {
 		std::cout << "Source Node: " << sourceNode << " Dest Node: " << destNode << " Shortest Distance: " << prevNode_cost.second << " prev node: " << prevNode_cost.first << std::endl;
 	}
-	std::cout << "visitedNodes: " << vecToString(visitedNodes) << " unvisitedNodes: " << vecToString(unvisitedNodes) << std::endl;
+	std::cout << "visitedNodes: " << setToString(visitedNodes) << " unvisitedNodes: " << setToString(unvisitedNodes) << std::endl;
 	std::cout << std::endl;
 	
 	//Dijkstras Table is now built for this sourceNode. Update the forwarding table (_FT) accordingly
