@@ -476,6 +476,7 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 			dijk.find(reachableNode)->second.first = sourceNode;
 			dijk.find(reachableNode)->second.second = reachableNodeCost;
 			if(reachableNodeCost < minDist) {
+				std::cout << "Initial tie breaking is not happening... reachableNode " << reachableNode << " reachableNodeCost " << reachableNodeCost << " minDistNode " << minDistNode << " minDist " << minDist << std::endl;
 				minDist = reachableNodeCost;
 				minDistNode = reachableNode;
 			}
