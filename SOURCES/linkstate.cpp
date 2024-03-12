@@ -201,6 +201,8 @@ int main(int argc, char** argv) {
     
     //processChanges(FT, changeInput);
 	
+	std::cout << "Did we get to processChanges?" << std::endl;
+	
 	processChanges(FT, TT, changesInputFile, messagesInputFile, outFile);
     
     std::cout << std::endl;

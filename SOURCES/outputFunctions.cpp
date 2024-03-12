@@ -109,10 +109,10 @@ void consoleOutFT(std::vector<std::map<int, std::pair<int,int>>> &_FT) {
 
     for (unsigned short sourceNode = 1; sourceNode < _FT.size(); sourceNode++) {
         //std::cout << "sourceNode: " << sourceNode << " " << _FT.size() << std::endl;
-        for (std::map<int, std::pair<int,int>>::iterator it = _FT[sourceNode].begin(); it!=_FT[sourceNode].end(); it++) {
-           
-			std::cout << "source: " << sourceNode << " Destination: " << it->first << " Next Hop: " << it->second.first << " Cost: " << it->second.second << std::endl;
-			
+        //for (std::map<int, std::pair<int,int>>::iterator it = _FT[sourceNode].begin(); it!=_FT[sourceNode].end(); it++) {
+         for(auto&& [destNode, nextHop_cost] : _FT[sourceNode]) {  
+			//std::cout << "source: " << sourceNode << " Destination: " << it->first << " Next Hop: " << it->second.first << " Cost: " << it->second.second << std::endl;
+			std::cout << "source: " << sourceNode << " Destination: " << destNode << " Next Hop: " << nextHop_cost.first << " Cost: " << nextHop_cost.second << std::endl;
 			//std::cout << "source: " << sourceNode << " Destination: " << it->first << " Cost: " << itMM->first << " Path: " << pathToPrint << std::endl;
 			//std::cout << "source: " << sourceNode << " Destination: " << it->first << " Cost: " << itMM->first << " First Hop: " << itMM->second.size() << std::endl;
 			//std::cout << "-------------------------------------" << std::endl;
