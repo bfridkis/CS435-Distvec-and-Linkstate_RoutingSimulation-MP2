@@ -479,6 +479,12 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 				minDist = reachableNodeCost;
 				minDistNode = reachableNode;
 			}
+			//Break tie here if needed
+			else(reachableNodeCost == minDist) {
+				if(dijk.find(reachableNode)->second.first < minDistNode) {
+					minDistNode = reachableNode;
+				}
+			}
 		}
 	}
 	
@@ -496,7 +502,7 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 		//Find next unvisited node with minimum distance from source node
 		std::set<int>::iterator minDistIt = unvisitedNodes.find(minDistNode);
 		//Used to track min distance update needed for next loop iteration...
-		int nextMinDistNode, nextMinDist = std::numeric_limits<int>::max();
+		//int nextMinDistNode, nextMinDist = std::numeric_limits<int>::max();
 		//Used to find adjust nextMinDistNode in case of tie breaker
 		std::vector<int> tiedForLowestNextMinDistance;
 		std::cout << "minDistNode: " << minDistNode << " ";
@@ -511,10 +517,10 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 				std::cout << "Adding previous node " << minDistNode << " and cost of " << reachableNodeCost + minDist << " for reachableNode " << reachableNode << " to sourceNode " << sourceNode << std::endl;
 			}
 			if(unvisitedNodes.find(reachableNode) != unvisitedNodes.end() && reachableNodeCost + minDist < nextMinDist) {
-				nextMinDist = reachableNodeCost + minDist;
-				nextMinDistNode = reachableNode;
-				tiedForLowestNextMinDistance.clear();
-				tiedForLowestNextMinDistance.push_back(reachableNode);
+				//nextMinDist = reachableNodeCost + minDist;
+				//nextMinDistNode = reachableNode;
+				//tiedForLowestNextMinDistance.clear();
+				//tiedForLowestNextMinDistance.push_back(reachableNode);
 				std::cout << "nextMinDist updated here to " << nextMinDist << " and nextMinDistNode updated to " << nextMinDistNode << std::endl;
 			}
 			if(unvisitedNodes.find(reachableNode) != unvisitedNodes.end() && reachableNodeCost + minDist == nextMinDist) {
@@ -525,7 +531,7 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 			}
 		}
 		//Break tie for next min distance if needed
-		if(tiedForLowestNextMinDistance.size() > 1) {
+		/* if(tiedForLowestNextMinDistance.size() > 1) {
 			int winner = std::numeric_limits<int>::max();
 			for(auto node : tiedForLowestNextMinDistance) {
 				if(dijk.find(node)->second.first < winner) {
@@ -534,7 +540,7 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 			}
 			nextMinDistNode = winner;
 			std::cout << "Tie encountered for nextMinDistNode update. nextMinDist now " << nextMinDist << " (should be same as just printed) and nextMinDistNode updated to " << nextMinDistNode << std::endl;
-		}
+		} */
 		
 		std::cout << std::endl;
 		std::cout << "dijkstras table after main loop for reachable node " << minDistNode << " (loop number: " << i+1 << ")" << std::endl;
@@ -546,12 +552,12 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 		unvisitedNodes.erase(*minDistIt);
 		std::cout << "UnvisitedNodes after erasure attempt: " << setToString(unvisitedNodes) << std::endl;
 		//Update minDistNode and minDist
-		if(minDistNode != nextMinDistNode) {
-			minDistNode = nextMinDistNode;
-			minDist = nextMinDist;
-		}
+		//if(minDistNode != nextMinDistNode) {
+		//	minDistNode = nextMinDistNode;
+		//	minDist = nextMinDist;
+		//}
 		//If we get here it means we got to the end of a path with no loop back to the source, and we are out of remaining reachable unvisited nodes but not done with the algorithm. Therefore, we need to search back through our dijkstras table so far to find the next lowest cost path (that is not the source, of course)
-		else {
+		//else {
 			minDist = std::numeric_limits<int>::max();
 			for(std::set<int>::iterator it = unvisitedNodes.begin(); it != unvisitedNodes.end(); it++ ) { 
 				//Ignore self-entry, where cost == 0
@@ -567,7 +573,7 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 					}
 				}
 			}
-		}
+		//}
 		
 		std::cout << "nextMinDistNode: " << nextMinDistNode << " nextMinDist: " << nextMinDist << std::endl;
 		for(auto&& [destNode, prevNode_cost] : dijk) {
