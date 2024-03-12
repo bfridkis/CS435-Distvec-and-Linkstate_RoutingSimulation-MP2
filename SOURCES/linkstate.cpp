@@ -158,6 +158,7 @@ int main(int argc, char** argv) {
     std::cout << std::endl;
     std::cout << "Forwarding tables after initial converge..." << std::endl;
     consoleOutFT(FT);
+	std::cout << "Got past consoleOutFT?" << std::endl;
 	
 	//fileOutFT(FT, outFile);
 	fileOutFT(FT, outFile, true);

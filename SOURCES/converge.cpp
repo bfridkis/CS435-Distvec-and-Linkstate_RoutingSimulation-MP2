@@ -597,7 +597,7 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 		int nextHop = nextHop_cost.first, cost = nextHop_cost.second;
 		std::cout << "Should be adding entry for reachableNode " << reachableNode << " to source node: " << sourceNode << " with next hop of " << nextHop << " and cost of " << cost << std::endl;
 		//Note: if cost does equal std::numeric_limits<int>::max(), a path was not discovered to the node in question and it is therefore unreachable from source
-		if(cost != std::numeric_limits<int>::max()) {
+		if(cost != std::numeric_limits<int>::max() && reachableNode != sourceNode) {
 			if(_FT[reachableNode].find(sourceNode) != _FT[sourceNode].end()) {
 				_FT[reachableNode].find(sourceNode)->second.first = nextHop;
 				_FT[reachableNode].find(sourceNode)->second.second = cost;
@@ -605,6 +605,7 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 			}
 			else {
 				_FT[reachableNode].insert(std::make_pair(sourceNode, std::make_pair(nextHop, cost)));
+				std::cout << "Just added to FT here, new entry for source node " << sourceNode << ". FT[reachableNode].find(sourceNode)->second.first = " << _FT[reachableNode].find(sourceNode)->second.first << " _FT[reachableNode].find(sourceNode)->second.second = " << _FT[reachableNode].find(sourceNode)->second.second << std::endl;
 			}
 		}
 	}
