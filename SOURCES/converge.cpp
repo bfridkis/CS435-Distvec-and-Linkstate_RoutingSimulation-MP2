@@ -516,13 +516,13 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 				dijk.find(reachableNode)->second.second = reachableNodeCost + minDist;
 				std::cout << "Adding previous node " << minDistNode << " and cost of " << reachableNodeCost + minDist << " for reachableNode " << reachableNode << " to sourceNode " << sourceNode << std::endl;
 			}
-			if(unvisitedNodes.find(reachableNode) != unvisitedNodes.end() && reachableNodeCost + minDist < nextMinDist) {
+			//if(unvisitedNodes.find(reachableNode) != unvisitedNodes.end() && reachableNodeCost + minDist < nextMinDist) {
 				//nextMinDist = reachableNodeCost + minDist;
 				//nextMinDistNode = reachableNode;
 				//tiedForLowestNextMinDistance.clear();
 				//tiedForLowestNextMinDistance.push_back(reachableNode);
-				std::cout << "nextMinDist updated here to " << nextMinDist << " and nextMinDistNode updated to " << nextMinDistNode << std::endl;
-			}
+			//	std::cout << "nextMinDist updated here to " << nextMinDist << " and nextMinDistNode updated to " << nextMinDistNode << std::endl;
+			//}
 			if(unvisitedNodes.find(reachableNode) != unvisitedNodes.end() && reachableNodeCost + minDist == nextMinDist) {
 				tiedForLowestNextMinDistance.push_back(reachableNode);
 			}
