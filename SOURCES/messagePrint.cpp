@@ -108,7 +108,7 @@ void messagePrint(std::vector<std::map<int, std::multimap<int, std::vector<int>>
 			_outFile << std::endl;
 			int sourceNode, destNode, cost;
 			std::istringstream messageStr(line);
-			std::cout << "messageStr: " << messageStr << std::endl;
+			//std::cout << "messageStr: " << messageStr << std::endl;
 			messageStr >> sourceNode >> destNode;
 			getline(messageStr, message);
 			if(_FT[sourceNode].find(destNode) != _FT[sourceNode].end()) {
@@ -116,6 +116,7 @@ void messagePrint(std::vector<std::map<int, std::multimap<int, std::vector<int>>
 				std::vector<int> lowestCostPath(_FT[sourceNode].find(destNode)->second.begin()->second);
 				if (lowestCostPath.size() == 1) {
 					_outFile << "from " << sourceNode << " to " << destNode << " cost " << cost << " hops " << sourceNode;
+					std::cout << "from " << sourceNode << " to " << destNode << " cost " << cost << " hops " << sourceNode;
 				}
 				else if (lowestCostPath.size() > 1) {
 					_outFile << "from " << sourceNode << " to " << destNode << " cost " << cost << " hops " << sourceNode << " ";
