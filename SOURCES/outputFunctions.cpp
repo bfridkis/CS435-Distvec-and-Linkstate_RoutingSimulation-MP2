@@ -120,6 +120,32 @@ void consoleOutFT(std::vector<std::map<int, std::pair<int,int>>> &_FT) {
 	}
 }
 
+//To print non-inverted...
+//For Printing the Forwarding Table Elements to a File - For Link State
+/* void fileOutFT(std::vector<std::map<int, std::pair<int, int>>> &_FT, std::ofstream& _outFile, bool _initialConverge) {
+	if(_FT.size() > 1 && !_initialConverge) { 
+		_outFile << std::endl; 
+	}
+	for (unsigned short sourceNode = 1; sourceNode < _FT.size(); sourceNode++) {
+        //std::cout << "sourceNode: " << sourceNode << " " << _FT.size() << std::endl;
+			if(_FT[sourceNode].find(sourceNode)->second.second != -1) {
+			for (std::map<int, std::pair<int,int>>::iterator it=_FT[sourceNode].begin(); it !=_FT[sourceNode].end(); it++) {
+			   if(sourceNode == _FT.size()-1 && it == std::prev(_FT[sourceNode].end())) {
+					_outFile << it->first << " " << it->second.first << " " << it->second.second;
+			   }
+			   else {
+				   _outFile << it->first << " " << it->second.first << " " << it->second.second << std::endl;
+			   }
+				
+				//std::cout << "source: " << sourceNode << " Destination: " << it->first << " Cost: " << itMM->first << " Path: " << pathToPrint << std::endl;
+				//std::cout << "source: " << sourceNode << " Destination: " << it->first << " Cost: " << itMM->first << " First Hop: " << itMM->second.size() << std::endl;
+				//std::cout << "-------------------------------------" << std::endl;
+			}
+		}
+	}
+} */
+
+//To print inverted...
 //For Printing the Forwarding Table Elements to a File - For Link State
 void fileOutFT(std::vector<std::map<int, std::pair<int, int>>> &_FT, std::ofstream& _outFile, bool _initialConverge) {
 	if(_FT.size() > 1 && !_initialConverge) { 
