@@ -481,7 +481,7 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 			}
 			//Break tie here if needed
 			else if(reachableNodeCost == minDist) {
-				if(dijk.find(reachableNode)->second.first < minDistNode) {
+				if(reachableNode < minDistNode) {
 					minDistNode = reachableNode;
 				}
 			}
