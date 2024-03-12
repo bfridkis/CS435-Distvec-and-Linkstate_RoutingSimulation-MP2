@@ -595,6 +595,7 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 	//Dijkstras Table is now built for this sourceNode. Update the forwarding table (_FT) accordingly
 	for(auto&& [reachableNode, nextHop_cost] : dijk) {
 		int nextHop = nextHop_cost.first, cost = nextHop_cost.second;
+		std::cout << "Should be adding entry for reachableNode " << reachableNode << " to " << sourceNode << " with next hop of " << nextHop << " and cost of " << cost << std::endl;
 		//Note: if cost does equal std::numeric_limits<int>::max(), a path was not discovered to the node in question and it is therefore unreachable from source
 		if(cost != std::numeric_limits<int>::max()) {
 			if(_FT[reachableNode].find(sourceNode) != _FT[sourceNode].end()) {
