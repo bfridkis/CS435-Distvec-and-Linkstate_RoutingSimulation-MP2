@@ -606,4 +606,8 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 			}
 		}
 	}
+	std::cout << std::endl;
+	std::cout << "FT after final dijkstras inside converge... just ran for source node: " << std::endl;
+	std::cout << std::endl;
+	consoleOutFT(_FT);
 }
