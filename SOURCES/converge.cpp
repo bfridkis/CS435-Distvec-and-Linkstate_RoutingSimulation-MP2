@@ -468,7 +468,7 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 	std::cout << std::endl;
 	
 	//First iteration, for all of sourceNode's directly connected nodes. (If a source node has only one entry in the topology table, it is isolated, so no need to run dijkstras)
-	if(_TT[sourceNode].size() > 1) {
+	if(_TT[sourceNode].size() > 0) {
 		for(std::map<int, int>::iterator it = _TT[sourceNode].begin(); it != _TT[sourceNode].end(); it++) {
 			int reachableNode = it->first;
 			if(reachableNode != sourceNode) {
