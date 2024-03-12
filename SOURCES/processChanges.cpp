@@ -360,8 +360,8 @@ void processChanges(std::vector<std::map<int, std::pair<int, int>>> &_FT, std::v
 		consoleOutFT(_FT_invert);
 		
 		//Reconverge
-		for(int sourceNode = 1; sourceNode < _TT.size(); sourceNode++) {
-			if(_FT.invert[sourceNode].find(sourceNode)->second.second != -1) {
+		for(int sourceNode = 1; sourceNode < _FT_invert.size(); sourceNode++) {
+			if(_FT_invert[sourceNode].find(sourceNode)->second.second != -1) {
 				converge(sourceNode, _TT, _FT_invert);
 			}
 		}
