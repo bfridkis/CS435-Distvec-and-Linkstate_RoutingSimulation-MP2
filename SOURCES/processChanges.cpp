@@ -305,6 +305,6 @@ void processChanges(std::vector<std::map<int, std::pair<int, int>>> &_FT, std::v
         consoleOutFT(_FT);
 		fileOutFT(_FT, _outFile, false);
 		
-		messagePrint(_FT, _messagesInput, _outFile);
+		//messagePrint(_FT, _messagesInput, _outFile);
     }
 }
