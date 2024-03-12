@@ -269,7 +269,7 @@ void processChanges(std::vector<std::map<int, std::pair<int, int>>> &_FT, std::v
 				}
 				else {
 					_FT[i].insert(std::make_pair(i, std::make_pair(i,-1)));
-					_FT_[i]invert.insert(std::make_pair(i, std::make_pair(i,-1)));
+					_FT_invert[i]invert.insert(std::make_pair(i, std::make_pair(i,-1)));
 				}
 			}
 		}
