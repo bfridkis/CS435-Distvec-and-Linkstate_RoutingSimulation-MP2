@@ -602,7 +602,7 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 		if(cost != std::numeric_limits<int>::max() && reachableNode != sourceNode) {
 		//if(nextHop != -1 && reachableNode != sourceNode) {
 			if(_FT[reachableNode].find(sourceNode) != _FT[reachableNode].end()) {
-				std::cout << "Should be adding entry for reachableNode " << reachableNode << " to source node: " << sourceNode << " with next hop of " << nextHop << " and cost of " << cost << std::endl;
+				std::cout << "Line 605 inside converge..." << std::endl;
 				_FT[reachableNode].find(sourceNode)->second.first = nextHop;
 				_FT[reachableNode].find(sourceNode)->second.second = cost;
 				//_FT[reachableNode].find(sourceNode)->insert(std::make_pair(nextHop, cost);
