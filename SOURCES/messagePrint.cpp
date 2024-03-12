@@ -146,7 +146,7 @@ void messagePrint(std::vector<std::map<int, std::multimap<int, std::vector<int>>
 }
 
 //For Link State
-void messagePrint(std::vector<std::map<int, std::pair<int, int>>> &_FT, std::ifstream& messages, std::ofstream& _outFile) {
+/*void messagePrint(std::vector<std::map<int, std::pair<int, int>>> &_FT, std::ifstream& messages, std::ofstream& _outFile) {
     
     std::cout << std::endl;
     //_outFile << std::endl;
