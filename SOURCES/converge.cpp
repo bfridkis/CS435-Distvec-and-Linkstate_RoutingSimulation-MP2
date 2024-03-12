@@ -467,7 +467,7 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 	std::cout << "visitedNodes: " << setToString(visitedNodes) << " unvisitedNodes: " << setToString(unvisitedNodes) << " _TT[sourceNode].size() " << _TT[sourceNode].size() << std::endl;
 	std::cout << std::endl;
 	
-	//First iteration, for all of sourceNode's directly connected nodes. (If a source node has only one entry in the topology table, it is isolated, so no need to run dijkstras)
+	//First iteration, for all of sourceNode's directly connected nodes. (If a source node has no entries in the topology table, it is isolated, so no need to run dijkstras)
 	if(_TT[sourceNode].size() > 0) {
 		for(std::map<int, int>::iterator it = _TT[sourceNode].begin(); it != _TT[sourceNode].end(); it++) {
 			int reachableNode = it->first;
@@ -502,7 +502,7 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 		
 		std::cout << "dijkstras main run..." << std::endl;
 		int unvisitedNodesInitialSize = unvisitedNodes.size();
-		for (int i = 0; i < unvisitedNodesInitialSize; i++) {
+		for (int i = 0; i < unvisitedNodesInitialSize && minDistNode != -1; i++) {
 			//Find next unvisited node with minimum distance from source node
 			std::set<int>::iterator minDistIt = unvisitedNodes.find(minDistNode);
 			//Used to track min distance update needed for next loop iteration...
@@ -555,28 +555,24 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 			std::cout << "Trying to erase " << *minDistIt << " here from univistedNodes... unvisitedNodes before erasure attempt: " << setToString(unvisitedNodes) << std::endl;
 			unvisitedNodes.erase(*minDistIt);
 			std::cout << "UnvisitedNodes after erasure attempt: " << setToString(unvisitedNodes) << std::endl;
-			//Update minDistNode and minDist
-			//if(minDistNode != nextMinDistNode) {
-			//	minDistNode = nextMinDistNode;
-			//	minDist = nextMinDist;
-			//}
-			//If we get here it means we got to the end of a path with no loop back to the source, and we are out of remaining reachable unvisited nodes but not done with the algorithm. Therefore, we need to search back through our dijkstras table so far to find the next lowest cost path (that is not the source, of course)
-			//else {
-				minDist = std::numeric_limits<int>::max();
-				for(std::set<int>::iterator it = unvisitedNodes.begin(); it != unvisitedNodes.end(); it++ ) { 
-					//Ignore self-entry, where cost == 0
-					if(dijk.find(*it)->second.second > 0 && dijk.find(*it)->second.second < minDist) {
+
+			//Find the next minDistNode & minDist, if any more directly connected nodes are available.
+			minDistNode = -1;
+			minDist = std::numeric_limits<int>::max();
+			for(std::set<int>::iterator it = unvisitedNodes.begin(); it != unvisitedNodes.end(); it++ ) { 
+				//Ignore self-entry, where cost == 0
+				if(dijk.find(*it)->second.second > 0 && dijk.find(*it)->second.second < minDist) {
+					minDist = dijk.find(*it)->second.second;
+					minDistNode = *it;
+				}
+				//In case of tie (that is not max int limit)
+				if(dijk.find(*it)->second.second > 0 && dijk.find(*it)->second.second != std::numeric_limits<int>::max() && dijk.find(*it)->second.second == minDist) {
+					if(dijk.find(*it)->second.first < dijk.find(minDistNode)->second.first) {
 						minDist = dijk.find(*it)->second.second;
 						minDistNode = *it;
 					}
-					//In case of tie (that is not max int limit)
-					if(dijk.find(*it)->second.second > 0 && dijk.find(*it)->second.second != std::numeric_limits<int>::max() && dijk.find(*it)->second.second == minDist) {
-						if(dijk.find(*it)->second.first < dijk.find(minDistNode)->second.first) {
-							minDist = dijk.find(*it)->second.second;
-							minDistNode = *it;
-						}
-					}
 				}
+			}
 			//}
 			
 			std::cout << "nextMinDistNode: " << minDistNode << " nextMinDist: " << minDist << std::endl;
