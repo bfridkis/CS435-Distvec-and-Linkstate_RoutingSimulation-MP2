@@ -435,25 +435,27 @@ void converge(std::vector<std::map<int, std::multimap<int, std::vector<int>>>> &
 }
 
 //For Link State
-void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<std::map<int, std::pair<int, int>>> &_FT_invert) {
-	
-	//Initialize container for Dijkstras. Map key is reachable node, first element of pair (int) is the "previous" node (or, alternatively from the view of the destination node itself, next hop to source), while the first element of the pair is the reachable node shortest path cost, 
-	std::map<int, std::pair<int,int>> dijk;
+//void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<std::map<int, std::pair<int, int>>> &_FT_invert) {
+void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<std::map<int, std::pair<int, int>>> &_FT, std::pair<int,int> &tiesTracker) {	
+	//Initialize container for Dijkstras. Map key is reachable node, first element of pair (int) is the "previous" node (or, alternatively from the view of the destination node itself, next hop to source), while the second element of the pair is the reachable node shortest path cost, 
+	//std::map<int, std::pair<int,int>> dijk;
+	//Initialize container for Dijkstras. Map key is reachable node, first element of pair (int) is the path (dest -> source) and the second element is the cost
+	std::map<int, std::pair<std::vector<int>>,int> dijk;
 	
 	//Initialize helper containers and min distance node tracker
 	std::set<int> visitedNodes, unvisitedNodes;
 	int minDistNode, minDist = std::numeric_limits<int>::max();
 	
 	//Initialize shortest distance values, with sourceNode = 0 and all other nodes set to infinity
-	for (int i = 1; i < _FT_invert.size(); i++) {
+	for (int i = 1; i < _FT.size(); i++) {
 		//Do not add node numbers with no established links to dijkstras (if, for example, some node numbers were skipped in topology input file)
-		if (_FT_invert[i].find(i)->second.second != -1) {
+		if (_FT[i].find(i)->second.second != -1) {
 			if(i == sourceNode) {
-				dijk.insert(std::make_pair(sourceNode, std::make_pair(i,0)));
+				dijk.insert(std::make_pair(sourceNode, std::make_pair(std::vector<int>(1,i),0)));
 				visitedNodes.insert(sourceNode);
 			}
 			else {			
-				dijk.insert(std::make_pair(i, std::make_pair(-1, std::numeric_limits<int>::max())));
+				dijk.insert(std::make_pair(i, std::make_pair(std::vector<int>(), std::numeric_limits<int>::max())));
 				unvisitedNodes.insert(i);
 			}
 		}
@@ -461,8 +463,10 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 	
 	std::cout << std::endl;
 	std::cout << "dijkstras table after initialization with infinite values for all non-source nodes (and 0 for source):" << std::endl;
-	for(auto&& [destNode, prevNode_cost] : dijk) {
-		std::cout << "Source Node: " << sourceNode << " Dest Node: " << destNode << " Shortest Distance: " << prevNode_cost.second << " prev node: " << prevNode_cost.first << std::endl;
+	//for(auto&& [destNode, prevNode_cost] : dijk) {
+	for(auto&& [destNode, path_cost] : dijk) {
+		//std::cout << "Source Node: " << sourceNode << " Dest Node: " << destNode << " Shortest Distance: " << prevNode_cost.second << " path (0 == empty, should be empty here): " << prevNode_cost.first << std::endl;
+		std::cout << "Source Node: " << sourceNode << " Dest Node: " << destNode << " Shortest Distance: " << prevNode_cost.second << " path: " << ((path_cost.first.size()) > 0 ? vecToString(path_cost.first) : " empty:" << std::endl;		
 	}
 	std::cout << "visitedNodes: " << setToString(visitedNodes) << " unvisitedNodes: " << setToString(unvisitedNodes) << " _TT[sourceNode].size() " << _TT[sourceNode].size() << std::endl;
 	std::cout << std::endl;
@@ -474,7 +478,8 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 			if(reachableNode != sourceNode) {
 				int reachableNodeCost = it->second;
 				//Add cost to dijkstras entry from source node to this reachable node
-				dijk.find(reachableNode)->second.first = sourceNode;
+				//dijk.find(reachableNode)->second.first = sourceNode;
+				dijk.find(reachableNode)->second.first.push_back(sourceNode);
 				dijk.find(reachableNode)->second.second = reachableNodeCost;
 				if(reachableNodeCost < minDist) {
 					//std::cout << "Initial tie breaking is not happening... reachableNode " << reachableNode << " reachableNodeCost " << reachableNodeCost << " minDistNode " << minDistNode << " minDist " << minDist << std::endl;
@@ -488,20 +493,24 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 						minDistNode = reachableNode;
 						//std::cout << "Initial tie breaking here... reachableNode " << reachableNode << " and minDistNode " << minDistNode << "after reassignment..." << std::endl;
 					}
+					tiesTracker.insert(std::make_pair(sourceNode, minDistNode);
 				}
 			}
 		}
 	
 		std::cout << std::endl;
 		std::cout << "dijkstras table after first initialization with source direct links:" << std::endl;
-		for(auto&& [destNode, prevNode_cost] : dijk) {
-			std::cout << "Source Node: " << sourceNode << " Dest Node: " << destNode << " Shortest Distance: " << prevNode_cost.second << " prev node: " << prevNode_cost.first << std::endl;
+		//for(auto&& [destNode, prevNode_cost] : dijk) {
+		for(auto&& [destNode, path_cost] : dijk) {
+			//std::cout << "Source Node: " << sourceNode << " Dest Node: " << destNode << " Shortest Distance: " << prevNode_cost.second << " prev node: " << prevNode_cost.first << std::endl;
+			std::cout << "Source Node: " << sourceNode << " Dest Node: " << destNode << " Shortest Distance: " << prevNode_cost.second << " path: " << ((path_cost.first.size()) > 0 ? vecToString(path_cost.first) : " empty:" << std::endl;		
 		}
 		std::cout << "visitedNodes: " << setToString(visitedNodes) << " unvisitedNodes: " << setToString(unvisitedNodes) << std::endl;
 		std::cout << std::endl;
 		
 		std::cout << "dijkstras main run..." << std::endl;
 		int unvisitedNodesInitialSize = unvisitedNodes.size();
+		std::vector<int> path(1,sourceNode);
 		for (int i = 0; i < unvisitedNodesInitialSize && minDistNode != -1; i++) {
 			//Find next unvisited node with minimum distance from source node
 			std::set<int>::iterator minDistIt = unvisitedNodes.find(minDistNode);
@@ -516,7 +525,8 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 				if(unvisitedNodes.find(reachableNode) != unvisitedNodes.end() && 
 				  ((reachableNodeCost + minDist < dijk.find(reachableNode)->second.second) ||
 				  (dijk.find(reachableNode)->second.second == reachableNodeCost + minDist && dijk.find(reachableNode)->second.first > minDistNode))) {
-					dijk.find(reachableNode)->second.first = minDistNode;
+					path.push_back(minDistNode);
+					dijk.find(reachableNode)->second.first = std::vector<int>(path);
 					dijk.find(reachableNode)->second.second = reachableNodeCost + minDist;
 					std::cout << "Adding previous node " << minDistNode << " and cost of " << reachableNodeCost + minDist << " for reachableNode " << reachableNode << " to sourceNode " << sourceNode << std::endl;
 				}
@@ -567,17 +577,21 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 				}
 				//In case of tie (that is not max int limit)
 				if(dijk.find(*it)->second.second > 0 && dijk.find(*it)->second.second != std::numeric_limits<int>::max() && dijk.find(*it)->second.second == minDist) {
-					if(dijk.find(*it)->second.first < dijk.find(minDistNode)->second.first) {
+					//if(dijk.find(*it)->second.first < dijk.find(minDistNode)->second.first) {
+					if(dijk.find(*it)->second.first.back() < dijk.find(minDistNode)->second.first.back()) {	
 						minDist = dijk.find(*it)->second.second;
 						minDistNode = *it;
 					}
+					tiesTracker.insert(std::make_pair(sourceNode, minDistNode);
+					
 				}
 			}
 			//}
 			
 			std::cout << "nextMinDistNode: " << minDistNode << " nextMinDist: " << minDist << std::endl;
-			for(auto&& [destNode, prevNode_cost] : dijk) {
-				std::cout << "Source Node: " << sourceNode << " Dest Node: " << destNode << " Shortest Distance: " << prevNode_cost.second << " prev node: " << prevNode_cost.first << std::endl;
+			for(auto&& [destNode, path_cost] : dijk) {
+				//std::cout << "Source Node: " << sourceNode << " Dest Node: " << destNode << " Shortest Distance: " << prevNode_cost.second << " prev node: " << prevNode_cost.first << std::endl;
+				std::cout << "Source Node: " << sourceNode << " Dest Node: " << destNode << " Shortest Distance: " << prevNode_cost.second << " path: " << ((path_cost.first.size()) > 0 ? vecToString(path_cost.first) : " empty:" << std::endl;		
 			}
 			std::cout << "visitedNodes: " << setToString(visitedNodes) << " unvisitedNodes: " << setToString(unvisitedNodes) << std::endl;
 
@@ -586,35 +600,36 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 		
 		std::cout << std::endl;
 		std::cout << "Final dijkstras table:" << std::endl;
-		for(auto&& [destNode, prevNode_cost] : dijk) {
-			std::cout << "Source Node: " << sourceNode << " Dest Node: " << destNode << " Shortest Distance: " << prevNode_cost.second << " prev node: " << prevNode_cost.first << std::endl;
+		for(auto&& [destNode, path_cost] : dijk) {
+			std::cout << "Source Node: " << sourceNode << " Dest Node: " << destNode << " Shortest Distance: " << prevNode_cost.second << " prev node: " << ((path_cost.first.size()) > 0 ? vecToString(path_cost.first) << std::endl;
 		}
 		std::cout << "visitedNodes: " << setToString(visitedNodes) << " unvisitedNodes: " << setToString(unvisitedNodes) << std::endl;
 		std::cout << std::endl;
 		
 		std::cout << "FT Table before loaded with dijkstras..." << std::endl;
-		consoleOutFT(_FT_invert);
+		consoleOutFT(_FT);
 		
-		//Dijkstras Table is now built for this sourceNode. Update the forwarding table (_FT_invert) accordingly
+		//Dijkstras Table is now built for this sourceNode. Update the forwarding table (_FT) accordingly
 		//for(auto&& [reachableNode, nextHop_cost] : dijk) {
 		for(std::map<int, std::pair<int,int>>::iterator it = dijk.begin(); it != dijk.end(); it++) {
 			//int nextHop = nextHop_cost.first, cost = nextHop_cost.second;
-			int reachableNode = it->first, nextHop = it->second.first, cost = it->second.second;
+			int reachableNode = it->first, cost = it->second.second;
+			std::vector<int> node_path = it->second.first;
 			//Note: if cost does equal std::numeric_limits<int>::max(), a path was not discovered to the node in question and it is therefore unreachable from source
 			if(cost != std::numeric_limits<int>::max() && reachableNode != sourceNode) {
 			//if(nextHop != -1 && reachableNode != sourceNode) {
-				if(_FT_invert[reachableNode].find(sourceNode) != _FT_invert[reachableNode].end()) {
+				if(_FT[reachableNode].find(sourceNode) != _FT[reachableNode].end()) {
 					std::cout << "Should be updating entry for reachableNode " << reachableNode << " to source node: " << sourceNode << " with next hop of " << nextHop << " and cost of " << cost << std::endl;
-					_FT_invert[reachableNode].find(sourceNode)->second.first = nextHop;
-					_FT_invert[reachableNode].find(sourceNode)->second.second = cost;
-					//_FT_invert[reachableNode].find(sourceNode)->insert(std::make_pair(nextHop, cost);
-					//std::cout << "Just added to FT here, existing entry for source node " << sourceNode << " already present. FT[reachableNode].find(sourceNode)->second.first = " << _FT_invert[reachableNode].find(sourceNode)->second.first << " _FT_invert[reachableNode].find(sourceNode)->second.second = " << _FT_invert[reachableNode].find(sourceNode)->second.second << std::endl;
-					//consoleOutFT(_FT_invert);
+					_FT[reachableNode].find(sourceNode)->second.first = nextHop;
+					_FT[reachableNode].find(sourceNode)->second.second = cost;
+					//_FT[reachableNode].find(sourceNode)->insert(std::make_pair(nextHop, cost);
+					//std::cout << "Just added to FT here, existing entry for source node " << sourceNode << " already present. FT[reachableNode].find(sourceNode)->second.first = " << _FT[reachableNode].find(sourceNode)->second.first << " _FT[reachableNode].find(sourceNode)->second.second = " << _FT[reachableNode].find(sourceNode)->second.second << std::endl;
+					//consoleOutFT(_FT);
 				}
 				else {
 					std::cout << "Should be adding entry for reachableNode " << reachableNode << " to source node: " << sourceNode << " with next hop of " << nextHop << " and cost of " << cost << std::endl;
-					_FT_invert[reachableNode].insert(std::make_pair(sourceNode, std::make_pair(std::move(nextHop), cost)));
-					//std::cout << "Just added to FT here, new entry for source node " << sourceNode << ". FT[reachableNode].find(sourceNode)->second.first = " << _FT_invert[reachableNode].find(sourceNode)->second.first << " _FT_invert[reachableNode].find(sourceNode)->second.second = " << _FT_invert[reachableNode].find(sourceNode)->second.second << std::endl;
+					_FT[reachableNode].insert(std::make_pair(sourceNode, std::make_pair(std::move(nextHop), cost)));
+					//std::cout << "Just added to FT here, new entry for source node " << sourceNode << ". FT[reachableNode].find(sourceNode)->second.first = " << _FT[reachableNode].find(sourceNode)->second.first << " _FT[reachableNode].find(sourceNode)->second.second = " << _FT[reachableNode].find(sourceNode)->second.second << std::endl;
 				}
 			}
 		}
@@ -622,7 +637,7 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 	std::cout << std::endl;
 	std::cout << "FT after final dijkstras inside converge... just ran for source node: " << sourceNode << std::endl;
 	std::cout << std::endl;
-	consoleOutFT(_FT_invert);
+	consoleOutFT(_FT);
 	
 	//Print converged FT (testing/troubleshooting only)
     std::cout << std::endl;
