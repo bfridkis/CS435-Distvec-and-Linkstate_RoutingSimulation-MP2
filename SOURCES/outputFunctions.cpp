@@ -134,8 +134,8 @@ void fileOutFT(std::vector<std::map<int, std::pair<std::vector<int>, int>>> &_FT
 			   _outFile << it->first << " ";
 			   //If source is destination, output source as next hop
 			   if(it->second.first.size() == 1 && sourceNode == it->first) {
-			   }
 				   _outFile << sourceNode << it->second.second << std::endl;
+			   }
 			   //If source and destination are not the same but path size == 1, this is a direct link/hop. Output destination as next hop.
 			   else if(it->second.first.size() == 1) {
 				   _outFile << it->first << it->second.second << std::endl;
