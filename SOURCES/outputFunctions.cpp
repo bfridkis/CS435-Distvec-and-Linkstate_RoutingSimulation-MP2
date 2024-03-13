@@ -122,31 +122,6 @@ void consoleOutFT(std::vector<std::map<int, std::pair<std::vector<int>,int>>> &_
 	}
 }
 
-//To print non-inverted...
-//For Printing the Forwarding Table Elements to a File - For Link State
-/* void fileOutFT(std::vector<std::map<int, std::pair<int, int>>> &_FT, std::ofstream& _outFile, bool _initialConverge) {
-	if(_FT.size() > 1 && !_initialConverge) { 
-		_outFile << std::endl; 
-	}
-	for (unsigned short sourceNode = 1; sourceNode < _FT.size(); sourceNode++) {
-        //std::cout << "sourceNode: " << sourceNode << " " << _FT.size() << std::endl;
-			if(_FT[sourceNode].find(sourceNode)->second.second != -1) {
-			for (std::map<int, std::pair<int,int>>::iterator it=_FT[sourceNode].begin(); it !=_FT[sourceNode].end(); it++) {
-			   if(sourceNode == _FT.size()-1 && it == std::prev(_FT[sourceNode].end())) {
-					_outFile << it->first << " " << it->second.first << " " << it->second.second;
-			   }
-			   else {
-				   _outFile << it->first << " " << it->second.first << " " << it->second.second << std::endl;
-			   }
-				
-				//std::cout << "source: " << sourceNode << " Destination: " << it->first << " Cost: " << itMM->first << " Path: " << pathToPrint << std::endl;
-				//std::cout << "source: " << sourceNode << " Destination: " << it->first << " Cost: " << itMM->first << " First Hop: " << itMM->second.size() << std::endl;
-				//std::cout << "-------------------------------------" << std::endl;
-			}
-		}
-	}
-} */
-
 //For Printing the Forwarding Table Elements to a File - For Link State
 void fileOutFT(std::vector<std::map<int, std::pair<std::vector<int>, int>>> &_FT, std::ofstream& _outFile, bool _initialConverge) {
 	if(_FT.size() > 1 && !_initialConverge) { 
@@ -156,16 +131,22 @@ void fileOutFT(std::vector<std::map<int, std::pair<std::vector<int>, int>>> &_FT
         //std::cout << "sourceNode: " << sourceNode << " " << _FT.size() << std::endl;
 			if(_FT[sourceNode].find(sourceNode)->second.second != -1) {
 			for (std::map<int, std::pair<std::vector<int>,int>>::iterator it=_FT[sourceNode].begin(); it !=_FT[sourceNode].end(); it++) {
-			   if(sourceNode == _FT.size()-1 && it == std::prev(_FT[sourceNode].end())) {
-					_outFile << it->first << " " << ((it->second.first.size() == 1) ? it->second.first[0] : it->second.first[1]) << " " << it->second.second;
+			   _outFile << it->first << " ";
+			   //If source is destination, output source as next hop
+			   if(it->second.first.size() == 1 && sourceNode == it->first) {
+				   _outFile << sourceNode << it->second.second << std::endl;
+			   //If source and destination are not the same but path size == 1, this is a direct link/hop. Output destination as next hop.
+			   else if(it->second.first.size() == 1) {
+				   _outFile << it->first << it->second.second << std::endl;
 			   }
+			   //Otherwise, print second element of path as nextHop (first element of the path is source)
 			   else {
-				   _outFile << it->first << " " << ((it->second.first.size() == 1) ? it->second.first[0] : it->second.first[1]) << " " << it->second.second << std::endl;
+					_outFile << it->second.first[1] << it->second.second << std::endl;
 			   }
-				
-				//std::cout << "source: " << sourceNode << " Destination: " << it->first << " Cost: " << itMM->first << " Path: " << pathToPrint << std::endl;
-				//std::cout << "source: " << sourceNode << " Destination: " << it->first << " Cost: " << itMM->first << " First Hop: " << itMM->second.size() << std::endl;
-				//std::cout << "-------------------------------------" << std::endl;
+			   //Omit outputting new line for last entry (message print that follows will print the next new line...however this might cause issues if message input file is emtpy, as next FT entry will be on same line as last entry of this FT output...
+			   //if(!(sourceNode == _FT.size()-1 && it == std::prev(_FT[sourceNode].end()))) {
+			   //	outFile << std::endl;
+			   }
 			}
 		}
 	}

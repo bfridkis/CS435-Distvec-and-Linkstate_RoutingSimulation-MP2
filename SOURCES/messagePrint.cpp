@@ -187,7 +187,8 @@ void messagePrint(std::vector<std::map<int, std::pair<std::vector<int>, int>>> &
 					_outFile << "from " << sourceNode << " to " << destNode << " cost infinite hops unreachable message" << message;
 			}	
 		}
-	}		
+	}	
+	std::cout << std::endl;
     //_outFile << std::endl;
 	//Rewind input stream to beginning for next print job...
 	messages.clear();
