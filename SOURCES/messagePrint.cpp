@@ -180,7 +180,6 @@ void messagePrint(std::vector<std::map<int, std::pair<std::vector<int>, int>>> &
 				//_outFile << "message" << message;
 				//_outFile << "from " << sourceNode << " to " << destNode << " cost " << cost << " hops " << sourceNode << " " << vecToString(_FT[sourceNode].find(destNode)->second.first, " ");
 				_outFile << "from " << sourceNode << " to " << destNode << " cost " << cost << " hops " << vecToString(_FT[sourceNode].find(destNode)->second.first, " ");
-				_outFile << "from " << sourceNode << " to " << destNode << " cost infinite hops unreachable message" << message;
 			}
 			else {
 					//_outFile << "from " << sourceNode << " to " << destNode << " cost infinite hops unreachable message" << message << std::endl;
