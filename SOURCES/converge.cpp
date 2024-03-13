@@ -466,7 +466,7 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 	//for(auto&& [destNode, prevNode_cost] : dijk) {
 	for(auto&& [destNode, path_cost] : dijk) {
 		//std::cout << "Source Node: " << sourceNode << " Dest Node: " << destNode << " Shortest Distance: " << prevNode_cost.second << " path (0 == empty, should be empty here): " << prevNode_cost.first << std::endl;
-		std::cout << "Source Node: " << sourceNode << " Dest Node: " << destNode << " Shortest Distance: " << path_cost.second << " path: " << ((path_cost.first.size()) > 0 ? vecToString(path_cost.first) : "empty:") << std::endl;
+		std::cout << "Source Node: " << sourceNode << " Dest Node: " << destNode << " Shortest Distance: " << path_cost.second << " path: " << ((path_cost.first.size()) > 0 ? vecToString(path_cost.first) : "empty") << std::endl;
 	}
 	std::cout << "visitedNodes: " << setToString(visitedNodes) << " unvisitedNodes: " << setToString(unvisitedNodes) << " _TT[sourceNode].size() " << _TT[sourceNode].size() << std::endl;
 	std::cout << std::endl;
@@ -503,7 +503,7 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 		//for(auto&& [destNode, path_cost] : dijk) {
 		for(auto&& [destNode, path_cost] : dijk) {
 			//std::cout << "Source Node: " << sourceNode << " Dest Node: " << destNode << " Shortest Distance: " << path_cost.second << " prev node: " << path_cost.first << std::endl;
-			std::cout << "Source Node: " << sourceNode << " Dest Node: " << destNode << " Shortest Distance: " << path_cost.second << " path: " << ((path_cost.first.size()) > 0 ? vecToString(path_cost.first) : "empty:") << std::endl;
+			std::cout << "Source Node: " << sourceNode << " Dest Node: " << destNode << " Shortest Distance: " << path_cost.second << " path: " << ((path_cost.first.size()) > 0 ? vecToString(path_cost.first) : "empty") << std::endl;
 		}
 		std::cout << "visitedNodes: " << setToString(visitedNodes) << " unvisitedNodes: " << setToString(unvisitedNodes) << std::endl;
 		std::cout << std::endl;
@@ -589,13 +589,13 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 			//}
 			
 			//Update path for next visited node
-			path.clear();
+			path.resize(1);
 			path.insert(path.begin(), dijk.find(minDistNode)->second.first.begin(), dijk.find(minDistNode)->second.first.end());
 			
-			std::cout << "nextMinDistNode: " << minDistNode << " nextMinDist: " << minDist << " next minDistNodePath: " << (dijk.find(minDistNode)->second.first.size() > 0 ? vecToString(dijk.find(minDistNode)->second.first) : "empty:") << std::endl;
+			std::cout << "nextMinDistNode: " << minDistNode << " nextMinDist: " << minDist << " next minDistNodePath: " << (dijk.find(minDistNode)->second.first.size() > 0 ? vecToString(dijk.find(minDistNode)->second.first) : "empty") << std::endl;
 			for(auto&& [destNode, path_cost] : dijk) {
 				//std::cout << "Source Node: " << sourceNode << " Dest Node: " << destNode << " Shortest Distance: " << path_cost.second << " prev node: " << path_cost.first << std::endl;
-				std::cout << "Source Node: " << sourceNode << " Dest Node: " << destNode << " Shortest Distance: " << path_cost.second << " path: " << ((path_cost.first.size()) > 0 ? vecToString(path_cost.first) : "empty:") << std::endl;
+				std::cout << "Source Node: " << sourceNode << " Dest Node: " << destNode << " Shortest Distance: " << path_cost.second << " path: " << ((path_cost.first.size()) > 0 ? vecToString(path_cost.first) : "empty") << std::endl;
 			}
 			std::cout << "visitedNodes: " << setToString(visitedNodes) << " unvisitedNodes: " << setToString(unvisitedNodes) << std::endl;
 
@@ -605,7 +605,7 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 		std::cout << std::endl;
 		std::cout << "Final dijkstras table:" << std::endl;
 		for(auto&& [destNode, path_cost] : dijk) {
-			std::cout << "Source Node: " << sourceNode << " Dest Node: " << destNode << " Shortest Distance: " << path_cost.second << " path: " << ((path_cost.first.size()) > 0 ? vecToString(path_cost.first) : "empty:") << std::endl;
+			std::cout << "Source Node: " << sourceNode << " Dest Node: " << destNode << " Shortest Distance: " << path_cost.second << " path: " << ((path_cost.first.size()) > 0 ? vecToString(path_cost.first) : "empty") << std::endl;
 		}
 		std::cout << "visitedNodes: " << setToString(visitedNodes) << " unvisitedNodes: " << setToString(unvisitedNodes) << std::endl;
 		std::cout << std::endl;
@@ -623,7 +623,7 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 			if(cost != std::numeric_limits<int>::max() && reachableNode != sourceNode) {
 			//if(nextHop != -1 && reachableNode != sourceNode) {
 				if(_FT[reachableNode].find(sourceNode) != _FT[reachableNode].end()) {
-					std::cout << "Should be updating entry for reachableNode " << reachableNode << " to source node: " << sourceNode << " with path of " << ((node_path.size()) > 0 ? vecToString(node_path) : "empty:") << " and cost of " << cost << std::endl;
+					std::cout << "Should be updating entry for reachableNode " << reachableNode << " to source node: " << sourceNode << " with path of " << ((node_path.size()) > 0 ? vecToString(node_path) : "empty") << " and cost of " << cost << std::endl;
 					_FT[reachableNode].find(sourceNode)->second.first = node_path;
 					_FT[reachableNode].find(sourceNode)->second.second = cost;
 					//_FT[reachableNode].find(sourceNode)->insert(std::make_pair(nextHop, cost);
@@ -631,7 +631,7 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 					//consoleOutFT(_FT);
 				}
 				else {
-					std::cout << "Should be adding entry for reachableNode " << reachableNode << " to source node: " << sourceNode << " with path of " << ((node_path.size()) > 0 ? vecToString(node_path) : " empty:") << " and cost of " << cost << std::endl;
+					std::cout << "Should be adding entry for reachableNode " << reachableNode << " to source node: " << sourceNode << " with path of " << ((node_path.size()) > 0 ? vecToString(node_path) : " empty") << " and cost of " << cost << std::endl;
 					_FT[reachableNode].insert(std::make_pair(sourceNode, std::make_pair(std::vector<int>(node_path), cost)));
 					//std::cout << "Just added to FT here, new entry for source node " << sourceNode << ". FT[reachableNode].find(sourceNode)->second.first = " << _FT[reachableNode].find(sourceNode)->second.first << " _FT[reachableNode].find(sourceNode)->second.second = " << _FT[reachableNode].find(sourceNode)->second.second << std::endl;
 				}
