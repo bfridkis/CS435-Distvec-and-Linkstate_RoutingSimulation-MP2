@@ -589,7 +589,7 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 			//}
 			
 			//Update path for next visited node
-			std::cout << "path right before resizing back to 1: " << vecToString(path) << " dijk path for minDistNode: " << vecToString(dijk.find(minDistNode)->second) << std::endl;
+			std::cout << "path right before resizing back to 1: " << vecToString(path) << " dijk path for minDistNode: " << vecToString(dijk.find(minDistNode)->second.first) << std::endl;
 			path.resize(1);
 			path.insert(path.begin(), dijk.find(minDistNode)->second.first.begin(), dijk.find(minDistNode)->second.first.end());
 			
