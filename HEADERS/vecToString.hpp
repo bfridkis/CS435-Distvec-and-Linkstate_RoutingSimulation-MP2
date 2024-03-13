@@ -10,6 +10,6 @@
 
 #include "include.hpp"
 
-std::string vecToString(std::vector<int>& vec, const char *sep);
-std::string setToString(std::set<int>& set, const char *sep);
+std::string vecToString(std::vector<int>& vec, const char *sep = "");
+std::string setToString(std::set<int>& set, const char *sep = "");
 #endif
