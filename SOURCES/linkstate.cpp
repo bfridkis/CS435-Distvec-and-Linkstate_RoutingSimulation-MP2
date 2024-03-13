@@ -46,8 +46,9 @@ int main(int argc, char** argv) {
 	std::vector<std::map<int, int>> TT; 
 	
     //Forwarding tables stored as vector of maps, with each vector element corresponding to a forwarding table for a given node, and each (map) entry of that table is that node's forwarding entry, indexed by destination and with the resulting pair first element == to the next hop, and second element == path cost
-	std::vector<std::map<int, std::pair<int, int>>> FT, FT_invert; 		//FT_invert is used for the converge function's dijkstra results, since dijkstra essentially builds paths /resolves ties in reverse order. The results of invert will be swapped/inverted to produce the final FT
-    
+	//std::vector<std::map<int, std::pair<int, int>>> FT, FT_invert; 		//FT_invert is used for the converge function's dijkstra results, since dijkstra essentially builds paths /resolves ties in reverse order. The results of invert will be swapped/inverted to produce the final FT
+    std::vector<std::map<int, std::pair<vector<int>, int>>> FT;
+	
     //Build initial forwarding table from topology input file
     //std::ifstream topoInput(argv[1]);
     
@@ -90,12 +91,12 @@ int main(int argc, char** argv) {
         if (a >= FT.size()) { 
 			TT.resize(a+1);
 			FT.resize(a+1);
-			FT_invert.resize(a+1);
+			//FT_invert.resize(a+1);
 		}
         if (b >= FT.size()) { 
 			TT.resize(b+1);
 			FT.resize(b+1); 
-			FT_invert.resize(b+1); 
+			//FT_invert.resize(b+1); 
 		}
 		
         //std::cout << "Line75..." << "FT Size: " << FT.size() << std::endl;
@@ -126,14 +127,14 @@ int main(int argc, char** argv) {
         
         //If node number added/part of topology, add path to self with cost of 0
         if(nodesAdded.find(i) != nodesAdded.end()) {
-			FT[i].insert(std::make_pair(i, std::make_pair(i,0)));
-			FT_invert[i].insert(std::make_pair(i, std::make_pair(i,0)));
+			FT[i].insert(std::make_pair(i, std::make_pair(std::vector<int>(1,i),0)));
+			//FT_invert[i].insert(std::make_pair(i, std::make_pair(i,0)));
 		}
 		//If a node is not part of the topology, add a self-entry with a cost of -1 (used to omit printing these place holder node numbers to output file)
 		else {
 			std::cout << "adding -1 entry for this unused node's self cost: " << i << std::endl;
-			FT[i].insert(std::make_pair(i, std::make_pair(i,-1)));
-			FT_invert[i].insert(std::make_pair(i, std::make_pair(i,-1)));
+			FT[i].insert(std::make_pair(i, std::make_pair(std::vector<int>(1,i),-1)));
+			//FT_invert[i].insert(std::make_pair(i, std::make_pair(i,-1)));
 		}
     }
     
@@ -150,11 +151,11 @@ int main(int argc, char** argv) {
     std::cout << std::endl;
     
     //Initial Routing Table Convergences. 
-    for (int sourceNode = 1; sourceNode < FT_invert.size(); sourceNode++) {
+    for (int sourceNode = 1; sourceNode < FT.size(); sourceNode++) {
         std::cout << std::endl;
         std::cout << "Initial convergence for node: " << sourceNode << std::endl;
-        if(FT_invert[sourceNode].find(sourceNode)->second.second != -1) {
-			converge(sourceNode, TT, FT_invert);
+        if(FT[sourceNode].find(sourceNode)->second.second != -1) {
+			converge(sourceNode, TT, FT);
 		}
 	}
 	//After converge, need to swap routes between each source and destination to ensure tie breaking rule of lowest last hop node number is followed (due to the fact that dijkstra's algo builds the routes in reverse order, i.e. from destination to source... see converge.cpp)
@@ -177,11 +178,11 @@ int main(int argc, char** argv) {
     std::cout << std::endl;
     std::cout << "Forwarding tables after initial converge..." << std::endl;
     //consoleOutFT(FT);
-	consoleOutFT(FT_invert);
+	consoleOutFT(FT);
 	//std::cout << "Got past consoleOutFT?" << std::endl;
 	
 	//fileOutFT(FT, outFile);
-	fileOutFT(FT_invert, outFile, true);
+	fileOutFT(FT, outFile, true);
     
     /*std::cout << "\n2nd Convergence..." << std::endl;
     for (int i = 1; i < FT.size(); i++) {
@@ -202,7 +203,7 @@ int main(int argc, char** argv) {
     //auto iss = std::istringstream{"2 1 here is a message from 2 to 1\n3 5 this one gets sent from 3 to 5!"};
     //messagePrint(FT, iss);
 	
-	messagePrint(FT_invert, messagesInputFile, outFile);
+	messagePrint(FT, messagesInputFile, outFile);
     //messagePrint(FT, messagesInputFile, outFile);
 	
     std::cout << std::endl;
@@ -220,11 +221,11 @@ int main(int argc, char** argv) {
      //   i++;
     //}
     
-    //processChanges(FT_invert, changeInput);
+    //processChanges(FT, changeInput);
 	
 	//std::cout << "Did we get to processChanges?" << std::endl;
 	
-	processChanges(FT, FT_invert, TT, changesInputFile, messagesInputFile, outFile);
+	processChanges(FT, TT, changesInputFile, messagesInputFile, outFile);
     
     std::cout << std::endl;
     

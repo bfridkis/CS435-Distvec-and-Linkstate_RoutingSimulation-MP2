@@ -110,12 +110,14 @@ void consoleOutFT(std::vector<std::map<int, std::pair<int,int>>> &_FT) {
     for (unsigned short sourceNode = 1; sourceNode < _FT.size(); sourceNode++) {
         //std::cout << "sourceNode: " << sourceNode << " " << _FT.size() << std::endl;
         //for (std::map<int, std::pair<int,int>>::iterator it = _FT[sourceNode].begin(); it!=_FT[sourceNode].end(); it++) {
-         for(auto&& [destNode, nextHop_cost] : _FT[sourceNode]) {  
+         for(auto&& [destNode, path_cost] : _FT[sourceNode]) {  
 			//std::cout << "source: " << sourceNode << " Destination: " << it->first << " Next Hop: " << it->second.first << " Cost: " << it->second.second << std::endl;
-			std::cout << "source: " << sourceNode << " Destination: " << destNode << " Next Hop: " << nextHop_cost.first << " Cost: " << nextHop_cost.second << std::endl;
+			//std::cout << "source: " << sourceNode << " Destination: " << destNode << " Next Hop: " << nextHop_cost.first << " Cost: " << nextHop_cost.second << std::endl;
 			//std::cout << "source: " << sourceNode << " Destination: " << it->first << " Cost: " << itMM->first << " Path: " << pathToPrint << std::endl;
 			//std::cout << "source: " << sourceNode << " Destination: " << it->first << " Cost: " << itMM->first << " First Hop: " << itMM->second.size() << std::endl;
 			//std::cout << "-------------------------------------" << std::endl;
+			std::cout << "source: " << sourceNode << " Destination: " << destNode << " Path: " << ((path_cost.first.size()) > 0 ? vecToString(path_cost.first) << " Cost: " << nextHop_cost.second << std::endl;
+			
 		}
 	}
 }
@@ -147,7 +149,7 @@ void consoleOutFT(std::vector<std::map<int, std::pair<int,int>>> &_FT) {
 
 //To print inverted...
 //For Printing the Forwarding Table Elements to a File - For Link State
-void fileOutFT(std::vector<std::map<int, std::pair<int, int>>> &_FT, std::ofstream& _outFile, bool _initialConverge) {
+void fileOutFT(std::vector<std::map<int, std::pair<std::vector<int>, int>>> &_FT, std::ofstream& _outFile, bool _initialConverge) {
 	if(_FT.size() > 1 && !_initialConverge) { 
 		_outFile << std::endl; 
 	}
@@ -156,10 +158,10 @@ void fileOutFT(std::vector<std::map<int, std::pair<int, int>>> &_FT, std::ofstre
 			if(_FT[sourceNode].find(sourceNode)->second.second != -1) {
 			for (std::map<int, std::pair<int,int>>::iterator it=_FT[sourceNode].begin(); it !=_FT[sourceNode].end(); it++) {
 			   if(sourceNode == _FT.size()-1 && it == std::prev(_FT[sourceNode].end())) {
-					_outFile << it->first << " " << it->second.first << " " << it->second.second;
+					_outFile << it->first << " " << it->second.first[0] << " " << it->second.second;
 			   }
 			   else {
-				   _outFile << it->first << " " << it->second.first << " " << it->second.second << std::endl;
+				   _outFile << it->first << " " << it->second.first[0] << " " << it->second.second << std::endl;
 			   }
 				
 				//std::cout << "source: " << sourceNode << " Destination: " << it->first << " Cost: " << itMM->first << " Path: " << pathToPrint << std::endl;

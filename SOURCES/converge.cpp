@@ -436,7 +436,7 @@ void converge(std::vector<std::map<int, std::multimap<int, std::vector<int>>>> &
 
 //For Link State
 //void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<std::map<int, std::pair<int, int>>> &_FT_invert) {
-void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<std::map<int, std::pair<int, int>>> &_FT, std::pair<int,int> &tiesTracker) {	
+void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<std::map<int, std::pair<vector<int>, int>>> &_FT, std::vector<std::pair<int,int>> &tiesTracker) {	
 	//Initialize container for Dijkstras. Map key is reachable node, first element of pair (int) is the "previous" node (or, alternatively from the view of the destination node itself, next hop to source), while the second element of the pair is the reachable node shortest path cost, 
 	//std::map<int, std::pair<int,int>> dijk;
 	//Initialize container for Dijkstras. Map key is reachable node, first element of pair (int) is the path (dest -> source) and the second element is the cost
@@ -588,7 +588,10 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 			}
 			//}
 			
-			std::cout << "nextMinDistNode: " << minDistNode << " nextMinDist: " << minDist << std::endl;
+			//Update path for next visited node
+			path = dijk.find(minDistNode)->second.first;
+			
+			std::cout << "nextMinDistNode: " << minDistNode << " nextMinDist: " << minDist << " next minDistNodePath: " << ((path_cost.first.size()) > 0 ? vecToString(path_cost.first) : " empty:") << std::endl;
 			for(auto&& [destNode, path_cost] : dijk) {
 				//std::cout << "Source Node: " << sourceNode << " Dest Node: " << destNode << " Shortest Distance: " << path_cost.second << " prev node: " << path_cost.first << std::endl;
 				std::cout << "Source Node: " << sourceNode << " Dest Node: " << destNode << " Shortest Distance: " << path_cost.second << " path: " << ((path_cost.first.size()) > 0 ? vecToString(path_cost.first) : " empty:") << std::endl;		
@@ -611,7 +614,7 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 		
 		//Dijkstras Table is now built for this sourceNode. Update the forwarding table (_FT) accordingly
 		//for(auto&& [reachableNode, nextHop_cost] : dijk) {
-		for(std::map<int, std::pair<int,int>>::iterator it = dijk.begin(); it != dijk.end(); it++) {
+		for(std::map<int, std::pair<vector<int>,int>>::iterator it = dijk.begin(); it != dijk.end(); it++) {
 			//int nextHop = nextHop_cost.first, cost = nextHop_cost.second;
 			int reachableNode = it->first, cost = it->second.second;
 			std::vector<int> node_path = it->second.first;
@@ -620,7 +623,7 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 			//if(nextHop != -1 && reachableNode != sourceNode) {
 				if(_FT[reachableNode].find(sourceNode) != _FT[reachableNode].end()) {
 					std::cout << "Should be updating entry for reachableNode " << reachableNode << " to source node: " << sourceNode << " with next hop of " << nextHop << " and cost of " << cost << std::endl;
-					_FT[reachableNode].find(sourceNode)->second.first = nextHop;
+					_FT[reachableNode].find(sourceNode)->second.first = node_path;
 					_FT[reachableNode].find(sourceNode)->second.second = cost;
 					//_FT[reachableNode].find(sourceNode)->insert(std::make_pair(nextHop, cost);
 					//std::cout << "Just added to FT here, existing entry for source node " << sourceNode << " already present. FT[reachableNode].find(sourceNode)->second.first = " << _FT[reachableNode].find(sourceNode)->second.first << " _FT[reachableNode].find(sourceNode)->second.second = " << _FT[reachableNode].find(sourceNode)->second.second << std::endl;
@@ -628,7 +631,7 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 				}
 				else {
 					std::cout << "Should be adding entry for reachableNode " << reachableNode << " to source node: " << sourceNode << " with next hop of " << nextHop << " and cost of " << cost << std::endl;
-					_FT[reachableNode].insert(std::make_pair(sourceNode, std::make_pair(std::move(nextHop), cost)));
+					_FT[reachableNode].insert(std::make_pair(sourceNode, std::make_pair(std::vector<int>(node_path, cost)));
 					//std::cout << "Just added to FT here, new entry for source node " << sourceNode << ". FT[reachableNode].find(sourceNode)->second.first = " << _FT[reachableNode].find(sourceNode)->second.first << " _FT[reachableNode].find(sourceNode)->second.second = " << _FT[reachableNode].find(sourceNode)->second.second << std::endl;
 				}
 			}

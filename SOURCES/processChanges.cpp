@@ -249,8 +249,8 @@ void processChanges(std::vector<std::map<int, std::multimap<int, std::vector<int
 }
 
 //For Link State
-void processChanges(std::vector<std::map<int, std::pair<int, int>>> &_FT, std::vector<std::map<int, std::pair<int, int>>> &_FT_invert, std::vector<std::map<int, int>> &_TT,  std::ifstream& _changesInput, std::ifstream& _messagesInput, std::ofstream& _outFile) {
-
+//void processChanges(std::vector<std::map<int, std::pair<int, int>>> &_FT, std::vector<std::map<int, std::pair<int, int>>> &_FT_invert, std::vector<std::map<int, int>> &_TT,  std::ifstream& _changesInput, std::ifstream& _messagesInput, std::ofstream& _outFile) {
+void processChanges(std::vector<std::map<int, std::pair<int, int>>> &_FT, std::vector<std::map<int, int>> &_TT,  std::ifstream& _changesInput, std::ifstream& _messagesInput, std::ofstream& _outFile) {
     int changedLinkNode1, changedLinkNode2, change, j=1;
     while (_changesInput >> changedLinkNode1 >> changedLinkNode2 >> change) {    
         std::cout << "\nChanges to be applied: changedLinkNode1 - " << changedLinkNode1 << " changedLinkNode2 - " << changedLinkNode2 << " change - " << change << std::endl;
@@ -260,16 +260,16 @@ void processChanges(std::vector<std::map<int, std::pair<int, int>>> &_FT, std::v
 			int prevSize = _TT.size();
 			_TT.resize(changedLinkNode1+1);
 			_FT.resize(changedLinkNode1+1);
-			_FT_invert.resize(changedLinkNode1+1);
+			//_FT_invert.resize(changedLinkNode1+1);
 			//Resize forwarding table and initialize added node with self link cost of 0 (and if any nodes are skipped in between previous highest node number and newest node, initialize those node number placeholders with cost of -1, to denote not part of topology)
 			for(int i = prevSize ; i < _FT.size(); i++) {
 				if(i == changedLinkNode1) {
-					_FT[i].insert(std::make_pair(i, std::make_pair(i,0)));
-					_FT_invert[i].insert(std::make_pair(i, std::make_pair(i,0)));
+					_FT[i].insert(std::make_pair(i, std::make_pair(std::vector<int>(1,i),0)));
+					//_FT_invert[i].insert(std::make_pair(i, std::make_pair(i,0)));
 				}
 				else {
-					_FT[i].insert(std::make_pair(i, std::make_pair(i,-1)));
-					_FT_invert[i].insert(std::make_pair(i, std::make_pair(i,-1)));
+					_FT[i].insert(std::make_pair(i, std::make_pair(std::vector<int>(1,i),-1)));
+					//_FT_invert[i].insert(std::make_pair(i, std::make_pair(i,-1)));
 				}
 			}
 		}
@@ -277,16 +277,16 @@ void processChanges(std::vector<std::map<int, std::pair<int, int>>> &_FT, std::v
 			int prevSize = _TT.size();
 			_TT.resize(changedLinkNode2+1);
 			_FT.resize(changedLinkNode2+1);
-			_FT_invert.resize(changedLinkNode2+1);
+			//_FT_invert.resize(changedLinkNode2+1);
 			//Resize forwarding table and initialize added node with self link cost of 0 (and if any nodes are skipped in between previous highest node number and newest node, initialize those node number placeholders with cost of -1, to denote not part of topology)
 			for(int i = prevSize ; i < _FT.size(); i++) {
 				if(i == changedLinkNode2) {
-					_FT[i].insert(std::make_pair(i, std::make_pair(i,0)));
-					_FT_invert[i].insert(std::make_pair(i, std::make_pair(i,0)));
+					_FT[i].insert(std::make_pair(i, std::make_pair(std::vector<int>(1,i),0)));
+					//_FT_invert[i].insert(std::make_pair(i, std::make_pair(i,0)));
 				}
 				else {
-					_FT[i].insert(std::make_pair(i, std::make_pair(i,-1)));
-					_FT_invert[i].insert(std::make_pair(i, std::make_pair(i,-1)));
+					_FT[i].insert(std::make_pair(i, std::make_pair(std::vector<int>(1,i),-1)));
+					//_FT_invert[i].insert(std::make_pair(i, std::make_pair(i,-1)));
 				}
 			}
 		}
@@ -334,7 +334,7 @@ void processChanges(std::vector<std::map<int, std::pair<int, int>>> &_FT, std::v
 		std::cout << std::endl;
 		
 		//Clear forwarding tables except for self entries
-		for(int sourceNode = 1; sourceNode < _FT_invert.size(); sourceNode++) {
+		/* for(int sourceNode = 1; sourceNode < _FT_invert.size(); sourceNode++) {
 			//for(auto&& [reachableNode, nextHop_cost] : _FT[sourceNode]) {
 			for(auto it_m = _FT_invert[sourceNode].begin(), next_it=it_m; it_m != _FT_invert[sourceNode].end(); it_m = next_it){
 				next_it++;
@@ -343,7 +343,8 @@ void processChanges(std::vector<std::map<int, std::pair<int, int>>> &_FT, std::v
 					_FT_invert[sourceNode].erase(_FT_invert[sourceNode].find(reachableNode));
 				}
 			}
-		}
+		} */
+		//Clear forwarding tables except for self entries
 		for(int sourceNode = 1; sourceNode < _FT.size(); sourceNode++) {
 			//for(auto&& [reachableNode, nextHop_cost] : _FT[sourceNode]) {
 			for(auto it_m = _FT[sourceNode].begin(), next_it=it_m; it_m != _FT[sourceNode].end(); it_m = next_it){
@@ -357,12 +358,12 @@ void processChanges(std::vector<std::map<int, std::pair<int, int>>> &_FT, std::v
 		
 		//Should be empty except for self-entries here...
 		std::cout << "Stripped FT before recovergence... " << std::endl;
-		consoleOutFT(_FT_invert);
+		consoleOutFT(_FT);
 		
 		//Reconverge
-		for(int sourceNode = 1; sourceNode < _FT_invert.size(); sourceNode++) {
-			if(_FT_invert[sourceNode].find(sourceNode)->second.second != -1) {
-				converge(sourceNode, _TT, _FT_invert);
+		for(int sourceNode = 1; sourceNode < _FT.size(); sourceNode++) {
+			if(_FT[sourceNode].find(sourceNode)->second.second != -1) {
+				converge(sourceNode, _TT, _FT);
 			}
 		}
 		
@@ -389,9 +390,9 @@ void processChanges(std::vector<std::map<int, std::pair<int, int>>> &_FT, std::v
         std::cout << std::endl;
         
         std::cout << "Forwarding tables after change " << j++ << " and subsequent reconvergence applied..." << std::endl;
-        consoleOutFT(_FT_invert);
-		fileOutFT(_FT_invert, _outFile, false);
+        consoleOutFT(_FT);
+		fileOutFT(_FT, _outFile, false);
 		
-		messagePrint(_FT_invert, _messagesInput, _outFile);
+		messagePrint(_FT, _messagesInput, _outFile);
     }
 }
