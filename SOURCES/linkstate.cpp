@@ -47,7 +47,7 @@ int main(int argc, char** argv) {
 	
     //Forwarding tables stored as vector of maps, with each vector element corresponding to a forwarding table for a given node, and each (map) entry of that table is that node's forwarding entry, indexed by destination and with the resulting pair first element == to the next hop, and second element == path cost
 	//std::vector<std::map<int, std::pair<int, int>>> FT, FT_invert; 		//FT_invert is used for the converge function's dijkstra results, since dijkstra essentially builds paths /resolves ties in reverse order. The results of invert will be swapped/inverted to produce the final FT
-    std::vector<std::map<int, std::pair<vector<int>, int>>> FT;
+    std::vector<std::map<int, std::pair<std::vector<int>, int>>> FT;
 	
     //Build initial forwarding table from topology input file
     //std::ifstream topoInput(argv[1]);
