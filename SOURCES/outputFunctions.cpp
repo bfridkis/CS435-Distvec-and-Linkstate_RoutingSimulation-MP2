@@ -157,10 +157,10 @@ void fileOutFT(std::vector<std::map<int, std::pair<std::vector<int>, int>>> &_FT
 			if(_FT[sourceNode].find(sourceNode)->second.second != -1) {
 			for (std::map<int, std::pair<std::vector<int>,int>>::iterator it=_FT[sourceNode].begin(); it !=_FT[sourceNode].end(); it++) {
 			   if(sourceNode == _FT.size()-1 && it == std::prev(_FT[sourceNode].end())) {
-					_outFile << it->first << " " << ((it->second.first.size == 1) ? it->second.first[0] : it->second.first[1]) << " " << it->second.second;
+					_outFile << it->first << " " << ((it->second.first.size() == 1) ? it->second.first[0] : it->second.first[1]) << " " << it->second.second;
 			   }
 			   else {
-				   _outFile << it->first << " " << ((it->second.first.size == 1) ? it->second.first[0] : it->second.first[1])yy << " " << it->second.second << std::endl;
+				   _outFile << it->first << " " << ((it->second.first.size() == 1) ? it->second.first[0] : it->second.first[1])yy << " " << it->second.second << std::endl;
 			   }
 				
 				//std::cout << "source: " << sourceNode << " Destination: " << it->first << " Cost: " << itMM->first << " Path: " << pathToPrint << std::endl;
