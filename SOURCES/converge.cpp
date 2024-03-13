@@ -631,7 +631,7 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 				}
 				else {
 					std::cout << "Should be adding entry for reachableNode " << reachableNode << " to source node: " << sourceNode << " with path of " << ((node_path.size()) > 0 ? vecToString(node_path) : " empty:") << " and cost of " << cost << std::endl;
-					_FT[reachableNode].insert(std::make_pair(sourceNode, std::make_pair(std::vector<int>(node_path, cost)));
+					_FT[reachableNode].insert(std::make_pair(sourceNode, std::make_pair(std::vector<int>(node_path), cost)));
 					//std::cout << "Just added to FT here, new entry for source node " << sourceNode << ". FT[reachableNode].find(sourceNode)->second.first = " << _FT[reachableNode].find(sourceNode)->second.first << " _FT[reachableNode].find(sourceNode)->second.second = " << _FT[reachableNode].find(sourceNode)->second.second << std::endl;
 				}
 			}
