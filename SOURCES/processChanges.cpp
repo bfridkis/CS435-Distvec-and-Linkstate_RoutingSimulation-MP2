@@ -364,7 +364,7 @@ void processChanges(std::vector<std::map<int, std::pair<std::vector<int>, int>>>
 		std::vector<std::pair<int,int>> tiesTracker;	//Used for tracking tied path decision that may need to be swapped/inverted after convergence, to handle the way in which dijkstra's builds paths and assignemt tie breaker rule of last hop node with lowest node number... ex: node 1->4 may have a different path than 4->1 in the event of a tie, and these will need to be swapped to accomodate assignment priority rule of lowest last hop node number.
 		for(int sourceNode = 1; sourceNode < _FT.size(); sourceNode++) {
 			if(_FT[sourceNode].find(sourceNode)->second.second != -1) {
-				converge(sourceNode, _TT, _FT, );
+				converge(sourceNode, _TT, _FT, tiesTracker);
 			}
 		}
 		
