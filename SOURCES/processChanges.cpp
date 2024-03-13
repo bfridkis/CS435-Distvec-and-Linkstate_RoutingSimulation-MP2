@@ -361,13 +361,14 @@ void processChanges(std::vector<std::map<int, std::pair<std::vector<int>, int>>>
 		consoleOutFT(_FT);
 		
 		//Reconverge
+		std::vector<std::pair<int,int>> tiesTracker;	//Used for tracking tied path decision that may need to be swapped/inverted after convergence, to handle the way in which dijkstra's builds paths and assignemt tie breaker rule of last hop node with lowest node number... ex: node 1->4 may have a different path than 4->1 in the event of a tie, and these will need to be swapped to accomodate assignment priority rule of lowest last hop node number.
 		for(int sourceNode = 1; sourceNode < _FT.size(); sourceNode++) {
 			if(_FT[sourceNode].find(sourceNode)->second.second != -1) {
-				converge(sourceNode, _TT, _FT);
+				converge(sourceNode, _TT, _FT, );
 			}
 		}
 		
-		//After before after the initial converge (linkstate.cpp), need to swap routes between each source and destination to ensure tie breaking rule of lowest last hop node number is followed (due to the fact that dijkstra's algo builds the routes in reverse order, i.e. from destination to source... see converge.cpp)
+		//Just like after the initial converge (linkstate.cpp), need to swap routes between each source and destination to ensure tie breaking rule of lowest last hop node number is followed (due to the fact that dijkstra's algo builds the routes in reverse order, i.e. from destination to source... see converge.cpp)
 		//Do this by building a new FT with swapped values from the dijkstra inverted output
 		//(If this makes program run too slow, for this assignment/exercise just need to swap the final source / destination next hops for consoleOutFT and print dest path as source's and vis versa in messagePrint...)
 		//Doesn't work, needs more thought...
