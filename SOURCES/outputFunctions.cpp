@@ -156,12 +156,12 @@ void fileOutFT(std::vector<std::map<int, std::pair<std::vector<int>, int>>> &_FT
 	for (unsigned short sourceNode = 1; sourceNode < _FT.size(); sourceNode++) {
         //std::cout << "sourceNode: " << sourceNode << " " << _FT.size() << std::endl;
 			if(_FT[sourceNode].find(sourceNode)->second.second != -1) {
-			for (std::map<int, std::pair<int,int>>::iterator it=_FT[sourceNode].begin(); it !=_FT[sourceNode].end(); it++) {
+			for (std::map<int, std::pair<std::vector<int>,int>>::iterator it=_FT[sourceNode].begin(); it !=_FT[sourceNode].end(); it++) {
 			   if(sourceNode == _FT.size()-1 && it == std::prev(_FT[sourceNode].end())) {
-					_outFile << it->first << " " << it->second.first[0] << " " << it->second.second;
+					_outFile << it->first << " " << ((it->second.size()>0) ? it->second.first[0] : " ?") << " " << it->second.second;
 			   }
 			   else {
-				   _outFile << it->first << " " << it->second.first[0] << " " << it->second.second << std::endl;
+				   _outFile << it->first << " " << ((it->second.size()>0) ? it->second.first[0] : " ?") << " " << it->second.second << std::endl;
 			   }
 				
 				//std::cout << "source: " << sourceNode << " Destination: " << it->first << " Cost: " << itMM->first << " Path: " << pathToPrint << std::endl;
