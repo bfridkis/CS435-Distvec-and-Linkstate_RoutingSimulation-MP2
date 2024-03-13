@@ -436,7 +436,7 @@ void converge(std::vector<std::map<int, std::multimap<int, std::vector<int>>>> &
 
 //For Link State
 //void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<std::map<int, std::pair<int, int>>> &_FT_invert) {
-void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<std::map<int, std::pair<vector<int>, int>>> &_FT, std::vector<std::pair<int,int>> &tiesTracker) {	
+void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<std::map<int, std::pair<vector<int>, int>>> &_FT, std::vector<std::pair<int,int>> &_tiesTracker) {	
 	//Initialize container for Dijkstras. Map key is reachable node, first element of pair (int) is the "previous" node (or, alternatively from the view of the destination node itself, next hop to source), while the second element of the pair is the reachable node shortest path cost, 
 	//std::map<int, std::pair<int,int>> dijk;
 	//Initialize container for Dijkstras. Map key is reachable node, first element of pair (int) is the path (dest -> source) and the second element is the cost
@@ -493,7 +493,7 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 						minDistNode = reachableNode;
 						//std::cout << "Initial tie breaking here... reachableNode " << reachableNode << " and minDistNode " << minDistNode << "after reassignment..." << std::endl;
 					}
-					tiesTracker.insert(std::make_pair(sourceNode, minDistNode));
+					_tiesTracker.insert(std::make_pair(sourceNode, minDistNode));
 				}
 			}
 		}
@@ -582,7 +582,7 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 						minDist = dijk.find(*it)->second.second;
 						minDistNode = *it;
 					}
-					tiesTracker.insert(std::make_pair(sourceNode, minDistNode));
+					_tiesTracker.insert(std::make_pair(sourceNode, minDistNode));
 					
 				}
 			}

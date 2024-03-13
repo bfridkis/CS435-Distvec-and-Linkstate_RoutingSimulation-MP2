@@ -151,11 +151,12 @@ int main(int argc, char** argv) {
     std::cout << std::endl;
     
     //Initial Routing Table Convergences. 
+	std::vector<std::pair<int,int>> tiesTracker;	//Used for tracking tied path decision that may need to be swapped/inverted after convergence, to handle the way in which dijkstra's builds paths and assignemt tie breaker rule of last hop node with lowest node number... ex: node 1->4 may have a different path than 4->1 in the event of a tie, and these will need to be swapped to accomodate assignment priority rule of lowest last hop node number.
     for (int sourceNode = 1; sourceNode < FT.size(); sourceNode++) {
         std::cout << std::endl;
         std::cout << "Initial convergence for node: " << sourceNode << std::endl;
         if(FT[sourceNode].find(sourceNode)->second.second != -1) {
-			converge(sourceNode, TT, FT);
+			converge(sourceNode, TT, FT, tiesTracker);
 		}
 	}
 	//After converge, need to swap routes between each source and destination to ensure tie breaking rule of lowest last hop node number is followed (due to the fact that dijkstra's algo builds the routes in reverse order, i.e. from destination to source... see converge.cpp)
