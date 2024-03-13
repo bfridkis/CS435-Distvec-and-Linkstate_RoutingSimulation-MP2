@@ -493,7 +493,8 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 						minDistNode = reachableNode;
 						//std::cout << "Initial tie breaking here... reachableNode " << reachableNode << " and minDistNode " << minDistNode << "after reassignment..." << std::endl;
 					}
-					_tiesTracker.push_back(std::make_pair(sourceNode, minDistNode));
+					//Don't need to track tie occurring here because it is always a direct link...
+					//_tiesTracker.push_back(std::make_pair(sourceNode, minDistNode));
 				}
 			}
 		}
@@ -519,13 +520,13 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 			//Used to find adjust nextMinDistNode in case of tie breaker
 			//std::vector<int> tiedForLowestNextMinDistance;
 			std::cout << "minDistNode: " << minDistNode << " ";
+			path.push_back(minDistNode);
 			for(std::map<int, int>::iterator it = _TT[*minDistIt].begin(); it != _TT[*minDistIt].end(); it++) {
 				int reachableNode = it->first, reachableNodeCost = it->second;
 				std::cout << "next node connected to minDistNode (" << reachableNode << ") ... cost = reachableNodeCost " << "(" << reachableNodeCost << ")." << " So therefore, cost to reachableNode = minDist + reachableNodeCost = " << minDist+reachableNodeCost << std::endl;
 				if(unvisitedNodes.find(reachableNode) != unvisitedNodes.end() && 
 				  ((reachableNodeCost + minDist < dijk.find(reachableNode)->second.second) ||
 				  (dijk.find(reachableNode)->second.second == reachableNodeCost + minDist && dijk.find(reachableNode)->second.first.back() > minDistNode))) {
-					path.push_back(minDistNode);
 					dijk.find(reachableNode)->second.first = std::vector<int>(path);
 					dijk.find(reachableNode)->second.second = reachableNodeCost + minDist;
 					std::cout << "Adding previous node " << minDistNode << " and cost of " << reachableNodeCost + minDist << " for reachableNode " << reachableNode << " to sourceNode " << sourceNode << std::endl;
@@ -586,13 +587,14 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 					
 				}
 			}
-			//}
+			//After next minDistNode is determined, add it to path
+			path.push_back(minDistNode);
 			
 			//Update path for next visited node
 			std::cout << "path right before resizing back to 1: " << vecToString(path) << " dijk path for minDistNode: " << vecToString(dijk.find(minDistNode)->second.first) << std::endl;
 			//path.resize(1);
-			path.clear();
-			path.insert(path.begin(), dijk.find(minDistNode)->second.first.begin(), dijk.find(minDistNode)->second.first.end());
+			//path.clear();
+			//path.insert(path.begin(), dijk.find(minDistNode)->second.first.begin(), dijk.find(minDistNode)->second.first.end());
 			
 			std::cout << "nextMinDistNode: " << minDistNode << " nextMinDist: " << minDist << " next minDistNodePath: " << (dijk.find(minDistNode)->second.first.size() > 0 ? vecToString(dijk.find(minDistNode)->second.first) : "empty") << std::endl;
 			for(auto&& [destNode, path_cost] : dijk) {
