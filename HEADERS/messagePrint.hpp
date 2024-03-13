@@ -13,6 +13,7 @@
 void messagePrint(std::vector<std::map<int, std::multimap<int, std::vector<int>>>> &_FT, std::istringstream& messagesStr);
 void messagePrint(std::vector<std::map<int, std::multimap<int, std::vector<int>>>> &_FT, std::istringstream& messagesStr, std::ofstream& _outFile);
 void messagePrint(std::vector<std::map<int, std::multimap<int, std::vector<int>>>> &_FT, std::ifstream& messagesStr, std::ofstream& _outFile);
-void messagePrint(std::vector<std::map<int, std::pair<int, int>>> &_FT, std::ifstream& messages, std::ofstream& _outFile);
+//void messagePrint(std::vector<std::map<int, std::pair<int, int>>> &_FT, std::ifstream& messages, std::ofstream& _outFile);
+void messagePrint(std::vector<std::map<int, std::pair<std::vector<int>, int>>> &_FT, std::ifstream& messages, std::ofstream& _outFile);
 
 #endif

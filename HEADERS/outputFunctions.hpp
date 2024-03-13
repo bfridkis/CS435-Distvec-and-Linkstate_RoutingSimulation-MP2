@@ -15,7 +15,7 @@ void fileOutFT(std::vector<std::map<int, std::multimap<int, std::vector<int>>>> 
 void fileOutFT(std::vector<std::map<int, std::multimap<int, std::vector<int>>>> &_FT, std::ofstream& _outFile, bool _initialConverge);
 //void consoleOutFT(std::vector<std::map<int, std::pair<int,int>>> &_FT);
 //void fileOutFT(std::vector<std::map<int, std::pair<int, int>>> &_FT, std::ofstream& _outFile, bool _initialConverge);
-void consoleOutFT(std::vector<std::map<int, std::pair<vector<int>,int>>> &_FT);
-void fileOutFT(std::vector<std::map<int, std::pair<vector<int>, int>>> &_FT, std::ofstream& _outFile, bool _initialConverge);
+void consoleOutFT(std::vector<std::map<int, std::pair<std::vector<int>,int>>> &_FT);
+void fileOutFT(std::vector<std::map<int, std::pair<std::vector<int>, int>>> &_FT, std::ofstream& _outFile, bool _initialConverge);
 
 #endif
