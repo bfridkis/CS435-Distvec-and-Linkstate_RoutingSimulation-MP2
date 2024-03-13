@@ -466,7 +466,7 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 	//for(auto&& [destNode, prevNode_cost] : dijk) {
 	for(auto&& [destNode, path_cost] : dijk) {
 		//std::cout << "Source Node: " << sourceNode << " Dest Node: " << destNode << " Shortest Distance: " << prevNode_cost.second << " path (0 == empty, should be empty here): " << prevNode_cost.first << std::endl;
-		std::cout << "Source Node: " << sourceNode << " Dest Node: " << destNode << " Shortest Distance: " << prevNode_cost.second << " path: " << ((path_cost.first.size()) > 0 ? vecToString(path_cost.first) : " empty:" << std::endl;		
+		std::cout << "Source Node: " << sourceNode << " Dest Node: " << destNode << " Shortest Distance: " << path_cost.second << " path: " << ((path_cost.first.size()) > 0 ? vecToString(path_cost.first) : " empty:" << std::endl;		
 	}
 	std::cout << "visitedNodes: " << setToString(visitedNodes) << " unvisitedNodes: " << setToString(unvisitedNodes) << " _TT[sourceNode].size() " << _TT[sourceNode].size() << std::endl;
 	std::cout << std::endl;
@@ -500,10 +500,10 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 	
 		std::cout << std::endl;
 		std::cout << "dijkstras table after first initialization with source direct links:" << std::endl;
-		//for(auto&& [destNode, prevNode_cost] : dijk) {
+		//for(auto&& [destNode, path_cost] : dijk) {
 		for(auto&& [destNode, path_cost] : dijk) {
-			//std::cout << "Source Node: " << sourceNode << " Dest Node: " << destNode << " Shortest Distance: " << prevNode_cost.second << " prev node: " << prevNode_cost.first << std::endl;
-			std::cout << "Source Node: " << sourceNode << " Dest Node: " << destNode << " Shortest Distance: " << prevNode_cost.second << " path: " << ((path_cost.first.size()) > 0 ? vecToString(path_cost.first) : " empty:" << std::endl;		
+			//std::cout << "Source Node: " << sourceNode << " Dest Node: " << destNode << " Shortest Distance: " << path_cost.second << " prev node: " << path_cost.first << std::endl;
+			std::cout << "Source Node: " << sourceNode << " Dest Node: " << destNode << " Shortest Distance: " << path_cost.second << " path: " << ((path_cost.first.size()) > 0 ? vecToString(path_cost.first) : " empty:" << std::endl;		
 		}
 		std::cout << "visitedNodes: " << setToString(visitedNodes) << " unvisitedNodes: " << setToString(unvisitedNodes) << std::endl;
 		std::cout << std::endl;
@@ -590,8 +590,8 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 			
 			std::cout << "nextMinDistNode: " << minDistNode << " nextMinDist: " << minDist << std::endl;
 			for(auto&& [destNode, path_cost] : dijk) {
-				//std::cout << "Source Node: " << sourceNode << " Dest Node: " << destNode << " Shortest Distance: " << prevNode_cost.second << " prev node: " << prevNode_cost.first << std::endl;
-				std::cout << "Source Node: " << sourceNode << " Dest Node: " << destNode << " Shortest Distance: " << prevNode_cost.second << " path: " << ((path_cost.first.size()) > 0 ? vecToString(path_cost.first) : " empty:" << std::endl;		
+				//std::cout << "Source Node: " << sourceNode << " Dest Node: " << destNode << " Shortest Distance: " << path_cost.second << " prev node: " << path_cost.first << std::endl;
+				std::cout << "Source Node: " << sourceNode << " Dest Node: " << destNode << " Shortest Distance: " << path_cost.second << " path: " << ((path_cost.first.size()) > 0 ? vecToString(path_cost.first) : " empty:" << std::endl;		
 			}
 			std::cout << "visitedNodes: " << setToString(visitedNodes) << " unvisitedNodes: " << setToString(unvisitedNodes) << std::endl;
 
@@ -601,7 +601,7 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 		std::cout << std::endl;
 		std::cout << "Final dijkstras table:" << std::endl;
 		for(auto&& [destNode, path_cost] : dijk) {
-			std::cout << "Source Node: " << sourceNode << " Dest Node: " << destNode << " Shortest Distance: " << prevNode_cost.second << " prev node: " << ((path_cost.first.size()) > 0 ? vecToString(path_cost.first) << std::endl;
+			std::cout << "Source Node: " << sourceNode << " Dest Node: " << destNode << " Shortest Distance: " << path_cost.second << " prev node: " << ((path_cost.first.size()) > 0 ? vecToString(path_cost.first) << std::endl;
 		}
 		std::cout << "visitedNodes: " << setToString(visitedNodes) << " unvisitedNodes: " << setToString(unvisitedNodes) << std::endl;
 		std::cout << std::endl;
