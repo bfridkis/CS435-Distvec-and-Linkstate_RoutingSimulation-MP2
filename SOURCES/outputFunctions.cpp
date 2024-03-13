@@ -160,7 +160,7 @@ void fileOutFT(std::vector<std::map<int, std::pair<std::vector<int>, int>>> &_FT
 					_outFile << it->first << " " << ((it->second.first.size() == 1) ? it->second.first[0] : it->second.first[1]) << " " << it->second.second;
 			   }
 			   else {
-				   _outFile << it->first << " " << ((it->second.first.size() == 1) ? it->second.first[0] : it->second.first[1])yy << " " << it->second.second << std::endl;
+				   _outFile << it->first << " " << ((it->second.first.size() == 1) ? it->second.first[0] : it->second.first[1]) << " " << it->second.second << std::endl;
 			   }
 				
 				//std::cout << "source: " << sourceNode << " Destination: " << it->first << " Cost: " << itMM->first << " Path: " << pathToPrint << std::endl;
