@@ -103,7 +103,7 @@ void fileOutFT(std::vector<std::map<int, std::multimap<int, std::vector<int>>>> 
 }
 
 //For testing/debugging only - For Link State
-void consoleOutFT(std::vector<std::map<int, std::pair<int,int>>> &_FT) {
+void consoleOutFT(std::vector<std::map<int, std::pair<std::vector<int>,int>>> &_FT) {
     //Print converged FT (testing/troubleshooting only)
     std::cout << std::endl;
 
