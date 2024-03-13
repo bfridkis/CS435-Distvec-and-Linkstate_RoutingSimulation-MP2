@@ -493,7 +493,7 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 						minDistNode = reachableNode;
 						//std::cout << "Initial tie breaking here... reachableNode " << reachableNode << " and minDistNode " << minDistNode << "after reassignment..." << std::endl;
 					}
-					tiesTracker.insert(std::make_pair(sourceNode, minDistNode);
+					tiesTracker.insert(std::make_pair(sourceNode, minDistNode));
 				}
 			}
 		}
@@ -582,7 +582,7 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 						minDist = dijk.find(*it)->second.second;
 						minDistNode = *it;
 					}
-					tiesTracker.insert(std::make_pair(sourceNode, minDistNode);
+					tiesTracker.insert(std::make_pair(sourceNode, minDistNode));
 					
 				}
 			}
