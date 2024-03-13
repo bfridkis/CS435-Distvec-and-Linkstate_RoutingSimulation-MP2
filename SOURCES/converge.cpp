@@ -590,7 +590,7 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 			
 			//Update path for next visited node
 			path.clear();
-			path.insert(dijk.find(minDistNode)->second.first.begin(), dijk.find(minDistNode)->second.first.end());
+			path.insert(path.begin(), dijk.find(minDistNode)->second.first.begin(), dijk.find(minDistNode)->second.first.end());
 			
 			std::cout << "nextMinDistNode: " << minDistNode << " nextMinDist: " << minDist << " next minDistNodePath: " << (dijk.find(minDistNode)->second.first.size() > 0 ? vecToString(dijk.find(minDistNode)->second.first) : " empty:") << std::endl;
 			for(auto&& [destNode, path_cost] : dijk) {
