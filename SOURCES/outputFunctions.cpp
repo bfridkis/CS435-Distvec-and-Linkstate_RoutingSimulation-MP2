@@ -145,8 +145,9 @@ void fileOutFT(std::vector<std::map<int, std::pair<std::vector<int>, int>>> &_FT
 					_outFile << it->second.first[1] << " " << it->second.second << std::endl;
 			   }
 			   //Omit outputting new line for last entry (message print that follows will print the next new line...however this might cause issues if message input file is emtpy, as next FT entry will be on same line as last entry of this FT output...
-			   //if(!(sourceNode == _FT.size()-1 && it == std::prev(_FT[sourceNode].end()))) {
-			   //	outFile << std::endl;
+			   if(!(sourceNode == _FT.size()-1 && it == std::prev(_FT[sourceNode].end()))) {
+			   	outFile << std::endl;
+			   }
 			}
 		}
 	}
