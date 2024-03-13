@@ -590,10 +590,11 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 			//}
 			
 			//Update path for next visited node
-			std::cout << "path before updating: " << vecToString(path) << " dijk path for minDistNode: " << vecToString(dijk.find(minDistNode)->second.first) << std::endl;
-			path = std::vector<int>(dijk.find(minDistNode)->second.first);
-			std::cout << "path after updating: " << vecToString(path) << " dijk path for minDistNode: " << vecToString(dijk.find(minDistNode)->second.first) << std::endl;
-			
+			if(minDistNode != -1) {
+				std::cout << "path before updating: " << vecToString(path) << " dijk path for minDistNode: " << vecToString(dijk.find(minDistNode)->second.first) << std::endl;
+				path = std::vector<int>(dijk.find(minDistNode)->second.first);
+				std::cout << "path after updating: " << vecToString(path) << " dijk path for minDistNode: " << vecToString(dijk.find(minDistNode)->second.first) << std::endl;
+			}
 			std::cout << "nextMinDistNode: " << minDistNode << " nextMinDist: " << minDist << " next minDistNodePath: " << (dijk.find(minDistNode)->second.first.size() > 0 ? vecToString(dijk.find(minDistNode)->second.first) : "empty") << std::endl;
 			for(auto&& [destNode, path_cost] : dijk) {
 				//std::cout << "Source Node: " << sourceNode << " Dest Node: " << destNode << " Shortest Distance: " << path_cost.second << " prev node: " << path_cost.first << std::endl;
