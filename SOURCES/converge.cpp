@@ -524,7 +524,7 @@ void converge(int sourceNode, std::vector<std::map<int, int>> &_TT, std::vector<
 				std::cout << "next node connected to minDistNode (" << reachableNode << ") ... cost = reachableNodeCost " << "(" << reachableNodeCost << ")." << " So therefore, cost to reachableNode = minDist + reachableNodeCost = " << minDist+reachableNodeCost << std::endl;
 				if(unvisitedNodes.find(reachableNode) != unvisitedNodes.end() && 
 				  ((reachableNodeCost + minDist < dijk.find(reachableNode)->second.second) ||
-				  (dijk.find(reachableNode)->second.second == reachableNodeCost + minDist && dijk.find(reachableNode)->second.first > minDistNode))) {
+				  (dijk.find(reachableNode)->second.second == reachableNodeCost + minDist && dijk.find(reachableNode)->second.first.back() > minDistNode))) {
 					path.push_back(minDistNode);
 					dijk.find(reachableNode)->second.first = std::vector<int>(path);
 					dijk.find(reachableNode)->second.second = reachableNodeCost + minDist;
