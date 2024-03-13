@@ -188,8 +188,8 @@ void messagePrint(std::vector<std::map<int, std::pair<std::vector<int>, int>>> &
 			}	
 		}
 	}	
-	std::cout << std::endl;
-    //_outFile << std::endl;
+	//std::cout << std::endl;
+    _outFile << std::endl;
 	//Rewind input stream to beginning for next print job...
 	messages.clear();
 	messages.seekg(0);
