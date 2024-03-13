@@ -116,7 +116,7 @@ void consoleOutFT(std::vector<std::map<int, std::pair<std::vector<int>,int>>> &_
 			//std::cout << "source: " << sourceNode << " Destination: " << it->first << " Cost: " << itMM->first << " Path: " << pathToPrint << std::endl;
 			//std::cout << "source: " << sourceNode << " Destination: " << it->first << " Cost: " << itMM->first << " First Hop: " << itMM->second.size() << std::endl;
 			//std::cout << "-------------------------------------" << std::endl;
-			std::cout << "source: " << sourceNode << " Destination: " << destNode << " Path: " << ((path_cost.first.size()) > 0 ? vecToString(path_cost.first) << " Cost: " << nextHop_cost.second << std::endl;
+			std::cout << "source: " << sourceNode << " Destination: " << destNode << " Path: " << ((path_cost.first.size()) > 0 ? vecToString(path_cost.first) : " empty") << " Cost: " << nextHop_cost.second << std::endl;
 			
 		}
 	}
